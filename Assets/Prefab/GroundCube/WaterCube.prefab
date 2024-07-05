@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7271679340896950188}
   - component: {fileID: 4102963790753893820}
   m_Layer: 0
-  m_Name: WaterCube
+  m_Name: waterCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
