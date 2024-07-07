@@ -2,17 +2,19 @@ using UnityEngine;
 
 public class GridNode
 {
+    // 对象
+    public GameObject TerrainPrefab { get; set; }
     // 世界坐标位置
-    public Vector3 WorldPosition { get; private set; }
+    public Vector3 WorldPosition { get; set; }
 
     // 是否可以通行
     public bool IsWalkable { get; set; }
 
     // 节点在网格中的X坐标
-    public int GridX { get; private set; }
+    public int GridX { get; set; }
 
     // 节点在网格中的Z坐标
-    public int GridZ { get; private set; }
+    public int GridZ { get; set; }
 
     // 父节点，用于路径回溯
     public GridNode Parent { get; set; }
@@ -27,8 +29,9 @@ public class GridNode
     public int FCost => GCost + HCost;
 
     // 构造函数，初始化节点
-    public GridNode(Vector3 worldPosition, bool isWalkable, int gridX, int gridZ)
+    public GridNode(GameObject terrainPrefab, Vector3 worldPosition, bool isWalkable, int gridX, int gridZ)
     {
+        TerrainPrefab = terrainPrefab;
         WorldPosition = worldPosition;
         IsWalkable = isWalkable;
         GridX = gridX;
