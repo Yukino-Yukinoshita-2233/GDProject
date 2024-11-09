@@ -365,6 +365,7 @@
 "Assets/Script/Unit/AStarPathfinding.cs"
 "Assets/Script/Unit/Unit.cs"
 "Assets/Script/Unit/UnitFactory.cs"
+"Assets/Script/VillagersAI/LumberjackAI.cs"
 -langversion:9.0
 
 /deterministic

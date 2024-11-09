@@ -11,19 +11,17 @@ public class MapGenerator : MonoBehaviour
     public int height = 100;
     public float scale = 20f;
 
-
     // 基础地形预制件
     public GameObject grassPrefab;  //草地形
     public GameObject waterPrefab;  //水地形
     public float waterTerrainSize = 0.3f;   //水地形占位百分比
 
     public GameObject[] resourcePrefabs; // 资源预制体数组
-    public int[] resourceScale;// 资源大小
+    public int[] resourceScale; // 资源大小
     public float resourcesTerrainSize = 0.3f;   //资源地形占位百分比
 
     // 节点网格
     private GridNode[,] mapGrid;
-    bool isWalkable = true;
 
     // 噪声地图
     private float[,] noiseMap;
@@ -31,9 +29,37 @@ public class MapGenerator : MonoBehaviour
     void Start()
     {
         GenerateMap();  //生成地形
-
     }
 
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0)) // 检测左键点击
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                // 获取被点击的 GameObject
+                GameObject clickedObject = hit.collider.gameObject;
+                // 通过 Collider 来判断点击的是哪个方块
+                for (int x = 0; x < width; x++)
+                {
+                    for (int z = 0; z < height; z++)
+                    {
+                        GridNode node = mapGrid[x, z];
+                            
+                        if (clickedObject.transform.position == node.WorldPosition)
+                        {
+                            // 输出方块信息
+                            Debug.Log($"Clicked on: {node.TerrainPrefab.name}, IsWalkable: {node.IsWalkable}, Grid Position: ({node.GridX}, {node.GridZ})");
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
     [ContextMenu("TestMap")]
     private void TestMap()
     {
@@ -46,15 +72,17 @@ public class MapGenerator : MonoBehaviour
         noiseMap = GenerateNoiseMap(width, height, scale);
         mapGrid = new GridNode[width, height];
 
-        CreateMap();
+        CreateMap(); // 创建地图基础
 
         for (int i = 0; i < resourcePrefabs.Length; i++)
         {
-            GenerateResources(i);
+            GenerateResources(i); // 生成资源
         }
+
+        InstantiateMap(); // 实例化地图和资源
     }
 
-    //创建地形并保存到节点网格grid
+    // 创建地形并保存到节点网格grid
     private void CreateMap()
     {
         // 删除旧的地图
@@ -71,35 +99,29 @@ public class MapGenerator : MonoBehaviour
             {
                 float sample = noiseMap[x, z];
                 Vector3 position = new Vector3(x, 0, z);
-                isWalkable = true;
+                bool isWalkable = true;
                 GameObject terrainPrefab = null;
 
                 // 根据噪声值选择地形
-
-
-
                 if (sample < waterTerrainSize)
                 {
                     terrainPrefab = waterPrefab;
                     isWalkable = false; // 河流不可通行
+                    // 保存到节点网格
+                    mapGrid[x, z] = new GridNode(terrainPrefab, position, isWalkable, x, z);
 
                 }
                 else
                 {
                     terrainPrefab = grassPrefab;
+                    isWalkable = true; // 河流不可通行
+                    // 保存到节点网格
+                    mapGrid[x, z] = new GridNode(terrainPrefab, position, isWalkable, x, z);
 
                 }
 
-
-
-                // 创建地形的实例
-                GameObject terrainInstance = Instantiate(terrainPrefab, position, Quaternion.identity);
-                // 将 terrainInstance 设置为当前脚本所在游戏对象的子对象
-                terrainInstance.transform.parent = transform;
-                mapGrid[x, z] = new GridNode(terrainInstance, position, isWalkable, x, z);
             }
         }
-
     }
 
     // 生成噪声地图
@@ -121,7 +143,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        return noiseMap;   
+        return noiseMap;
     }
 
     void GenerateResources(int resourceIndex)
@@ -143,15 +165,31 @@ public class MapGenerator : MonoBehaviour
 
                     if (sample > resourcesTerrainSize) // 设定阈值，表示大于resourcesTerrainSize的点生成资源
                     {
-                        isWalkable = false;
-                        Vector3 position = new Vector3(x, 1, y);
-                        GameObject resourceInstance = Instantiate(resourcePrefabs[resourceIndex], position, Quaternion.identity);
-                        resourceInstance.transform.parent = transform;
-                        mapGrid[x, y] = new GridNode(resourceInstance, position, isWalkable, x, y);
-
+                        Vector3 position = new Vector3(x, 0, y);
+                        // 将资源信息保存到节点网格
+                        mapGrid[x, y] = new GridNode(resourcePrefabs[resourceIndex], position, true, x, y);
                     }
                 }
             }
         }
     }
+
+    void InstantiateMap()
+    {
+        // 遍历节点网格并实例化所有对象
+        for (int x = 0; x < width; x++)
+        {
+            for (int z = 0; z < height; z++)
+            {
+                GridNode node = mapGrid[x, z];
+
+                if (node.TerrainPrefab != null) // 如果有预制件，实例化
+                {
+                    GameObject instance = Instantiate(node.TerrainPrefab, node.WorldPosition, Quaternion.identity);
+                    instance.transform.parent = transform; // 设置为当前脚本所在游戏对象的子对象
+                }
+            }
+        }
+    }
 }
+
