@@ -3,109 +3,109 @@ using UnityEngine;
 
 public class AStarPathfinding
 {
-    // 查找路径
-    public List<GridNode> FindPath(GridNode startNode, GridNode targetNode, GridNode[,] grid)
+    public static List<Node> FindPath(int[,] map, Vector2Int startPos, Vector2Int targetPos)
     {
-        List<GridNode> openSet = new List<GridNode>();
-        HashSet<GridNode> closedSet = new HashSet<GridNode>();
-        openSet.Add(startNode);
+        List<Node> openList = new List<Node>(); // 开放列表
+        HashSet<Node> closedList = new HashSet<Node>(); // 闭合列表
+        Node startNode = new Node(startPos, null, 0, GetDistance(startPos, targetPos));
+        openList.Add(startNode);
 
-        while (openSet.Count > 0)
+        while (openList.Count > 0)
         {
-            GridNode currentNode = openSet[0];
-
-            for (int i = 1; i < openSet.Count; i++)
+            Node currentNode = openList[0];
+            foreach (Node node in openList)
             {
-                if (openSet[i].FCost < currentNode.FCost || (openSet[i].FCost == currentNode.FCost && openSet[i].HCost < currentNode.HCost))
-                {
-                    currentNode = openSet[i];
-                }
+                if (node.FCost < currentNode.FCost || (node.FCost == currentNode.FCost && node.HCost < currentNode.HCost))
+                    currentNode = node;
             }
 
-            openSet.Remove(currentNode);
-            closedSet.Add(currentNode);
+            openList.Remove(currentNode);
+            closedList.Add(currentNode);
 
-            if (currentNode == targetNode)
-            {
-                return RetracePath(startNode, targetNode);
-            }
+            if (currentNode.Position == targetPos)
+                return RetracePath(startNode, currentNode);
 
-            foreach (GridNode neighbor in GetNeighbors(currentNode, grid))
+            foreach (Vector2Int direction in GetNeighbourPositions(currentNode.Position, map))
             {
-                if (!neighbor.IsWalkable || closedSet.Contains(neighbor))
-                {
+                if (map[direction.x, direction.y] == 1 || closedList.Contains(new Node(direction))) // 忽略障碍或已处理的节点
                     continue;
-                }
 
-                int newMovementCostToNeighbor = currentNode.GCost + GetDistance(currentNode, neighbor);
-                if (newMovementCostToNeighbor < neighbor.GCost || !openSet.Contains(neighbor))
+                int newMovementCost = currentNode.GCost + GetDistance(currentNode.Position, direction);
+                Node neighbourNode = new Node(direction, currentNode, newMovementCost, GetDistance(direction, targetPos));
+
+                if (newMovementCost < neighbourNode.GCost || !openList.Contains(neighbourNode))
                 {
-                    neighbor.GCost = newMovementCostToNeighbor;
-                    neighbor.HCost = GetDistance(neighbor, targetNode);
-                    neighbor.Parent = currentNode;
+                    neighbourNode.GCost = newMovementCost;
+                    neighbourNode.Parent = currentNode;
 
-                    if (!openSet.Contains(neighbor))
-                    {
-                        openSet.Add(neighbor);
-                    }
+                    if (!openList.Contains(neighbourNode))
+                        openList.Add(neighbourNode);
                 }
             }
         }
-
-        return null; // 未找到路径
+        return null; // 找不到路径时返回空
     }
 
-    // 回溯路径
-    List<GridNode> RetracePath(GridNode startNode, GridNode endNode)
+    // 返回路径
+    private static List<Node> RetracePath(Node startNode, Node endNode)
     {
-        List<GridNode> path = new List<GridNode>();
-        GridNode currentNode = endNode;
+        List<Node> path = new List<Node>();
+        Node currentNode = endNode;
 
         while (currentNode != startNode)
         {
             path.Add(currentNode);
             currentNode = currentNode.Parent;
         }
-
         path.Reverse();
         return path;
     }
 
-    // 获取邻居节点
-    List<GridNode> GetNeighbors(GridNode node, GridNode[,] grid)
+    // 获取相邻节点位置
+    private static List<Vector2Int> GetNeighbourPositions(Vector2Int nodePos, int[,] map)
     {
-        List<GridNode> neighbors = new List<GridNode>();
+        List<Vector2Int> neighbours = new List<Vector2Int>();
 
-        for (int x = -1; x <= 1; x++)
-        {
-            for (int z = -1; z <= 1; z++)
-            {
-                if (x == 0 && z == 0)
-                {
-                    continue;
-                }
+        if (nodePos.x + 1 < map.GetLength(0)) neighbours.Add(new Vector2Int(nodePos.x + 1, nodePos.y));
+        if (nodePos.x - 1 >= 0) neighbours.Add(new Vector2Int(nodePos.x - 1, nodePos.y));
+        if (nodePos.y + 1 < map.GetLength(1)) neighbours.Add(new Vector2Int(nodePos.x, nodePos.y + 1));
+        if (nodePos.y - 1 >= 0) neighbours.Add(new Vector2Int(nodePos.x, nodePos.y - 1));
 
-                int checkX = node.GridX + x;
-                int checkZ = node.GridZ + z;
-
-                if (checkX >= 0 && checkX < grid.GetLength(0) && checkZ >= 0 && checkZ < grid.GetLength(1))
-                {
-                    neighbors.Add(grid[checkX, checkZ]);
-                }
-            }
-        }
-
-        return neighbors;
+        return neighbours;
     }
 
-    // 计算节点间的距离
-    int GetDistance(GridNode nodeA, GridNode nodeB)
+    // 计算距离（曼哈顿距离）
+    public static int GetDistance(Vector2Int posA, Vector2Int posB)
     {
-        int distX = Mathf.Abs(nodeA.GridX - nodeB.GridX);
-        int distZ = Mathf.Abs(nodeA.GridZ - nodeB.GridZ);
+        return Mathf.Abs(posA.x - posB.x) + Mathf.Abs(posA.y - posB.y);
+    }
+}
 
-        if (distX > distZ)
-            return 14 * distZ + 10 * (distX - distZ);
-        return 14 * distX + 10 * (distZ - distX);
+public class Node
+{
+    public Vector2Int Position;   // 节点的坐标
+    public Node Parent;           // 父节点
+    public int GCost;             // 从起点到该节点的代价
+    public int HCost;             // 从该节点到终点的估算代价
+    public int FCost => GCost + HCost; // 总代价（G + H）
+
+    public Node(Vector2Int pos, Node parent = null, int gCost = 0, int hCost = 0)
+    {
+        Position = pos;
+        Parent = parent;
+        GCost = gCost;
+        HCost = hCost;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is Node node)
+            return Position == node.Position;
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return Position.GetHashCode();
     }
 }
