@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngineInternal;
 
 
 public class MapGenerator : MonoBehaviour
@@ -8,79 +9,50 @@ public class MapGenerator : MonoBehaviour
     public int width = 30;
     public int height = 20;
     public int scale = 20;
-    int[,] gridMap = null;   //网格地图
+    int[,] gridMapTest = null;   //网格地图
 
     // 基础地形
-    public GameObject grassPrefab;  //草地形
     public GameObject waterPrefab;  //水地形
+    public GameObject grassPrefab;  //草地形
+    public GameObject mountainPrefab;  //山地形
     public float waterTerrainSize = 0.3f;   //水地形占位百分比
     public float mountainTerrainSize = 0.3f;   //山地形占位百分比
 
+    //资源地形
     public GameObject[] resourcePrefabs; // 资源预制体数组
     public int[] resourceScale; // 资源大小
     public float resourcesTerrainSize = 0.3f;   //资源地形占位百分比
 
     private void Start()
     {
-        // 订阅生成完成的事件
-        //MapManager.Instance.OnMapGenerated += OnMapGenerated;
-        //Debug.Log("订阅生成完成的事件");
         // 生成地图
-        Debug.Log("MapGenerator Start");
+        Debug.Log("MapGenerator Start:生成地图数组");
         MapManager.Instance.GenerateMap(width, height, scale, waterTerrainSize, mountainTerrainSize);
-        //StartCoroutine(OnMapGenerated());
-        Debug.Log("MapGenerator Start:生成地图");
         OnMapGenerated();
-
     }
 
     [ContextMenu("TestMap")]
     public void TestMap()
     {
-        Debug.Log("TestMap");
-        // 订阅生成完成的事件
-        //MapManager.Instance.OnMapGenerated += OnMapGenerated;
         // 生成地图
+        Debug.Log("TestMap:生成地图数组");
         MapManager.Instance.GenerateMap(width, height, scale, waterTerrainSize, mountainTerrainSize);
-        //StartCoroutine(OnMapGenerated());
         OnMapGenerated();
     }
+
     public void OnMapGenerated()
     {
         Debug.Log("OnMapGenerated:地图生成完成，继续执行后续操作");
-        // 等待地图生成完成
-        //yield return new WaitUntil(() => gridMap != null && gridMap.Length > 0);
-
         // 获取地图数据
-        gridMap = MapManager.Instance.GetMap();
-        Print2DArray(gridMap);
-        Print2DArray(MapManager.gridMap);
-
+        // Print2DArray(MapManager.gridMap);//debug地图数据
+        gridMapTest = MapManager.gridMap;
         Debug.Log("获取地图数据成功");
-
-        if (gridMap != null)
-        {
-            Debug.Log("Map width: " + gridMap.GetLength(0));
-            Debug.Log("Map height: " + gridMap.GetLength(1));
-        }
-
         // 实例化地图
-        //InstantiateMap();
+        InstantiateMap();
+        Debug.Log("实例化地图成功");
     }
 
-    // 获取地图数据
-    public int[,] SetMap(int[,] gridMapT)
-    {
-        Debug.Log("SetMap获得了地图数据");
-        if (gridMapT == null)
-        {
-            Debug.Log("GetMap gridMap has not been generated yet!");
-            return null;
-        }
-        gridMap = gridMapT;
-        return gridMap;
-    }
-
+    // 随机资源生成
     /*
     void GenerateResources(int resourceIndex)
     {
@@ -114,8 +86,7 @@ public class MapGenerator : MonoBehaviour
     //实例化地图
     void InstantiateMap()
     {
-        DeleteChildren();
-
+        DeleteChildren();//删除当前地图
         Vector3 WorldPosition;
         float H = 0.5f;
         // 遍历节点网格并实例化所有对象
@@ -124,22 +95,22 @@ public class MapGenerator : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
 
-                if (gridMap[x,y] == 0) //生成草
+                if (gridMapTest[x,y] == -1) //生成水
                 {
                     WorldPosition = new Vector3(x, 0 - H, y);
                     GameObject instance = Instantiate(waterPrefab, WorldPosition, Quaternion.identity);
                     instance.transform.parent = transform; // 设置为当前脚本所在游戏对象的子对象
                 }
-                else if (gridMap[x,y] == -1) //生成水
+                else if (gridMapTest[x,y] == 0) //生成草
                 {
                     WorldPosition = new Vector3(x, 0, y);
                     GameObject instance = Instantiate(grassPrefab, WorldPosition, Quaternion.identity);
                     instance.transform.parent = transform; // 设置为当前脚本所在游戏对象的子对象
                 }
-                else if (gridMap[x, y] == 1)    //生成山
+                else if (gridMapTest[x, y] == 1)    //生成山
                 {
                     WorldPosition = new Vector3(x, 0+H, y);
-                    GameObject instance = Instantiate(grassPrefab, WorldPosition, Quaternion.identity);
+                    GameObject instance = Instantiate(mountainPrefab, WorldPosition, Quaternion.identity);
                     instance.transform.parent = transform; // 设置为当前脚本所在游戏对象的子对象
 
                 }
