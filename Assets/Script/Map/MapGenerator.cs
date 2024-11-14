@@ -1,155 +1,91 @@
-using UnityEditor.PackageManager.UI;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 public class MapGenerator : MonoBehaviour
 {
-    public AIController aiController;
-
     // 地图尺寸
-    public int width = 100;
-    public int height = 100;
-    public float scale = 20f;
+    public int width = 30;
+    public int height = 20;
+    public int scale = 20;
+    int[,] gridMap = null;   //网格地图
 
-    // 基础地形预制件
+    // 基础地形
     public GameObject grassPrefab;  //草地形
     public GameObject waterPrefab;  //水地形
     public float waterTerrainSize = 0.3f;   //水地形占位百分比
+    public float mountainTerrainSize = 0.3f;   //山地形占位百分比
 
     public GameObject[] resourcePrefabs; // 资源预制体数组
     public int[] resourceScale; // 资源大小
     public float resourcesTerrainSize = 0.3f;   //资源地形占位百分比
 
-    // 节点网格
-    private GridNode[,] mapGrid;
-
-    // 噪声地图
-    private float[,] noiseMap;
-
-    void Start()
+    private void Start()
     {
-        GenerateMap();  //生成地形
+        // 订阅生成完成的事件
+        //MapManager.Instance.OnMapGenerated += OnMapGenerated;
+        //Debug.Log("订阅生成完成的事件");
+        // 生成地图
+        Debug.Log("MapGenerator Start");
+        MapManager.Instance.GenerateMap(width, height, scale, waterTerrainSize, mountainTerrainSize);
+        //StartCoroutine(OnMapGenerated());
+        Debug.Log("MapGenerator Start:生成地图");
+        OnMapGenerated();
+
     }
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0)) // 检测左键点击
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                // 获取被点击的 GameObject
-                GameObject clickedObject = hit.collider.gameObject;
-                // 通过 Collider 来判断点击的是哪个方块
-                for (int x = 0; x < width; x++)
-                {
-                    for (int z = 0; z < height; z++)
-                    {
-                        GridNode node = mapGrid[x, z];
-                            
-                        if (clickedObject.transform.position == node.WorldPosition)
-                        {
-                            // 输出方块信息
-                            Debug.Log($"Clicked on: {node.TerrainPrefab.name}, IsWalkable: {node.IsWalkable}, Grid Position: ({node.GridX}, {node.GridZ})");
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    }
     [ContextMenu("TestMap")]
-    private void TestMap()
+    public void TestMap()
     {
-        GenerateMap();
+        Debug.Log("TestMap");
+        // 订阅生成完成的事件
+        //MapManager.Instance.OnMapGenerated += OnMapGenerated;
+        // 生成地图
+        MapManager.Instance.GenerateMap(width, height, scale, waterTerrainSize, mountainTerrainSize);
+        //StartCoroutine(OnMapGenerated());
+        OnMapGenerated();
     }
-
-    // 生成地图数据二维数组
-    void GenerateMap()
+    public void OnMapGenerated()
     {
-        noiseMap = GenerateNoiseMap(width, height, scale);
-        mapGrid = new GridNode[width, height];
+        Debug.Log("OnMapGenerated:地图生成完成，继续执行后续操作");
+        // 等待地图生成完成
+        //yield return new WaitUntil(() => gridMap != null && gridMap.Length > 0);
 
-        CreateMap(); // 创建地图基础
+        // 获取地图数据
+        gridMap = MapManager.Instance.GetMap();
+        Print2DArray(gridMap);
+        Print2DArray(MapManager.gridMap);
 
-        for (int i = 0; i < resourcePrefabs.Length; i++)
+        Debug.Log("获取地图数据成功");
+
+        if (gridMap != null)
         {
-            GenerateResources(i); // 生成资源
+            Debug.Log("Map width: " + gridMap.GetLength(0));
+            Debug.Log("Map height: " + gridMap.GetLength(1));
         }
 
-        InstantiateMap(); // 实例化地图和资源
+        // 实例化地图
+        //InstantiateMap();
     }
 
-    // 创建地形并保存到节点网格grid
-    private void CreateMap()
+    // 获取地图数据
+    public int[,] SetMap(int[,] gridMapT)
     {
-        // 删除旧的地图
-        for (int i = transform.childCount - 1; i >= 0; i--)
+        Debug.Log("SetMap获得了地图数据");
+        if (gridMapT == null)
         {
-            // 删除子物体
-            DestroyImmediate(transform.GetChild(i).gameObject);
+            Debug.Log("GetMap gridMap has not been generated yet!");
+            return null;
         }
-
-        //生成新的地图
-        for (int x = 0; x < width; x++)
-        {
-            for (int z = 0; z < height; z++)
-            {
-                float sample = noiseMap[x, z];
-                Vector3 position = new Vector3(x, 0, z);
-                bool isWalkable = true;
-                GameObject terrainPrefab = null;
-
-                // 根据噪声值选择地形
-                if (sample < waterTerrainSize)
-                {
-                    terrainPrefab = waterPrefab;
-                    isWalkable = false; // 河流不可通行
-                    // 保存到节点网格
-                    mapGrid[x, z] = new GridNode(terrainPrefab, position, isWalkable, x, z);
-
-                }
-                else
-                {
-                    terrainPrefab = grassPrefab;
-                    isWalkable = true; // 河流不可通行
-                    // 保存到节点网格
-                    mapGrid[x, z] = new GridNode(terrainPrefab, position, isWalkable, x, z);
-
-                }
-
-            }
-        }
+        gridMap = gridMapT;
+        return gridMap;
     }
 
-    // 生成噪声地图
-    float[,] GenerateNoiseMap(int width, int height, float scale)
-    {
-        // 生成噪声偏移值
-        Vector2 offset = new Vector2(Random.Range(0f, 1000f), Random.Range(0f, 1000f));
-
-        float[,] noiseMap = new float[width, height];
-
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                float sampleX = (x + offset.x) / scale;
-                float sampleZ = (y + offset.y) / scale;
-                float noiseValue = Mathf.PerlinNoise(sampleX, sampleZ);
-                noiseMap[x, y] = noiseValue;
-            }
-        }
-
-        return noiseMap;
-    }
-
+    /*
     void GenerateResources(int resourceIndex)
     {
         // 生成噪声偏移值
-        Vector2 offset = new Vector2(Random.Range(0f, 1000f), Random.Range(0f, 1000f));
+        Vector2 offset = new Vector2(UnityEngine.Random.Range(0f, 1000f), UnityEngine.Random.Range(0f, 1000f));
 
         for (int x = 0; x < width; x++)
         {
@@ -173,23 +109,79 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
+    */
 
+    //实例化地图
     void InstantiateMap()
     {
+        DeleteChildren();
+
+        Vector3 WorldPosition;
+        float H = 0.5f;
         // 遍历节点网格并实例化所有对象
         for (int x = 0; x < width; x++)
         {
-            for (int z = 0; z < height; z++)
+            for (int y = 0; y < height; y++)
             {
-                GridNode node = mapGrid[x, z];
 
-                if (node.TerrainPrefab != null) // 如果有预制件，实例化
+                if (gridMap[x,y] == 0) //生成草
                 {
-                    GameObject instance = Instantiate(node.TerrainPrefab, node.WorldPosition, Quaternion.identity);
+                    WorldPosition = new Vector3(x, 0 - H, y);
+                    GameObject instance = Instantiate(waterPrefab, WorldPosition, Quaternion.identity);
                     instance.transform.parent = transform; // 设置为当前脚本所在游戏对象的子对象
+                }
+                else if (gridMap[x,y] == -1) //生成水
+                {
+                    WorldPosition = new Vector3(x, 0, y);
+                    GameObject instance = Instantiate(grassPrefab, WorldPosition, Quaternion.identity);
+                    instance.transform.parent = transform; // 设置为当前脚本所在游戏对象的子对象
+                }
+                else if (gridMap[x, y] == 1)    //生成山
+                {
+                    WorldPosition = new Vector3(x, 0+H, y);
+                    GameObject instance = Instantiate(grassPrefab, WorldPosition, Quaternion.identity);
+                    instance.transform.parent = transform; // 设置为当前脚本所在游戏对象的子对象
+
                 }
             }
         }
     }
-}
 
+    //删除当前地图
+    void DeleteChildren()
+    {
+            if (Application.isPlaying)
+            {
+                for (int i = transform.childCount; i > 0; i--)
+                {
+                    Destroy(transform.GetChild(0).gameObject);
+                }
+            }
+            else
+            {
+                for (int i = transform.childCount; i > 0; i--)
+                {
+                    DestroyImmediate(transform.GetChild(0).gameObject);
+                }
+            }
+    }
+
+    //将二维数组格式化为字符串输出到 Debug.Log
+    public void Print2DArray<T>(T[,] array)
+    {
+        string result = "";
+        int rows = array.GetLength(0);
+        int cols = array.GetLength(1);
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                result += array[i, j] + "\t"; // 使用制表符对齐列
+            }
+            result += "\n"; // 每行结束后换行
+        }
+
+        Debug.Log(result);
+    }
+}

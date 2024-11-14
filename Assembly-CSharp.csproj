@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Assets\Script\Unit\AStarPathfinding.cs" />
     <Compile Include="Assets\Script\Unit\Unit.cs" />
+    <Compile Include="Assets\Script\Map\MapManager.cs" />
     <Compile Include="Assets\Script\Manager\ResourceManager.cs" />
     <Compile Include="Assets\Script\Manager\Singleton.cs" />
     <Compile Include="Assets\Script\Manager\UIManager.cs" />
@@ -67,7 +68,6 @@
     <Compile Include="Assets\Script\Map\Tile.cs" />
     <Compile Include="Assets\Script\Manager\GameManager.cs" />
     <Compile Include="Assets\Script\Map\MapGenerator.cs" />
-    <Compile Include="Assets\Script\VillagersAI\LumberjackAI.cs" />
     <Compile Include="Assets\Script\Map\Obstacle.cs" />
     <Compile Include="Assets\Script\Unit\UnitFactory.cs" />
     <Compile Include="Assets\Script\Map\GridNode.cs" />
