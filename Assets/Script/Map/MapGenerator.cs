@@ -95,13 +95,13 @@ public class MapGenerator : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
 
-                if (gridMapTest[x,y] == -1) //生成水
+                if (gridMapTest[x, y] == -1) //生成水
                 {
                     WorldPosition = new Vector3(x, 0 - H, y);
                     GameObject instance = Instantiate(waterPrefab, WorldPosition, Quaternion.identity);
                     instance.transform.parent = transform; // 设置为当前脚本所在游戏对象的子对象
                 }
-                else if (gridMapTest[x,y] == 0) //生成草
+                else if (gridMapTest[x, y] == 0) //生成草
                 {
                     WorldPosition = new Vector3(x, 0, y);
                     GameObject instance = Instantiate(grassPrefab, WorldPosition, Quaternion.identity);
@@ -109,7 +109,7 @@ public class MapGenerator : MonoBehaviour
                 }
                 else if (gridMapTest[x, y] == 1)    //生成山
                 {
-                    WorldPosition = new Vector3(x, 0+H, y);
+                    WorldPosition = new Vector3(x, 0 + 2 * H, y);
                     GameObject instance = Instantiate(mountainPrefab, WorldPosition, Quaternion.identity);
                     instance.transform.parent = transform; // 设置为当前脚本所在游戏对象的子对象
 
@@ -121,20 +121,20 @@ public class MapGenerator : MonoBehaviour
     //删除当前地图
     void DeleteChildren()
     {
-            if (Application.isPlaying)
+        if (Application.isPlaying)
+        {
+            for (int i = transform.childCount; i > 0; i--)
             {
-                for (int i = transform.childCount; i > 0; i--)
-                {
-                    Destroy(transform.GetChild(0).gameObject);
-                }
+                Destroy(transform.GetChild(0).gameObject);
             }
-            else
+        }
+        else
+        {
+            for (int i = transform.childCount; i > 0; i--)
             {
-                for (int i = transform.childCount; i > 0; i--)
-                {
-                    DestroyImmediate(transform.GetChild(0).gameObject);
-                }
+                DestroyImmediate(transform.GetChild(0).gameObject);
             }
+        }
     }
 
     //将二维数组格式化为字符串输出到 Debug.Log

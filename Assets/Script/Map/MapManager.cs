@@ -21,7 +21,7 @@ public class MapManager : MonoBehaviour
         {
             if (instance == null)
             {
-                instance = new MapManager(192,108);
+                instance = new MapManager(192, 108);
             }
             return instance;
         }
