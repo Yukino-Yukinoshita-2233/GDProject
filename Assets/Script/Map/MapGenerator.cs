@@ -40,6 +40,14 @@ public class MapGenerator : MonoBehaviour
         OnMapGenerated();
     }
 
+    private void FixedUpdate()
+    {
+        if (gridMapTest != MapManager.gridMap)
+        {
+            gridMapTest = MapManager.gridMap;
+            OnMapGenerated();
+        }
+    }
     public void OnMapGenerated()
     {
         Debug.Log("OnMapGenerated:地图生成完成，继续执行后续操作");
