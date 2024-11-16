@@ -145,24 +145,11 @@ public class MapGenerator : MonoBehaviour
 
         if (baseGridMap != null)
         {
-            //if (Application.isPlaying)
-            //{
-            //    Destroy(baseGridMap.gameObject);
-            //    Debug.Log("DeleteChildren:删除当前地图成功");
-
-            //}
-            //else
-            //{
-            //    DestroyImmediate(baseGridMap.gameObject);
-            //    Debug.Log("DeleteChildren:删除当前地图成功");
-
-            //}
             if (Application.isPlaying)
             {
                 for (int i = transform.childCount; i > 0; i--)
                 {
                     Destroy(transform.GetChild(0).gameObject);
-                    Debug.Log("Destroy succeed");
                 }
             }
             else
