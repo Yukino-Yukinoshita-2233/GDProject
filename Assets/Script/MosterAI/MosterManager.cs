@@ -13,10 +13,10 @@ public class MosterManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MapManager = MapManager.Instance;
+        //MapManager = MapManager.Instance;
         MonstergridMap = MapManager.gridMap;
         Debug.Log("输出MonsterManager获取的地图数据:");
-        MapManager.Print2DArray(MonstergridMap);
+        //MapManager.Print2DArray(MonstergridMap);
         GetAStarPath();
     }
 

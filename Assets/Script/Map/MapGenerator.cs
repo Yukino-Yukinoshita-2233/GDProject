@@ -6,17 +6,17 @@ using MapManagernamespace;
 public class MapGenerator : MonoBehaviour
 {
     // 地图尺寸
-    public int width = 30;
-    public int height = 20;
-    public int scale = 20;
-    int[,] gridMapTest = null;   //网格地图
+    public int widthGen;
+    public int heightGen;
+    public int scaleGen;
+    int[,] gridMapGen = null;   //网格地图
 
     // 基础地形
     public GameObject waterPrefab;  //水地形
     public GameObject grassPrefab;  //草地形
     public GameObject mountainPrefab;  //山地形
     public float waterTerrainSize = 0.3f;   //水地形占位百分比
-    public float mountainTerrainSize = 0.3f;   //山地形占位百分比
+    public float mountainTerrainSize = 0.6f;   //山地形占位百分比
 
     //资源地形
     public GameObject[] resourcePrefabs; // 资源预制体数组
@@ -25,30 +25,25 @@ public class MapGenerator : MonoBehaviour
 
     private void Start()
     {
-        // 生成地图
-        Debug.Log("MapGenerator Start:生成地图数组");
-        MapManager.Instance.GenerateMap(width, height, scale, waterTerrainSize, mountainTerrainSize);
-        OnMapGenerated();
-    }
-
-    [ContextMenu("TestMap")]
-    public void TestMap()
-    {
-
-        // 生成地图
-        Debug.Log("TestMap:生成地图数组");
-        MapManager.Instance.GenerateMap(width, height, scale, waterTerrainSize, mountainTerrainSize);
+        widthGen = MapManager.width;
+        heightGen = MapManager.height;
+        scaleGen = MapManager.scale;
 
         OnMapGenerated();
     }
+
 
     private void LateUpdate()
     {
-        if (gridMapTest != MapManager.gridMap)
+        if (MapManager.isMapChange)
         {
             Debug.Log("地图数据被修改,更新地图实例");
-            gridMapTest = MapManager.gridMap;
+            widthGen = MapManager.width;
+            heightGen = MapManager.height;
+            scaleGen = MapManager.scale;
+            gridMapGen = MapManager.gridMap;
             OnMapGenerated();
+            MapManager.isMapChange = false;
         }
     }
     public void OnMapGenerated()
@@ -56,7 +51,7 @@ public class MapGenerator : MonoBehaviour
         //Debug.Log("OnMapGenerated:地图生成完成，继续执行后续操作");
         // 获取地图数据
         //Print2DArray(MapManager.gridMap);//debug地图数据
-        gridMapTest = MapManager.gridMap;
+        gridMapGen = MapManager.gridMap;
         //Debug.Log("获取地图数据成功");
         // 实例化地图
         InstantiateMap();
@@ -70,7 +65,7 @@ public class MapGenerator : MonoBehaviour
         // 生成噪声偏移值
         Vector2 offset = new Vector2(UnityEngine.Random.Range(0f, 1000f), UnityEngine.Random.Range(0f, 1000f));
 
-        for (int x = 0; x < width; x++)
+        for (int x = 0; x < widthGen; x++)
         {
             for (int y = 0; y < height; y++)
             {
@@ -78,7 +73,7 @@ public class MapGenerator : MonoBehaviour
 
                 if (node.IsWalkable) // 确保资源只生成在可行走区域
                 {
-                    float xCoord = ((float)x + offset.x) / width * resourceScale[resourceIndex];
+                    float xCoord = ((float)x + offset.x) / widthGen * resourceScale[resourceIndex];
                     float yCoord = ((float)y + offset.y) / height * resourceScale[resourceIndex];
                     float sample = Mathf.PerlinNoise(xCoord, yCoord);
 
@@ -105,33 +100,33 @@ public class MapGenerator : MonoBehaviour
         // 如果没有，创建一个新的 GameObject 作为子物体
         //if (baseGridMap == null)
         //{
-            baseGridMap = new GameObject("BaseGridMap").transform;
-            baseGridMap.SetParent(transform);  // 设置为当前物体的子物体
-            baseGridMap.localPosition = Vector3.zero;  // 设置相对位置为零
-            Debug.Log("InstantiateMap:创建baseGridMap子物体成功");
+        baseGridMap = new GameObject("BaseGridMap").transform;
+        baseGridMap.SetParent(transform);  // 设置为当前物体的子物体
+        baseGridMap.localPosition = Vector3.zero;  // 设置相对位置为零
+        Debug.Log("InstantiateMap:创建baseGridMap子物体成功");
         //}
 
         Vector3 WorldPosition;
         float H = 0.5f;
         // 遍历节点网格并实例化所有对象
-        for (int x = 0; x < width; x++)
+        for (int x = 0; x < widthGen; x++)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < heightGen; y++)
             {
 
-                if (gridMapTest[x, y] == -1) //生成水
+                if (gridMapGen[x, y] == -1) //生成水
                 {
                     WorldPosition = new Vector3(x, 0 - H, y);
                     GameObject instance = Instantiate(waterPrefab, WorldPosition, Quaternion.identity, baseGridMap);
                     //instance.transform.parent = transform; // 设置为当前脚本所在游戏对象的子对象
                 }
-                else if (gridMapTest[x, y] == 0) //生成草
+                else if (gridMapGen[x, y] == 0) //生成草
                 {
                     WorldPosition = new Vector3(x, 0, y);
                     GameObject instance = Instantiate(grassPrefab, WorldPosition, Quaternion.identity, baseGridMap);
                     //instance.transform.parent = transform; // 设置为当前脚本所在游戏对象的子对象
                 }
-                else if (gridMapTest[x, y] == 1)    //生成山
+                else if (gridMapGen[x, y] == 1)    //生成山
                 {
                     WorldPosition = new Vector3(x, 0 + 2 * H, y);
                     GameObject instance = Instantiate(mountainPrefab, WorldPosition, Quaternion.identity, baseGridMap);
@@ -146,38 +141,40 @@ public class MapGenerator : MonoBehaviour
     void DeleteChildren()
     {
         // 首先检查是否有名为 "BaseGridMap" 的子物体
-        Transform baseGridMap = transform.Find("BaseGridMap");
+        Transform baseGridMap = GameObject.Find("Terrain").transform.Find("BaseGridMap");
 
         if (baseGridMap != null)
         {
-            if(Application.isPlaying)
+            //if (Application.isPlaying)
+            //{
+            //    Destroy(baseGridMap.gameObject);
+            //    Debug.Log("DeleteChildren:删除当前地图成功");
+
+            //}
+            //else
+            //{
+            //    DestroyImmediate(baseGridMap.gameObject);
+            //    Debug.Log("DeleteChildren:删除当前地图成功");
+
+            //}
+            if (Application.isPlaying)
             {
-                Destroy(baseGridMap.gameObject);
-                Debug.Log("DeleteChildren:删除当前地图成功");
-
+                for (int i = transform.childCount; i > 0; i--)
+                {
+                    Destroy(transform.GetChild(0).gameObject);
+                    Debug.Log("Destroy succeed");
+                }
             }
-            else 
-            { 
-                DestroyImmediate(baseGridMap.gameObject);
-                Debug.Log("DeleteChildren:删除当前地图成功");
-
+            else
+            {
+                for (int i = transform.childCount; i > 0; i--)
+                {
+                    DestroyImmediate(transform.GetChild(0).gameObject);
+                }
             }
+
         }
-        //if (Application.isPlaying)
-        //{
-        //    for (int i = transform.childCount; i > 0; i--)
-        //    {
-        //        Destroy(transform.GetChild(0).gameObject);
-        //        Debug.Log("Destroy succeed");
-        //    }
-        //}
-        //else
-        //{
-        //    for (int i = transform.childCount; i > 0; i--)
-        //    {
-        //        DestroyImmediate(transform.GetChild(0).gameObject);
-        //    }
-        //}
+
     }
 
     //将二维数组格式化为字符串输出到 Debug.Log

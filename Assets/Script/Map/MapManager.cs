@@ -9,13 +9,36 @@ namespace MapManagernamespace
     {
         // 单例实例
         private static MapManager instance;
+        MapGenerator mapGenerator;
         // 地图尺寸
-        public int width;
-        public int height;
-        public int scale;
-        public float[,] noiseMap;
-        public static int[,] gridMap;
+        public static int width = 80;
+        public static int height = 45;
+        public static int scale = 20;
+        public static float[,] noiseMap = new float[width, height];
+        public static int[,] gridMap = new int[width, height];
 
+        // 基础地形
+        public GameObject waterPrefab;  //水地形
+        public GameObject grassPrefab;  //草地形
+        public GameObject mountainPrefab;  //山地形
+        public float waterTerrainSize = 0.3f;   //水地形占位百分比
+        public float mountainTerrainSize = 0.6f;   //山地形占位百分比
+
+        //资源地形
+        public GameObject[] resourcePrefabs; // 资源预制体数组
+        public int[] resourceScale; // 资源大小
+        public float resourcesTerrainSize = 0.3f;   //资源地形占位百分比
+
+        public static bool isMapChange = false;
+        [ContextMenu("TestMap")]
+        public void TestMap()
+        {
+            // 生成地图
+            Debug.Log("TestMap:生成地图数组");
+            GenerateMap(width, height, scale, waterTerrainSize, mountainTerrainSize);
+            mapGenerator = GameObject.Find("Terrain").GetComponent<MapGenerator>();
+            //mapGenerator.OnMapGenerated();
+        }
 
         void Awake()
         {
@@ -31,7 +54,12 @@ namespace MapManagernamespace
                 // 如果已有实例存在，销毁这个新的
                 Destroy(gameObject);
             }
-            instance = new MapManager(192, 108);
+            instance = new MapManager(width, height);
+            Debug.Log("MapGenerator Start:生成地图数组");
+            GenerateMap(width, height, scale, waterTerrainSize, mountainTerrainSize);
+            mapGenerator = GameObject.Find("Terrain").GetComponent<MapGenerator>();
+            //mapGenerator.OnMapGenerated();
+
         }
         // 单例模式，确保 MapManager 只存在一个实例
         public static MapManager Instance
@@ -40,7 +68,7 @@ namespace MapManagernamespace
             {
                 if (instance == null)
                 {
-                    instance = new MapManager(192, 108);
+                    //instance = new MapManager(192, 108);
                 }
                 return instance;
             }
@@ -48,11 +76,13 @@ namespace MapManagernamespace
         // 私有构造函数，防止外部实例化
         private MapManager(int widthT, int heightT)
         {
-            this.width = widthT;
-            this.height = heightT;
+            width = widthT;
+            height = heightT;
             // 初始化噪声地图和网格地图
-            noiseMap = new float[this.width, this.height];
-            gridMap = new int[this.width, this.height];
+            noiseMap = new float[width, height];
+            gridMap = new int[width, height];
+            Debug.Log("MapManager初始化");
+            Debug.Log(noiseMap.Length);
         }
         // 生成地图并保存数据
         public void GenerateMap(int widthT, int heightT, int scaleT, float waterTerrainSizeT, float mountainTerrainSizeT)
@@ -61,6 +91,7 @@ namespace MapManagernamespace
             Debug.Log("GenerateMap:开始生成地图");
             noiseMap = GenerateNoiseMap(noiseMap, widthT, heightT, scaleT);
             gridMap = GenerategridMap(noiseMap, gridMap, waterTerrainSizeT, mountainTerrainSizeT);
+            isMapChange = true;
             Debug.Log("GenerateMap:地图生成完成");
         }
 
@@ -132,6 +163,7 @@ namespace MapManagernamespace
             }
             return gridMap;
         }
+
 
         //将二维数组格式化为字符串输出到 Debug.Log
         public void Print2DArray<T>(T[,] array)
