@@ -118,19 +118,16 @@ public class MapGenerator : MonoBehaviour
                 {
                     WorldPosition = new Vector3(x, 0 - H, y);
                     GameObject instance = Instantiate(waterPrefab, WorldPosition, Quaternion.identity, baseGridMap);
-                    //instance.transform.parent = transform; // 设置为当前脚本所在游戏对象的子对象
                 }
                 else if (gridMapGen[x, y] == 0) //生成草
                 {
                     WorldPosition = new Vector3(x, 0, y);
                     GameObject instance = Instantiate(grassPrefab, WorldPosition, Quaternion.identity, baseGridMap);
-                    //instance.transform.parent = transform; // 设置为当前脚本所在游戏对象的子对象
                 }
                 else if (gridMapGen[x, y] == 1)    //生成山
                 {
                     WorldPosition = new Vector3(x, 0 + 2 * H, y);
                     GameObject instance = Instantiate(mountainPrefab, WorldPosition, Quaternion.identity, baseGridMap);
-                    //instance.transform.parent = transform; // 设置为当前脚本所在游戏对象的子对象
 
                 }
             }
