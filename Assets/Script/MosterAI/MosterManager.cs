@@ -5,7 +5,8 @@ using MapManagernamespace;
 
 public class MosterManager : MonoBehaviour
 {
-    MapManager MapManager;
+    //MapManager MapManager;
+    PrintDebug printDebug;
     public int[,] MonstergridMap = null;
     public Vector2Int MonsterStartPos;
     public Vector2Int MonstertargetPos;
@@ -13,10 +14,10 @@ public class MosterManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //MapManager = MapManager.Instance;
+        printDebug = new PrintDebug();
         MonstergridMap = MapManager.gridMap;
         Debug.Log("输出MonsterManager获取的地图数据:");
-        //MapManager.Print2DArray(MonstergridMap);
+        printDebug.Print2DArray(MonstergridMap);
         GetAStarPath();
     }
 

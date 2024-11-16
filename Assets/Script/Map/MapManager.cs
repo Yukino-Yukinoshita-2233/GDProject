@@ -163,29 +163,30 @@ namespace MapManagernamespace
             }
             return gridMap;
         }
-
-
-        //将二维数组格式化为字符串输出到 Debug.Log
-        public void Print2DArray<T>(T[,] array)
-        {
-            string result = "";
-            int rows = array.GetLength(0);
-            int cols = array.GetLength(1);
-
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < cols; j++)
-                {
-                    result += array[i, j] + "\t"; // 使用制表符对齐列
-                }
-                result += "\n"; // 每行结束后换行
-            }
-
-            Debug.Log(result);
-        }
-
     }
 }
 
+public class PrintDebug : MonoBehaviour 
+{
+    //将二维数组格式化为字符串输出到 Debug.Log
+    public void Print2DArray<T>(T[,] array)
+    {
+        string result = "";
+        int rows = array.GetLength(0);
+        int cols = array.GetLength(1);
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                result += array[i, j] + "\t"; // 使用制表符对齐列
+            }
+            result += "\n"; // 每行结束后换行
+        }
+
+        Debug.Log(result);
+    }
+
+}
 
 

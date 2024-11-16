@@ -6,9 +6,9 @@ using MapManagernamespace;
 public class MapGenerator : MonoBehaviour
 {
     // 地图尺寸
-    public int widthGen;
-    public int heightGen;
-    public int scaleGen;
+    int widthGen;
+    int heightGen;
+    int scaleGen;
     int[,] gridMapGen = null;   //网格地图
 
     // 基础地形
