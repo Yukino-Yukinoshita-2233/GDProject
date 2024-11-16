@@ -1,0 +1,128 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "Y:\\Project\\GDProject\\GDProject01\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|Y:\\Project\\GDProject\\GDProject01\\assets\\script\\unit\\astarpathfinding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\unit\\astarpathfinding.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|y:\\project\\gdproject\\gdproject01\\assets\\script\\mosterai\\mostermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\mosterai\\mostermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|Y:\\Project\\GDProject\\GDProject01\\assets\\script\\map\\mapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\map\\mapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|Y:\\Project\\GDProject\\GDProject01\\assets\\script\\map\\mapmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\map\\mapmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|Y:\\Project\\GDProject\\GDProject01\\assets\\script\\map\\gridnode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\map\\gridnode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|y:\\project\\gdproject\\gdproject01\\assets\\script\\unit\\unit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\unit\\unit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MapManager.cs",
+              "DocumentMoniker": "Y:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Map\\MapManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Map\\MapManager.cs",
+              "ToolTip": "Y:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Map\\MapManager.cs",
+              "RelativeToolTip": "Assets\\Script\\Map\\MapManager.cs",
+              "ViewState": "AQIAAJoAAAAAAAAAAAAwwKgAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-11T15:00:46.648Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MapGenerator.cs",
+              "DocumentMoniker": "Y:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Map\\MapGenerator.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Map\\MapGenerator.cs",
+              "ToolTip": "Y:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Map\\MapGenerator.cs",
+              "RelativeToolTip": "Assets\\Script\\Map\\MapGenerator.cs",
+              "ViewState": "AQIAAHsAAAAAAAAAAAAAAJgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-11T14:26:52.944Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Unit.cs",
+              "DocumentMoniker": "Y:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Unit\\Unit.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Unit\\Unit.cs",
+              "ToolTip": "Y:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Unit\\Unit.cs",
+              "RelativeToolTip": "Assets\\Script\\Unit\\Unit.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-16T05:39:36.128Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GridNode.cs",
+              "DocumentMoniker": "Y:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Map\\GridNode.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Map\\GridNode.cs",
+              "ToolTip": "Y:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Map\\GridNode.cs",
+              "RelativeToolTip": "Assets\\Script\\Map\\GridNode.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACIAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-11T14:29:12.012Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MosterManager.cs",
+              "DocumentMoniker": "Y:\\Project\\GDProject\\GDProject01\\Assets\\Script\\MosterAI\\MosterManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\MosterAI\\MosterManager.cs",
+              "ToolTip": "Y:\\Project\\GDProject\\GDProject01\\Assets\\Script\\MosterAI\\MosterManager.cs",
+              "RelativeToolTip": "Assets\\Script\\MosterAI\\MosterManager.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAAwBgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-16T06:01:07.645Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AStarPathfinding.cs",
+              "DocumentMoniker": "Y:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Unit\\AStarPathfinding.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Unit\\AStarPathfinding.cs",
+              "ToolTip": "Y:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Unit\\AStarPathfinding.cs",
+              "RelativeToolTip": "Assets\\Script\\Unit\\AStarPathfinding.cs",
+              "ViewState": "AQIAABUAAAAAAAAAAAAQwDIAAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-11T14:24:56.297Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

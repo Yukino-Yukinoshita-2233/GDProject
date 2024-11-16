@@ -22,8 +22,20 @@ public class AStarPathfinding
             openList.Remove(currentNode);
             closedList.Add(currentNode);
 
+            // 找到目标位置后开始打印路径
             if (currentNode.Position == targetPos)
-                return RetracePath(startNode, currentNode);
+            {
+                List<Node> path = RetracePath(startNode, currentNode);
+
+                // 输出路径中的节点信息
+                Debug.Log("Path found:");
+                foreach (Node node in path)
+                {
+                    Debug.Log(node); // 逐个输出节点信息
+                }
+
+                return path;
+            }
 
             foreach (Vector2Int direction in GetNeighbourPositions(currentNode.Position, map))
             {
@@ -108,4 +120,9 @@ public class Node
     {
         return Position.GetHashCode();
     }
+    public override string ToString()
+    {
+        return $"Node(Position: {Position.x}, {Position.y})";
+    }
+
 }

@@ -27,12 +27,12 @@ public class MosterManager : MonoBehaviour
     {
         Debug.Log("MonsterMansger获取寻路路径");
         MonsterPathList = AStarPathfinding.FindPath(MonstergridMap, MonsterStartPos, MonstertargetPos);
-        // 输出路径中的节点信息
-        Debug.Log("Path found:");
-        foreach (Node node in MonsterPathList)
-        {
-            Debug.Log(node);
-        }
+        //// 输出路径中的节点信息
+        //Debug.Log("Path found:");
+        //foreach (Node node in MonsterPathList)
+        //{
+        //    Debug.Log(node);
+        //}
     }
 
     // Update is called once per frame
