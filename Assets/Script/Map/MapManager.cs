@@ -2,120 +2,158 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class MapManager : MonoBehaviour
+
+namespace MapManagernamespace
 {
-    // 单例实例
-    private static MapManager instance;
-    // 地图尺寸
-    public int width;
-    public int height;
-    public int scale;
-    public float[,] noiseMap;
-    public static int[,] gridMap;
-
-
-    // 单例模式，确保 MapManager 只存在一个实例
-    public static MapManager Instance
+    public class MapManager : MonoBehaviour
     {
-        get
+        // 单例实例
+        private static MapManager instance;
+        // 地图尺寸
+        public int width;
+        public int height;
+        public int scale;
+        public float[,] noiseMap;
+        public static int[,] gridMap;
+
+
+        void Awake()
         {
+            // 检查是否已有实例
             if (instance == null)
             {
-                instance = new MapManager(192, 108);
+                instance = this;
+                // 防止跨场景时重复
+                DontDestroyOnLoad(gameObject);
             }
-            return instance;
-        }
-    }
-    // 私有构造函数，防止外部实例化
-    private MapManager(int widthT, int heightT)
-    {
-        this.width = widthT;
-        this.height = heightT;
-        // 初始化噪声地图和网格地图
-        noiseMap = new float[this.width, this.height];
-        gridMap = new int[this.width, this.height];
-    }
-    // 生成地图并保存数据
-    public void GenerateMap(int widthT, int heightT, int scaleT, float waterTerrainSizeT, float mountainTerrainSizeT)
-    {
-
-        Debug.Log("GenerateMap:开始生成地图");
-        noiseMap = GenerateNoiseMap(noiseMap, widthT, heightT, scaleT);
-        gridMap = GenerategridMap(noiseMap, gridMap, waterTerrainSizeT, mountainTerrainSizeT);
-        Debug.Log("GenerateMap:地图生成完成");
-    }
-
-    // 生成噪声地图
-    private float[,] GenerateNoiseMap(float[,] noiseMapT, int width, int height, float scale)
-    {
-        Debug.Log("GenerateNoiseMap:正在生成噪声地图");
-
-        if (noiseMapT == null)
-        {
-            Debug.Log("GenerateNoiseMap noiseMap has not been generated yet!");
-        }
-
-        // 生成噪声偏移值
-        Vector2 offset = new Vector2(UnityEngine.Random.Range(0f, 1000f), UnityEngine.Random.Range(0f, 1000f));
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
+            else if (instance != this)
             {
-                float sampleX = (x + offset.x) / scale;
-                float sampleZ = (y + offset.y) / scale;
-                float noiseValue = Mathf.PerlinNoise(sampleX, sampleZ);//柏林算法
-                noiseMapT[x, y] = noiseValue;
+                // 如果已有实例存在，销毁这个新的
+                Destroy(gameObject);
             }
+            instance = new MapManager(192, 108);
         }
-        return noiseMapT;
-    }
-
-    // 创建地形并保存到节点网格grid
-    private int[,] GenerategridMap(float[,] noiseMapT, int[,] gridMapT, float waterTerrainSizeT, float mountainTerrainSizeT)
-    {
-        Debug.Log("GenerategridMap:正在生成网格地图");
-        if (noiseMapT == null)
+        // 单例模式，确保 MapManager 只存在一个实例
+        public static MapManager Instance
         {
-            Debug.Log("GenerategridMap noiseMap has not been generated yet!");
-        }
-        //生成新的地图
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
+            get
             {
-                float sample = noiseMapT[x, y];
-
-                // 根据噪声值选择地形
-                if (sample < waterTerrainSizeT)//生成水节点
+                if (instance == null)
                 {
-                    gridMapT[x, y] = -1;
+                    instance = new MapManager(192, 108);
                 }
-                else if (sample > mountainTerrainSizeT)//生成山节点
-                {
-                    gridMapT[x, y] = 1;
-                }
-                else
-                {
-                    gridMapT[x, y] = 0;//生成草节点
-                }
+                return instance;
             }
         }
-        return gridMapT;
-    }
-
-    // 获取地图数据
-    public int[,] GetMap()
-    {
-        if (gridMap == null)
+        // 私有构造函数，防止外部实例化
+        private MapManager(int widthT, int heightT)
         {
-            Debug.Log("GetMap gridMap has not been generated yet!");
-            return null;
+            this.width = widthT;
+            this.height = heightT;
+            // 初始化噪声地图和网格地图
+            noiseMap = new float[this.width, this.height];
+            gridMap = new int[this.width, this.height];
         }
-        return gridMap;
+        // 生成地图并保存数据
+        public void GenerateMap(int widthT, int heightT, int scaleT, float waterTerrainSizeT, float mountainTerrainSizeT)
+        {
+
+            Debug.Log("GenerateMap:开始生成地图");
+            noiseMap = GenerateNoiseMap(noiseMap, widthT, heightT, scaleT);
+            gridMap = GenerategridMap(noiseMap, gridMap, waterTerrainSizeT, mountainTerrainSizeT);
+            Debug.Log("GenerateMap:地图生成完成");
+        }
+
+        // 生成噪声地图
+        private float[,] GenerateNoiseMap(float[,] noiseMapT, int width, int height, float scale)
+        {
+            Debug.Log("GenerateNoiseMap:正在生成噪声地图");
+
+            if (noiseMapT == null)
+            {
+                Debug.Log("GenerateNoiseMap noiseMap has not been generated yet!");
+            }
+
+            // 生成噪声偏移值
+            Vector2 offset = new Vector2(UnityEngine.Random.Range(0f, 1000f), UnityEngine.Random.Range(0f, 1000f));
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    float sampleX = (x + offset.x) / scale;
+                    float sampleZ = (y + offset.y) / scale;
+                    float noiseValue = Mathf.PerlinNoise(sampleX, sampleZ);//柏林算法
+                    noiseMapT[x, y] = noiseValue;
+                }
+            }
+            return noiseMapT;
+        }
+
+        // 创建地形并保存到节点网格grid
+        private int[,] GenerategridMap(float[,] noiseMapT, int[,] gridMapT, float waterTerrainSizeT, float mountainTerrainSizeT)
+        {
+            Debug.Log("GenerategridMap:正在生成网格地图");
+            if (noiseMapT == null)
+            {
+                Debug.Log("GenerategridMap noiseMap has not been generated yet!");
+            }
+            //生成新的地图
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    float sample = noiseMapT[x, y];
+
+                    // 根据噪声值选择地形
+                    if (sample < waterTerrainSizeT)//生成水节点
+                    {
+                        gridMapT[x, y] = -1;
+                    }
+                    else if (sample > mountainTerrainSizeT)//生成山节点
+                    {
+                        gridMapT[x, y] = 1;
+                    }
+                    else
+                    {
+                        gridMapT[x, y] = 0;//生成草节点
+                    }
+                }
+            }
+            return gridMapT;
+        }
+
+        // 获取地图数据
+        public int[,] GetMap()
+        {
+            if (gridMap == null)
+            {
+                Debug.Log("GetMap gridMap has not been generated yet!");
+                return null;
+            }
+            return gridMap;
+        }
+
+        //将二维数组格式化为字符串输出到 Debug.Log
+        public void Print2DArray<T>(T[,] array)
+        {
+            string result = "";
+            int rows = array.GetLength(0);
+            int cols = array.GetLength(1);
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    result += array[i, j] + "\t"; // 使用制表符对齐列
+                }
+                result += "\n"; // 每行结束后换行
+            }
+
+            Debug.Log(result);
+        }
+
     }
 }
-
-
 
 
 
