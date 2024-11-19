@@ -14,7 +14,7 @@ public abstract class Monster : MonoBehaviour
     protected int[,] map;
 
     // 怪物状态枚举：移动、攻击、死亡
-    public enum State { Moving, Attacking, Dead }
+    public enum State { FindTarger, Moving, Attacking, Dead }
     public State currentState;
 
     // 初始化怪物，传入起始和目标位置以及地图
@@ -32,6 +32,9 @@ public abstract class Monster : MonoBehaviour
     {
         switch (currentState)
         {
+            case State.FindTarger:
+                FindTarger();
+                break;
             case State.Moving:
                 MoveTowardsTarget();
                 break;
@@ -43,15 +46,24 @@ public abstract class Monster : MonoBehaviour
                 break;
         }
     }
-
+    protected virtual void FindTarger()
+    {
+        //用来寻找攻击目标
+    }
+    
     // 移动到目标位置
     protected virtual void MoveTowardsTarget()
     {
-        if (path == null || currentPathIndex >= path.Count)
+        if (path == null)
+        {
+            currentState = State.Dead;
+        }
+        if (currentPathIndex >= path.Count)
         {
             currentState = State.Attacking;
             return;
         }
+
 
         Vector3 targetPosition = new Vector3(path[currentPathIndex].Position.x, 1, path[currentPathIndex].Position.y);
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
