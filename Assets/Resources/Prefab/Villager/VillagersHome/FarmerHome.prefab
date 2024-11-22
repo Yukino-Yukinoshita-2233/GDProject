@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4910425635320403967}
   - component: {fileID: 2201343845684008425}
   - component: {fileID: 1191151118797454625}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FarmerHome
   m_TagString: Untagged
   m_Icon: {fileID: 0}

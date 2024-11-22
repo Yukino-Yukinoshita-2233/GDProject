@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class Node
 {
     public Vector2Int Position;    // 节点在地图中的坐标
@@ -128,3 +129,4 @@ public class AStarPathfinding
         return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y); // 曼哈顿距离
     }
 }
+*/

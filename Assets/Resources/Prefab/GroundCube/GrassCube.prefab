@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2840344270442923408}
   - component: {fileID: 4639852498870794921}
   - component: {fileID: 3822595641215203535}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GrassCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

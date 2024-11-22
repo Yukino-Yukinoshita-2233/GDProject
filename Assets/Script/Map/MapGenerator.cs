@@ -10,13 +10,16 @@ public class MapGenerator : MonoBehaviour
     int heightGen;
     int scaleGen;
     int[,] gridMapGen = null;   //网格地图
-
     // 基础地形
+    Transform baseGridMap;  //基础地形父物体
     public GameObject waterPrefab;  //水地形
     public GameObject grassPrefab;  //草地形
     public GameObject mountainPrefab;  //山地形
     public float waterTerrainSize = 0.3f;   //水地形占位百分比
     public float mountainTerrainSize = 0.6f;   //山地形占位百分比
+    LayerMask GrassLayerMask;
+    LayerMask WaterLayerMask;
+    LayerMask MountainLayerMask;
 
     //资源地形
     public GameObject[] resourcePrefabs; // 资源预制体数组
@@ -28,7 +31,7 @@ public class MapGenerator : MonoBehaviour
         widthGen = MapManager.width;
         heightGen = MapManager.height;
         scaleGen = MapManager.scale;
-
+        GrassLayerMask = LayerMask.GetMask("Grass");
         OnMapGenerated();
     }
 
@@ -95,16 +98,16 @@ public class MapGenerator : MonoBehaviour
         DeleteChildren();//删除当前地图
 
         // 首先检查是否有名为 "BaseGridMap" 的子物体
-        Transform baseGridMap = transform.Find("BaseGridMap");
+        baseGridMap = transform.Find("BaseGridMap");
 
         // 如果没有，创建一个新的 GameObject 作为子物体
-        //if (baseGridMap == null)
-        //{
-        baseGridMap = new GameObject("BaseGridMap").transform;
-        baseGridMap.SetParent(transform);  // 设置为当前物体的子物体
-        baseGridMap.localPosition = Vector3.zero;  // 设置相对位置为零
-        Debug.Log("InstantiateMap:创建baseGridMap子物体成功");
-        //}
+        if (baseGridMap == null)
+        {
+            baseGridMap = new GameObject("BaseGridMap").transform;
+            baseGridMap.SetParent(transform);  // 设置为当前物体的子物体
+            baseGridMap.localPosition = Vector3.zero;  // 设置相对位置为零
+            Debug.Log("InstantiateMap:创建baseGridMap子物体成功");
+        }
 
         Vector3 WorldPosition;
         float H = 0.5f;
@@ -114,7 +117,7 @@ public class MapGenerator : MonoBehaviour
             for (int y = 0; y < heightGen; y++)
             {
 
-                if (gridMapGen[x, y] == -1) //生成水
+                if (gridMapGen[x, y] == 3) //生成水
                 {
                     WorldPosition = new Vector3(x, 0 - H, y);
                     GameObject instance = Instantiate(waterPrefab, WorldPosition, Quaternion.identity, baseGridMap);
@@ -123,6 +126,8 @@ public class MapGenerator : MonoBehaviour
                 {
                     WorldPosition = new Vector3(x, 0, y);
                     GameObject instance = Instantiate(grassPrefab, WorldPosition, Quaternion.identity, baseGridMap);
+                    //instance.layer = GrassLayerMask;
+
                 }
                 else if (gridMapGen[x, y] == 1)    //生成山
                 {
@@ -138,7 +143,7 @@ public class MapGenerator : MonoBehaviour
     void DeleteChildren()
     {
         // 首先检查是否有名为 "BaseGridMap" 的子物体
-        Transform baseGridMap = GameObject.Find("Terrain").transform.Find("BaseGridMap");
+        baseGridMap = GameObject.Find("Terrain").transform.Find("BaseGridMap");
 
         if (baseGridMap != null)
         {

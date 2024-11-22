@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8775892531748684725}
   - component: {fileID: 7378562889566426249}
   - component: {fileID: 8773207029778000425}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Lumberjack
   m_TagString: Untagged
   m_Icon: {fileID: 0}

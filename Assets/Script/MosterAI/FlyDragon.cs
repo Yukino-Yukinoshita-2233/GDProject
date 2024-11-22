@@ -14,13 +14,13 @@ public class FlyDragon : Monster
     protected override void Attack()
     {
         base.Attack();
-        Debug.Log("FlyDragon deals " + damage + " damage.");
+        //Debug.Log("FlyDragon deals " + damage + " damage.");
     }
 
     // 覆写死亡方法，执行特定死亡效果
     protected override void OnDeath()
     {
         base.OnDeath();
-        Debug.Log("FlyDragon death animation triggered.");
+        //Debug.Log("FlyDragon death animation triggered.");
     }
 }

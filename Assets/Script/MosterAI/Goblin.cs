@@ -14,13 +14,13 @@ public class Goblin : Monster
     protected override void Attack()
     {
         base.Attack();
-        Debug.Log("Goblin deals " + damage + " damage.");
+        //Debug.Log("Goblin deals " + damage + " damage.");
     }
 
     // 覆写死亡方法，执行特定死亡效果
     protected override void OnDeath()
     {
         base.OnDeath();
-        Debug.Log("Goblin death animation triggered.");
+        //Debug.Log("Goblin death animation triggered.");
     }
 }

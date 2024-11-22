@@ -9,11 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 78690930861583331}
+  - component: {fileID: 6986770002942845578}
   - component: {fileID: 7392113881913883883}
   - component: {fileID: 5587722918984945979}
   - component: {fileID: 2281993672788586653}
   - component: {fileID: 4033255743348092599}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: FlyDragon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,6 +36,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6986770002942845578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7115282773805053036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b87771697a27d8342b260b08935fd77a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!33 &7392113881913883883
 MeshFilter:
   m_ObjectHideFlags: 0

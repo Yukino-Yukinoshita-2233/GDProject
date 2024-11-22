@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7535105028077743584}
   - component: {fileID: 1099069639023099033}
   - component: {fileID: 79282991845047512}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MineCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

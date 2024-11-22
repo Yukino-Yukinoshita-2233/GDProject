@@ -9,7 +9,7 @@ public abstract class Monster : MonoBehaviour
     protected float moveSpeed;
     protected Vector2Int startPos;
     protected Vector2Int targetPos;
-    protected List<Node> path;
+    protected List<ThetaStarNode> path;
     protected int currentPathIndex = 0; // 当前路径索引
     protected int[,] map;
 
@@ -23,7 +23,7 @@ public abstract class Monster : MonoBehaviour
         this.startPos = startPos;
         this.targetPos = targetPos;
         this.map = map;
-        path = AStarPathfinding.FindPath(map, startPos, targetPos); // 使用A*算法生成路径
+        path = ThetaStar.FindPath(map, startPos, targetPos); // 使用A*算法生成路径
         currentState = State.Moving;
     }
 
@@ -82,7 +82,7 @@ public abstract class Monster : MonoBehaviour
     // 攻击方法（虚方法可被子类重写）
     protected virtual void Attack()
     {
-        Debug.Log($"{GetType().Name} attacking at position: " + targetPos);
+        //Debug.Log($"{GetType().Name} attacking at position: " + targetPos);
     }
 
     // 承受伤害方法

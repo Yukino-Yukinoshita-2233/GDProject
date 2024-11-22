@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4176428233498101151}
   - component: {fileID: 4862953217122157851}
   - component: {fileID: 951233760664299476}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MountainCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

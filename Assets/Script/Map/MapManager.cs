@@ -136,17 +136,17 @@ namespace MapManagernamespace
                     float sample = noiseMapT[x, y];
 
                     // 根据噪声值选择地形
-                    if (sample < waterTerrainSizeT)//生成水节点
+                    if (sample < waterTerrainSizeT)//生成障碍物 水节点
                     {
-                        gridMapT[x, y] = -1;
+                        gridMapT[x, y] = 3;
                     }
-                    else if (sample > mountainTerrainSizeT)//生成山节点
+                    else if (sample > mountainTerrainSizeT)//生成障碍物 山节点
                     {
                         gridMapT[x, y] = 1;
                     }
                     else
                     {
-                        gridMapT[x, y] = 0;//生成草节点
+                        gridMapT[x, y] = 0;  //生成可行走 草节点
                     }
                 }
             }

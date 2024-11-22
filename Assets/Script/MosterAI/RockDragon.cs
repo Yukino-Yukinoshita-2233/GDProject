@@ -14,13 +14,13 @@ public class RockDragon : Monster
     protected override void Attack()
     {
         base.Attack();
-        Debug.Log("RockDragon deals " + damage + " damage.");
+        //Debug.Log("RockDragon deals " + damage + " damage.");
     }
 
     // 覆写死亡方法，执行特定死亡效果
     protected override void OnDeath()
     {
         base.OnDeath();
-        Debug.Log("RockDragon death animation triggered.");
+        //Debug.Log("RockDragon death animation triggered.");
     }
 }

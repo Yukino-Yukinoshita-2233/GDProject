@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1526122370746718895}
   - component: {fileID: 4826314846207301185}
   - component: {fileID: 7257324231673002027}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FarmCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

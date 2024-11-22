@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MonsterManager : MonoBehaviour
 {
+    Transform monsterParent; 
     public GameObject goblinPrefab; // 哥布林的预制件
     public GameObject rockDragonPrefab; // 岩龙的预制件
     public GameObject flyDragonPrefab; // 飞龙的预制件
@@ -14,6 +15,8 @@ public class MonsterManager : MonoBehaviour
     void Start()
     {
         gridMap = MapManager.gridMap; // 获取地图数据
+        monsterParent = GameObject.Find("Monster").transform;
+
         //SpawnMonsters();
     }
 
@@ -38,12 +41,12 @@ public class MonsterManager : MonoBehaviour
 
         if (Random.value > 0.5f)
         {
-            monsterObject = Instantiate(goblinPrefab, new Vector3(startPos.x, 1, startPos.y), Quaternion.identity,transform);
+            monsterObject = Instantiate(goblinPrefab, new Vector3(startPos.x, 1, startPos.y), Quaternion.identity, monsterParent);
             monster = monsterObject.GetComponent<Goblin>();
         }
         else
         {
-            monsterObject = Instantiate(rockDragonPrefab, new Vector3(startPos.x, 1, startPos.y), Quaternion.identity, transform);
+            monsterObject = Instantiate(rockDragonPrefab, new Vector3(startPos.x, 1, startPos.y), Quaternion.identity, monsterParent);
             monster = monsterObject.GetComponent<RockDragon>();
         }
 
