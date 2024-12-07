@@ -15,7 +15,7 @@ public enum SoldierState
 /// <summary>
 /// 士兵行为逻辑类，使用 LPA* 算法进行寻路。
 /// </summary>
-public class Soldier : MonoBehaviour
+public class Soldier : MonoBehaviour, IHealthEntity
 {
     public SoldierState currentState = SoldierState.Idle; // 当前士兵状态
     public Transform target; // 当前目标，可以是位置或敌人
@@ -36,6 +36,7 @@ public class Soldier : MonoBehaviour
     private bool isPathUpdate = false;  // 是否需要更新路径
     private float pathUpdateInterval = 1.0f; // 路径更新间隔时间
     private float lastPathUpdateTime = 0f;   // 上次路径更新的时间
+
     private void Start()
     {
         gridMap = MapManager.gridMap; // 获取地图数据
@@ -45,6 +46,8 @@ public class Soldier : MonoBehaviour
 
         // 注册士兵到管理器
         SoldierManager.Instance.RegisterNewSoldier(this);
+        
+        HealthBarManager.Instance.CreateHealthBar(soldier);
     }
 
     private void OnDestroy()
@@ -84,9 +87,8 @@ public class Soldier : MonoBehaviour
         }
         if (target != null && gridMap != null)
         {
-            Debug.Log(WorldToGrid(target.position));
-            Debug.Log(WorldToGrid(transform.position));
-
+            //Debug.Log(WorldToGrid(target.position));
+            //Debug.Log(WorldToGrid(transform.position));
             if (WorldToGrid(target.position) != WorldToGrid(transform.position))
             {
                 isPathUpdate = true;
@@ -104,8 +106,7 @@ public class Soldier : MonoBehaviour
         if (path.Count > 0)
         {
             Vector3 targetPosition = GridToWorld(path[currentPathIndex].Position);
-            Debug.Log(WorldToGrid(transform.position));
-            Debug.Log(targetPosition);
+            targetPosition.y = 1.45f;
 
             MoveTowards(targetPosition);
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Monster : MonoBehaviour
+public abstract class Monster : MonoBehaviour, IHealthEntity
 {
     // 怪物的通用属性
     protected int health;
@@ -16,6 +16,9 @@ public abstract class Monster : MonoBehaviour
     // 怪物状态枚举：移动、攻击、死亡
     public enum State { FindTarger, Moving, Attacking, Dead }
     public State currentState;
+
+    public float MaxHealth { get; private set; } = 100f;
+    public float CurrentHealth { get; private set; } = 100f;
 
     // 初始化怪物，传入起始和目标位置以及地图
     public void Initialize(Vector2Int startPos, Vector2Int targetPos, int[,] map)
@@ -73,8 +76,12 @@ public abstract class Monster : MonoBehaviour
             currentPathIndex++;
         }
 
-        if (currentPathIndex >= path.Count - 1 && Vector3.Distance(transform.position, targetPosition) < 1f)
+        if (currentPathIndex >= path.Count && Vector3.Distance(transform.position, targetPosition) < 2f)
         {
+            //Debug.Log(targetPosition);
+            //Debug.Log(currentPathIndex >= path.Count - 1);
+            //Debug.Log(Vector3.Distance(transform.position, targetPosition) < 1f);
+            //Debug.Log("Monster到达目标点,开始攻击!!!");
             currentState = State.Attacking;
         }
     }
@@ -98,6 +105,7 @@ public abstract class Monster : MonoBehaviour
     // 死亡方法
     protected virtual void OnDeath()
     {
+        HealthBarManager.Instance.RemoveHealthBar(gameObject);
         Destroy(gameObject);
         Debug.Log($"{GetType().Name} has died.");
     }

@@ -11,12 +11,12 @@ public class MonsterManager : MonoBehaviour
 
     public int[,] gridMap; // 地图数据
     private List<Monster> monsters = new List<Monster>(); // 保存生成的怪物
-
+    public GameObject Castle;   //城堡
     void Start()
     {
         gridMap = MapManager.gridMap; // 获取地图数据
         monsterParent = GameObject.Find("Monster").transform;
-
+        //Castle = GameObject.Find("Castle");//
         //SpawnMonsters();
     }
 
@@ -24,10 +24,12 @@ public class MonsterManager : MonoBehaviour
     // 随机生成怪物
     void SpawnMonsters()
     {
+        Vector2Int targetPos = new Vector2Int(Mathf.RoundToInt(Castle.transform.position.x), Mathf.RoundToInt(Castle.transform.position.z));
+        //Debug.Log(targetPos);
         for (int i = 0; i < 5; i++) // 随机生成5个怪物
         {
             Vector2Int startPos = GetRandomPosition();
-            Vector2Int targetPos = GetRandomPosition();
+            //Vector2Int targetPos = GetRandomPosition();
 
             SpawnMonster(startPos, targetPos);
         }
@@ -43,11 +45,13 @@ public class MonsterManager : MonoBehaviour
         {
             monsterObject = Instantiate(goblinPrefab, new Vector3(startPos.x, 1, startPos.y), Quaternion.identity, monsterParent);
             monster = monsterObject.GetComponent<Goblin>();
+            HealthBarManager.Instance.CreateHealthBar(monsterObject);
         }
         else
         {
             monsterObject = Instantiate(rockDragonPrefab, new Vector3(startPos.x, 1, startPos.y), Quaternion.identity, monsterParent);
             monster = monsterObject.GetComponent<RockDragon>();
+            HealthBarManager.Instance.CreateHealthBar(monsterObject);
         }
 
         monster.Initialize(startPos, targetPos, gridMap);
