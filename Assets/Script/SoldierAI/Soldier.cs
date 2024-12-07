@@ -33,6 +33,7 @@ public class Soldier : MonoBehaviour
     // 地图数据（例如 0 表示可行区域，1 表示障碍物）
     public int[,] gridMap;
 
+    private bool isPathUpdate = false;  // 是否需要更新路径
     private float pathUpdateInterval = 1.0f; // 路径更新间隔时间
     private float lastPathUpdateTime = 0f;   // 上次路径更新的时间
     private void Start()
@@ -54,6 +55,7 @@ public class Soldier : MonoBehaviour
 
     private void Update()
     {
+
         switch (currentState)
         {
             case SoldierState.Idle:
@@ -80,34 +82,38 @@ public class Soldier : MonoBehaviour
             currentState = SoldierState.Idle;
             return;
         }
-
-        // 检查是否需要更新路径（每隔 pathUpdateInterval 秒）
-        if (Time.time - lastPathUpdateTime >= pathUpdateInterval)
+        if (target != null && gridMap != null)
         {
-            lastPathUpdateTime = Time.time; // 更新路径更新时间
-            targetGridPosition = WorldToGrid(target.position);
+            Debug.Log(WorldToGrid(target.position));
+            Debug.Log(WorldToGrid(transform.position));
 
-            // 重新计算路径
-            path = LPAStar.FindPath(gridMap, currentGridPosition, targetGridPosition);
-            currentPathIndex = 0;
-
-            if (path.Count == 0)
+            if (WorldToGrid(target.position) != WorldToGrid(transform.position))
             {
-                Debug.LogWarning("无法找到路径，进入待机状态");
-                currentState = SoldierState.Idle;
-                return;
+                isPathUpdate = true;
             }
         }
+
+        if (isPathUpdate)
+        {
+            UpdatePath();
+            isPathUpdate = false;
+        }
+
 
         // 如果路径有效，移动到当前路径点
         if (path.Count > 0)
         {
             Vector3 targetPosition = GridToWorld(path[currentPathIndex].Position);
+            Debug.Log(WorldToGrid(transform.position));
+            Debug.Log(targetPosition);
+
             MoveTowards(targetPosition);
 
             // 如果到达当前路径点，切换到下一个路径点
             if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
             {
+                Debug.Log(currentPathIndex + "前往下一个点");
+
                 currentPathIndex++;
                 currentGridPosition = WorldToGrid(transform.position);
 
@@ -125,6 +131,25 @@ public class Soldier : MonoBehaviour
                 }
             }
         }
+
+        
+    }
+
+    private void UpdatePath()
+    {
+            //lastPathUpdateTime = Time.time; // 更新路径更新时间
+            targetGridPosition = WorldToGrid(target.position);
+
+            // 重新计算路径
+            path = LPAStar.FindPath(gridMap, currentGridPosition, targetGridPosition);
+            currentPathIndex = 1;
+
+            if (path.Count == 0)
+            {
+                Debug.LogWarning("无法找到路径，进入待机状态");
+                currentState = SoldierState.Idle;
+                return;
+            }
     }
     private void HandleAttackingState()
     {
