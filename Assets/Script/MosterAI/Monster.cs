@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Monster : MonoBehaviour, IHealthEntity
+public abstract class Monster : MonoBehaviour//, IHealthEntity
 {
     // 怪物的通用属性
     protected int health;
@@ -105,7 +105,7 @@ public abstract class Monster : MonoBehaviour, IHealthEntity
     // 死亡方法
     protected virtual void OnDeath()
     {
-        HealthBarManager.Instance.RemoveHealthBar(gameObject);
+        //HealthBarManager.Instance.RemoveHealthBar(gameObject);
         Destroy(gameObject);
         Debug.Log($"{GetType().Name} has died.");
     }

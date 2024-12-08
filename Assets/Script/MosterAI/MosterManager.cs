@@ -45,13 +45,13 @@ public class MonsterManager : MonoBehaviour
         {
             monsterObject = Instantiate(goblinPrefab, new Vector3(startPos.x, 1, startPos.y), Quaternion.identity, monsterParent);
             monster = monsterObject.GetComponent<Goblin>();
-            HealthBarManager.Instance.CreateHealthBar(monsterObject);
+            //HealthBarManager.Instance.CreateHealthBar(monsterObject);
         }
         else
         {
             monsterObject = Instantiate(rockDragonPrefab, new Vector3(startPos.x, 1, startPos.y), Quaternion.identity, monsterParent);
             monster = monsterObject.GetComponent<RockDragon>();
-            HealthBarManager.Instance.CreateHealthBar(monsterObject);
+            //HealthBarManager.Instance.CreateHealthBar(monsterObject);
         }
 
         monster.Initialize(startPos, targetPos, gridMap);

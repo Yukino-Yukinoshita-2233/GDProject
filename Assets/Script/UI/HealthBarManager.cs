@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-
+/**
 public class HealthBarManager : MonoBehaviour
 {
     public static HealthBarManager Instance { get; private set; }
@@ -69,3 +69,4 @@ public class HealthBarManager : MonoBehaviour
         }
     }
 }
+**/

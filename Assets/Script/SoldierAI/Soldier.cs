@@ -15,7 +15,7 @@ public enum SoldierState
 /// <summary>
 /// 士兵行为逻辑类，使用 LPA* 算法进行寻路。
 /// </summary>
-public class Soldier : MonoBehaviour, IHealthEntity
+public class Soldier : MonoBehaviour//, IHealthEntity
 {
     public SoldierState currentState = SoldierState.Idle; // 当前士兵状态
     public Transform target; // 当前目标，可以是位置或敌人
@@ -47,7 +47,7 @@ public class Soldier : MonoBehaviour, IHealthEntity
         // 注册士兵到管理器
         SoldierManager.Instance.RegisterNewSoldier(this);
         
-        HealthBarManager.Instance.CreateHealthBar(soldier);
+        //HealthBarManager.Instance.CreateHealthBar(this);
     }
 
     private void OnDestroy()
@@ -113,7 +113,7 @@ public class Soldier : MonoBehaviour, IHealthEntity
             // 如果到达当前路径点，切换到下一个路径点
             if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
             {
-                Debug.Log(currentPathIndex + "前往下一个点");
+                //Debug.Log(currentPathIndex + "前往下一个点");
 
                 currentPathIndex++;
                 currentGridPosition = WorldToGrid(transform.position);
