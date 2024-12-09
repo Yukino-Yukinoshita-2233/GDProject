@@ -21,6 +21,8 @@ public class MapGenerator : MonoBehaviour
     LayerMask WaterLayerMask;
     LayerMask MountainLayerMask;
 
+    public GameObject Castle;   //城堡预制体
+
     //资源地形
     public GameObject[] resourcePrefabs; // 资源预制体数组
     public int[] resourceScale; // 资源大小
@@ -33,6 +35,7 @@ public class MapGenerator : MonoBehaviour
         scaleGen = MapManager.scale;
         GrassLayerMask = LayerMask.GetMask("Grass");
         OnMapGenerated();
+        CreateCastle();
     }
 
 
@@ -61,8 +64,31 @@ public class MapGenerator : MonoBehaviour
         Debug.Log("实例化地图成功");
     }
 
+    //城堡生成
+    void CreateCastle()
+    {
+        while (true)
+        {
+            int X = Random.Range(1, widthGen-1);
+            int Z = Random.Range(1, heightGen-1);
+            if (gridMapGen[X, Z] == 0)
+            {
+                if (gridMapGen[X - 1, Z] == 0 && gridMapGen[X + 1, Z] == 0 && gridMapGen[X, Z - 1] == 0 && gridMapGen[X, Z + 1] == 0)
+                {
+                    if (gridMapGen[X - 1, Z - 1] == 0 && gridMapGen[X + 1, Z + 1] == 0 && gridMapGen[X + 1, Z - 1] == 0 && gridMapGen[X - 1, Z + 1] == 0)
+                    {
+                        Castle.transform.position = new Vector3(X, 1, Z);
+                        return;
+                    }
+                }
+
+                //Castle.transform.position = new Vector3(X, 1, Z);
+            }
+
+        }
+    }
+
     // 随机资源生成
-    /*
     void GenerateResources(int resourceIndex)
     {
         // 生成噪声偏移值
@@ -70,27 +96,25 @@ public class MapGenerator : MonoBehaviour
 
         for (int x = 0; x < widthGen; x++)
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < heightGen; y++)
             {
-                GridNode node = mapGrid[x, y];
 
-                if (node.IsWalkable) // 确保资源只生成在可行走区域
+                if (gridMapGen[x,y] == 0) // 确保资源只生成在可行走区域
                 {
                     float xCoord = ((float)x + offset.x) / widthGen * resourceScale[resourceIndex];
-                    float yCoord = ((float)y + offset.y) / height * resourceScale[resourceIndex];
+                    float yCoord = ((float)y + offset.y) / heightGen * resourceScale[resourceIndex];
                     float sample = Mathf.PerlinNoise(xCoord, yCoord);
 
                     if (sample > resourcesTerrainSize) // 设定阈值，表示大于resourcesTerrainSize的点生成资源
                     {
-                        Vector3 position = new Vector3(x, 0, y);
+                        Vector3 position = new Vector3(x, 1, y);
                         // 将资源信息保存到节点网格
-                        mapGrid[x, y] = new GridNode(resourcePrefabs[resourceIndex], position, true, x, y);
+                        // 在此生成资源
                     }
                 }
             }
         }
     }
-    */
 
     //实例化地图
     void InstantiateMap()

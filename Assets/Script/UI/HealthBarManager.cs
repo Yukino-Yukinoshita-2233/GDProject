@@ -1,72 +1,67 @@
-using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
-/**
+using UnityEngine;
+
 public class HealthBarManager : MonoBehaviour
 {
-    public static HealthBarManager Instance { get; private set; }
+    public static HealthBarManager Instance;
 
-    [SerializeField] private GameObject healthBarPrefab; // 血条预制体
-    [SerializeField] private RectTransform healthBarPanel; // 血条所在的 Panel
-    private Dictionary<GameObject, HealthBar> healthBars = new Dictionary<GameObject, HealthBar>();
+    public GameObject healthBarPrefab; // 血条的预制件
+    public Transform canvasTransform; // UI画布的Transform
 
-    private void Awake()
+    // 用于保存每个单位及其对应的血条控制器
+    private Dictionary<GameObject, HealthBarController> healthBars = new Dictionary<GameObject, HealthBarController>();
+
+    void Awake()
     {
+        // 单例模式，确保只有一个实例
         if (Instance == null)
+        {
             Instance = this;
+        }
         else
+        {
             Destroy(gameObject);
-    }
-
-    private void Update()
-    {
-        // 更新每个血条的位置
-        foreach (var pair in healthBars)
-        {
-            UpdateHealthBarPosition(pair.Key, pair.Value);
         }
     }
 
-    public void CreateHealthBar(GameObject entity)
+    /// <summary>
+    /// 创建血条
+    /// </summary>
+    public void CreateHealthBar(GameObject target)
     {
-        if (entity == null) return;
+        if (healthBars.ContainsKey(target))
+            return;
 
-        GameObject healthBarObj = Instantiate(healthBarPrefab, healthBarPanel);
-        HealthBar healthBar = healthBarObj.GetComponent<HealthBar>();
+        GameObject healthBarObject = Instantiate(healthBarPrefab, canvasTransform);
+        HealthBarController controller = healthBarObject.GetComponent<HealthBarController>();
 
-        if (entity.TryGetComponent(out Monster monster))
+        if (controller != null)
         {
-            healthBar.Initialize(monster);
+            controller.SetTarget(target);
+            healthBars.Add(target, controller);
         }
-        else if (entity.TryGetComponent(out Soldier soldier))
-        {
-            healthBar.Initialize(soldier);
-        }
-
-        healthBars[entity] = healthBar;
     }
 
-    public void RemoveHealthBar(GameObject entity)
+    /// <summary>
+    /// 更新血条
+    /// </summary>
+    public void UpdateHealthBar(GameObject target, float healthRatio)
     {
-        if (entity == null || !healthBars.ContainsKey(entity)) return;
-
-        Destroy(healthBars[entity].gameObject);
-        healthBars.Remove(entity);
+        if (healthBars.ContainsKey(target))
+        {
+            healthBars[target].UpdateHealth(healthRatio);
+        }
     }
 
-    private void UpdateHealthBarPosition(GameObject entity, HealthBar healthBar)
+    /// <summary>
+    /// 移除血条
+    /// </summary>
+    public void RemoveHealthBar(GameObject target)
     {
-        if (entity == null) return;
-
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(entity.transform.position + Vector3.up * 2); // 偏移位置
-        if (screenPos.z > 0)
+        if (healthBars.ContainsKey(target))
         {
-            healthBar.SetPosition(screenPos);
-        }
-        else
-        {
-            healthBar.Hide();
+            Destroy(healthBars[target].gameObject); // 销毁血条UI
+            healthBars.Remove(target); // 从字典中移除
         }
     }
 }
-**/

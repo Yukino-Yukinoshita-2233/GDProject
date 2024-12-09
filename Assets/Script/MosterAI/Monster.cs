@@ -1,43 +1,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Monster : MonoBehaviour//, IHealthEntity
+public abstract class Monster : MonoBehaviour
 {
-    // 怪物的通用属性
-    protected int health;
-    protected int damage;
-    protected float moveSpeed;
+    protected int health;                // 当前血量
+    protected int damage;                // 攻击力
+    protected float moveSpeed;           // 移动速度
     protected Vector2Int startPos;
     protected Vector2Int targetPos;
-    protected List<ThetaStarNode> path;
-    protected int currentPathIndex = 0; // 当前路径索引
+    protected List<ThetaStarNode> path;  // 路径
+    protected int currentPathIndex = 0;
     protected int[,] map;
 
-    // 怪物状态枚举：移动、攻击、死亡
-    public enum State { FindTarger, Moving, Attacking, Dead }
+    public float maxHealth = 100f;
+    public float currentHealth;
+
+    Vector2Int oldCastlePosition = Vector2Int.zero;
+
+    public enum State { Moving, Attacking, Dead }
     public State currentState;
 
-    public float MaxHealth { get; private set; } = 100f;
-    public float CurrentHealth { get; private set; } = 100f;
-
-    // 初始化怪物，传入起始和目标位置以及地图
     public void Initialize(Vector2Int startPos, Vector2Int targetPos, int[,] map)
     {
         this.startPos = startPos;
         this.targetPos = targetPos;
         this.map = map;
-        path = ThetaStar.FindPath(map, startPos, targetPos); // 使用A*算法生成路径
+        this.currentHealth = maxHealth;
+        path = ThetaStar.FindPath(map, startPos, targetPos);
         currentState = State.Moving;
+        oldCastlePosition = targetPos;
     }
 
-    // 更新怪物状态，基于当前状态执行操作
     public void UpdateMonster()
     {
+
         switch (currentState)
         {
-            case State.FindTarger:
-                FindTarger();
-                break;
             case State.Moving:
                 MoveTowardsTarget();
                 break;
@@ -49,64 +47,72 @@ public abstract class Monster : MonoBehaviour//, IHealthEntity
                 break;
         }
     }
-    protected virtual void FindTarger()
-    {
-        //用来寻找攻击目标
-    }
-    
-    // 移动到目标位置
+
     protected virtual void MoveTowardsTarget()
     {
-        if (path == null)
-        {
-            currentState = State.Dead;
-        }
-        if (currentPathIndex >= path.Count)
+        if (path == null || currentPathIndex >= path.Count)
         {
             currentState = State.Attacking;
             return;
         }
 
+        if (targetPos != WorldToGrid(MonsterManager.castle.position))
+        {
+            targetPos = WorldToGrid(MonsterManager.castle.position);
+            path = ThetaStar.FindPath(map, WorldToGrid(transform.position), targetPos);
+            currentPathIndex = 0;
+        }
 
         Vector3 targetPosition = new Vector3(path[currentPathIndex].Position.x, 1, path[currentPathIndex].Position.y);
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
 
         if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
-        {
             currentPathIndex++;
-        }
-
-        if (currentPathIndex >= path.Count && Vector3.Distance(transform.position, targetPosition) < 2f)
-        {
-            //Debug.Log(targetPosition);
-            //Debug.Log(currentPathIndex >= path.Count - 1);
-            //Debug.Log(Vector3.Distance(transform.position, targetPosition) < 1f);
-            //Debug.Log("Monster到达目标点,开始攻击!!!");
-            currentState = State.Attacking;
-        }
     }
 
-    // 攻击方法（虚方法可被子类重写）
+    void updatePath()
+    {
+
+    }
+
     protected virtual void Attack()
     {
-        //Debug.Log($"{GetType().Name} attacking at position: " + targetPos);
+        // 攻击逻辑
     }
 
-    // 承受伤害方法
     public virtual void TakeDamage(int damage)
     {
-        health -= damage;
-        if (health <= 0)
-        {
+        currentHealth -= damage;
+        HealthBarManager.Instance.UpdateHealthBar(gameObject, currentHealth / maxHealth);
+
+        if (currentHealth <= 0)
             currentState = State.Dead;
-        }
     }
 
-    // 死亡方法
     protected virtual void OnDeath()
     {
-        //HealthBarManager.Instance.RemoveHealthBar(gameObject);
+        HealthBarManager.Instance.RemoveHealthBar(gameObject);
         Destroy(gameObject);
-        Debug.Log($"{GetType().Name} has died.");
     }
+
+    /// <summary>
+    /// 将世界坐标转换为网格坐标。
+    /// </summary>
+    /// <param name="worldPosition">世界坐标。</param>
+    /// <returns>网格坐标。</returns>
+    private Vector2Int WorldToGrid(Vector3 worldPosition)
+    {
+        return new Vector2Int(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.z));
+    }
+
+    /// <summary>
+    /// 将网格坐标转换为世界坐标。
+    /// </summary>
+    /// <param name="gridPosition">网格坐标。</param>
+    /// <returns>世界坐标。</returns>
+    private Vector3 GridToWorld(Vector2Int gridPosition)
+    {
+        return new Vector3(gridPosition.x, 0, gridPosition.y);
+    }
+
 }
