@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MapManagernamespace;
+using System.Threading;
 
 /// <summary>
 /// 士兵状态枚举，表示士兵当前的状态：待机、移动、攻击。
@@ -9,7 +10,8 @@ public enum SoldierState
 {
     Idle,      // 待机状态
     Moving,    // 移动状态
-    Attacking  // 攻击状态
+    Attacking,  // 攻击状态
+    Dead        //死亡状态
 }
 
 /// <summary>
@@ -20,9 +22,12 @@ public class Soldier : MonoBehaviour//, IHealthEntity
     public SoldierState currentState = SoldierState.Idle; // 当前士兵状态
     public Transform target; // 当前目标，可以是位置或敌人
     public float moveSpeed = 3.0f; // 移动速度
-    public float attackRange = 1.5f; // 攻击范围
+    public float attackRange = 3.0f; // 攻击范围
     public float attackCooldown = 1.0f; // 攻击冷却时间（秒）
     public int attackDamage = 10; // 攻击造成的伤害值
+    public float maxHealth = 1000f;
+    public float currentHealth;
+    protected Collider AttackRange;
 
     private float lastAttackTime = 0f; // 上次攻击时间
     private List<LPAStarNode> path = new List<LPAStarNode>(); // 当前路径
@@ -37,23 +42,61 @@ public class Soldier : MonoBehaviour//, IHealthEntity
     private float pathUpdateInterval = 1.0f; // 路径更新间隔时间
     private float lastPathUpdateTime = 0f;   // 上次路径更新的时间
 
+    GameObject GOmonster;
     private void Start()
     {
         gridMap = MapManager.gridMap; // 获取地图数据
+        AttackRange = transform.GetComponentInChildren<Collider>();
 
         // 初始化士兵当前格子坐标
         currentGridPosition = WorldToGrid(transform.position);
 
         // 注册士兵到管理器
         SoldierManager.Instance.RegisterNewSoldier(this);
-        
-        //HealthBarManager.Instance.CreateHealthBar(this);
+        HealthBarManager.Instance.CreateHealthBar(this.gameObject);
+
+        Health health = gameObject.GetComponent<Health>();
+
+        // 监听子物体触发的事件
+        if (health != null)
+        {
+            health.healthChange += TakeDamage;
+        }
+
+
+
+        // 找到子物体上的AttackRangeDetector脚本
+        AttackRangeDetector attackRangeDetector = GetComponentInChildren<AttackRangeDetector>();
+        // 监听子物体触发的事件
+        if (attackRangeDetector != null)
+        {
+            attackRangeDetector.OnMonsterDetected += HandleMonsterDetected;
+        }
+
     }
 
-    private void OnDestroy()
+    public virtual void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        HealthBarManager.Instance.UpdateHealthBar(gameObject, currentHealth / maxHealth);
+
+        if (currentHealth <= 0)
+            currentState = SoldierState.Dead;
+    }
+
+    // 处理碰撞到Monster的逻辑
+    public void HandleMonsterDetected(GameObject monster)
+    {
+        GOmonster = monster;
+        // 在这里可以实现攻击或其他逻辑
+        currentState = SoldierState.Attacking;
+    }
+
+    private void HendleDeadState()
     {
         // 从管理器注销士兵
         SoldierManager.Instance.UnregisterSoldier(this);
+        HealthBarManager.Instance.RemoveHealthBar(this.gameObject);
     }
 
     private void Update()
@@ -68,7 +111,10 @@ public class Soldier : MonoBehaviour//, IHealthEntity
                 HandleMovingState();
                 break;
             case SoldierState.Attacking:
-                HandleAttackingState();
+                HandleAttackingState(GOmonster);
+                break;
+            case SoldierState.Dead:
+                HendleDeadState();
                 break;
         }
     }
@@ -152,7 +198,7 @@ public class Soldier : MonoBehaviour//, IHealthEntity
                 return;
             }
     }
-    private void HandleAttackingState()
+    private void HandleAttackingState(GameObject monster)
     {
         if (target != null && target.CompareTag("Monster"))
         {
@@ -167,7 +213,7 @@ public class Soldier : MonoBehaviour//, IHealthEntity
             if (Time.time - lastAttackTime >= attackCooldown)
             {
                 lastAttackTime = Time.time;
-                AttackTarget();
+                AttackTarget(monster);
             }
         }
         else
@@ -176,14 +222,17 @@ public class Soldier : MonoBehaviour//, IHealthEntity
         }
     }
 
-    private void AttackTarget()
+    private void AttackTarget(GameObject monster)
     {
-        Debug.Log($"攻击目标：{target.name}");
-        var enemyHealth = target.GetComponent<Health>();
-        if (enemyHealth != null)
-        {
-            enemyHealth.TakeDamage(attackDamage);
-        }
+        monster.GetComponent<Health>().TakeDamage(attackDamage);
+
+        //Debug.Log($"攻击目标：{target.name}");
+        //var enemyHealth = target.GetComponent<Health>();
+        //if (enemyHealth != null)
+        //{
+        //    enemyHealth.TakeDamage(attackDamage);
+        //}
+
     }
 
     private void MoveTowards(Vector3 targetPosition)

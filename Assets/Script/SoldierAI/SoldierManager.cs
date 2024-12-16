@@ -52,6 +52,7 @@ public class SoldierManager : MonoBehaviour
                 if (soldier != null)
                 {
                     soldiers.Add(soldier); // ×¢²áÊ¿±ø
+
                 }
                 else
                 {

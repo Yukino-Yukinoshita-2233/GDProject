@@ -6,18 +6,20 @@ public abstract class Monster : MonoBehaviour
     protected int health;                // 当前血量
     protected int damage;                // 攻击力
     protected float moveSpeed;           // 移动速度
+    public float attackCooldown; // 攻击冷却时间（秒）
+
     protected Vector2Int startPos;
     protected Vector2Int targetPos;
     protected List<ThetaStarNode> path;  // 路径
     protected int currentPathIndex = 0;
     protected int[,] map;
-
+    protected Collider AttackRange;
     public float maxHealth = 100f;
     public float currentHealth;
 
     Vector2Int oldCastlePosition = Vector2Int.zero;
 
-    public enum State { Moving, Attacking, Dead }
+    public enum State { Idling, Moving, Attacking, Dead }
     public State currentState;
 
     public void Initialize(Vector2Int startPos, Vector2Int targetPos, int[,] map)
@@ -29,13 +31,18 @@ public abstract class Monster : MonoBehaviour
         path = ThetaStar.FindPath(map, startPos, targetPos);
         currentState = State.Moving;
         oldCastlePosition = targetPos;
+        //AttackRange = transform.GetComponentInChildren<Collider>();
+        //Debug.Log(AttackRange);
+
     }
 
     public void UpdateMonster()
     {
-
         switch (currentState)
         {
+            case State.Idling:
+                FindNewTarget();
+                break;
             case State.Moving:
                 MoveTowardsTarget();
                 break;
@@ -70,6 +77,25 @@ public abstract class Monster : MonoBehaviour
             currentPathIndex++;
     }
 
+    // 处理碰撞到Building的逻辑
+    public void HandleBuildingDetected(GameObject building)
+    {
+        currentState = State.Attacking;
+        building.GetComponent<Health>().TakeDamage(damage*2);
+        // 在这里可以实现攻击或其他逻辑
+    }
+    // 处理碰撞到Building的逻辑
+    public void HandleSoldierDetected(GameObject soldier)
+    {
+        soldier.GetComponent<Health>().TakeDamage(damage);
+        // 在这里可以实现攻击或其他逻辑
+    }
+
+    //寻找新目标
+    void FindNewTarget()
+    {
+
+    }
     void updatePath()
     {
 

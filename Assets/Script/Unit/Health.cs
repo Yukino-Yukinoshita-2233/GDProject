@@ -13,6 +13,8 @@ public class Health : MonoBehaviour
     private Image healthBarFill;         // 血条填充部分
     private RectTransform canvas;       // 血条所在的 Canvas
 
+    public delegate void HealthChange(int health);
+    public event HealthChange healthChange;
     private void Start()
     {
         currentHealth = maxHealth;
@@ -89,6 +91,7 @@ public class Health : MonoBehaviour
         // 更新血条填充
         UpdateHealthBarFill();
 
+        healthChange?.Invoke(currentHealth);
         if (currentHealth <= 0)
         {
             Die();
