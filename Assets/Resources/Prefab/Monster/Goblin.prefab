@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0786ae56ace815845b789ab10ddee223, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackCooldown: 0
   maxHealth: 100
   currentHealth: 0
   currentState: 0
@@ -66,6 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  currentHealth: 0
   healthBarPrefab: {fileID: 0}
 --- !u!33 &1747320565596071959
 MeshFilter:
@@ -176,7 +178,7 @@ GameObject:
   - component: {fileID: 3241605247544220239}
   - component: {fileID: 3756567532224908460}
   - component: {fileID: 1019986054914651593}
-  m_Layer: 15
+  m_Layer: 0
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}

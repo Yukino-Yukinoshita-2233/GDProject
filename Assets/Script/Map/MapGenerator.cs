@@ -78,6 +78,7 @@ public class MapGenerator : MonoBehaviour
                     if (gridMapGen[X - 1, Z - 1] == 0 && gridMapGen[X + 1, Z + 1] == 0 && gridMapGen[X + 1, Z - 1] == 0 && gridMapGen[X - 1, Z + 1] == 0)
                     {
                         Castle.transform.position = new Vector3(X, 1, Z);
+                        HealthBarManager.Instance.CreateHealthBar(Castle);
                         return;
                     }
                 }

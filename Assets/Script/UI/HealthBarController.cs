@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class HealthBarController : MonoBehaviour
 {
     public Slider healthSlider; // 血条UI组件
-    private GameObject target; // 目标单位
+    private GameObject target;  // 目标单位
     private Vector3 offset = new Vector3(0, 0, 0.7f); // 血条位置偏移（目标单位头顶）
 
     /// <summary>

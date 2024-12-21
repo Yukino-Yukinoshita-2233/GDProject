@@ -4,8 +4,8 @@ using UnityEngine.UI;
 public class Health : MonoBehaviour
 {
     [Header("Health Settings")]
-    public int maxHealth = 100; // 最大生命值
-    private int currentHealth;  // 当前生命值
+    public float maxHealth = 100; // 最大生命值
+    public float currentHealth;  // 当前生命值
 
     [Header("Health Bar Settings")]
     public GameObject healthBarPrefab; // 血条预制体
@@ -13,14 +13,19 @@ public class Health : MonoBehaviour
     private Image healthBarFill;         // 血条填充部分
     private RectTransform canvas;       // 血条所在的 Canvas
 
-    public delegate void HealthChange(int health);
+    public delegate void HealthChange(float health);
     public event HealthChange healthChange;
+
     private void Start()
     {
         currentHealth = maxHealth;
-
+        HealthBarManager healthBarManager = gameObject.transform.GetComponentInParent<HealthBarManager>();
+        if (healthBarInstance != null )
+        {
+            healthBarPrefab = healthBarManager.healthBarPrefab;
+        }
         // 初始化血条
-        InitializeHealthBar();
+        //InitializeHealthBar();
     }
 
     private void Update()
@@ -50,16 +55,6 @@ public class Health : MonoBehaviour
             return;
         }
 
-        // 创建血条实例
-        healthBarInstance = Instantiate(healthBarPrefab, canvas);
-        healthBarFill = healthBarInstance.transform.Find("Fill").GetComponent<Image>();
-
-        if (healthBarFill == null)
-        {
-            Debug.LogError("HealthBar prefab is missing 'Fill' Image component!");
-            Destroy(healthBarInstance);
-            return;
-        }
     }
 
     /// <summary>
@@ -83,15 +78,15 @@ public class Health : MonoBehaviour
     /// <summary>
     /// 处理受到的伤害。
     /// </summary>
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         currentHealth -= damage;
         Debug.Log($"{gameObject.name} took {damage} damage! Current health: {currentHealth}");
 
         // 更新血条填充
-        UpdateHealthBarFill();
+        //UpdateHealthBarFill();
 
-        healthChange?.Invoke(currentHealth);
+        healthChange?.Invoke(currentHealth / maxHealth);
         if (currentHealth <= 0)
         {
             Die();
@@ -105,6 +100,7 @@ public class Health : MonoBehaviour
     {
         if (healthBarFill != null)
         {
+            //Debug.Log(currentHealth + maxHealth + currentHealth / maxHealth);
             healthBarFill.fillAmount = Mathf.Clamp01((float)currentHealth / maxHealth);
         }
     }
@@ -133,5 +129,16 @@ public class Health : MonoBehaviour
         {
             Destroy(healthBarInstance);
         }
+    }
+
+    public float GetHealth()
+    {
+        return currentHealth;
+    }
+
+    public void SetHealth(float health)
+    {
+        maxHealth = health;
+        currentHealth = health;
     }
 }

@@ -11,11 +11,11 @@ public class FlyDragon : Monster
     }
 
     // 覆写攻击方法，输出特定的攻击行为
-    protected override void Attack()
-    {
-        base.Attack();
-        //Debug.Log("FlyDragon deals " + damage + " damage.");
-    }
+    //protected void Attack()
+    //{
+    //    base.Attack();
+    //    //Debug.Log("FlyDragon deals " + damage + " damage.");
+    //}
 
     // 覆写死亡方法，执行特定死亡效果
     protected override void OnDeath()

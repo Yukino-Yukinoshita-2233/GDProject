@@ -108,15 +108,16 @@ public class SelectionManager : MonoBehaviour
     /// </summary>
     private void HandleCommandInput()
     {
+        // 定义需要检测的层级（Grass 和 Monster）
+        int layerMask = LayerMask.GetMask("Grass", "Monster");
         // 右键点击
         if (Input.GetMouseButtonDown(1) && selectedSoldiers.Count > 0)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f, layerMask))
             {
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Grass"))
                 {
-                    // 设置所有选中士兵的目标为点击位置
                     foreach (var soldier in selectedSoldiers)
                     {
                         soldier.SetTarget(new GameObject("TargetPoint") { transform = { position = hit.point } }.transform);
@@ -124,7 +125,6 @@ public class SelectionManager : MonoBehaviour
                 }
                 else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Monster"))
                 {
-                    // 设置所有选中士兵的目标为敌人
                     Transform enemy = hit.collider.transform;
                     foreach (var soldier in selectedSoldiers)
                     {

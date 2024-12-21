@@ -39,17 +39,13 @@ public class HealthBarManager : MonoBehaviour
         {
             controller.SetTarget(target);
             healthBars.Add(target, controller);
-        }
-    }
 
-    /// <summary>
-    /// 更新血条
-    /// </summary>
-    public void UpdateHealthBar(GameObject target, float healthRatio)
-    {
-        if (healthBars.ContainsKey(target))
-        {
-            healthBars[target].UpdateHealth(healthRatio);
+            // 订阅目标单位的血量变化事件
+            Health health = target.GetComponent<Health>();
+            if (health != null)
+            {
+                health.healthChange += controller.UpdateHealth;  // 将血量变化事件与血条UI更新方法绑定
+            }
         }
     }
 
@@ -60,6 +56,13 @@ public class HealthBarManager : MonoBehaviour
     {
         if (healthBars.ContainsKey(target))
         {
+            // 取消血量变化事件订阅
+            Health health = target.GetComponent<Health>();
+            if (health != null)
+            {
+                health.healthChange -= healthBars[target].UpdateHealth; // 解除事件订阅
+            }
+
             Destroy(healthBars[target].gameObject); // 销毁血条UI
             healthBars.Remove(target); // 从字典中移除
         }
