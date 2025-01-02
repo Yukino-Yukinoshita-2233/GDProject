@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a6a0b5310f4784b9bf50d8ec531e37, type: 3}
   m_Name: BuildData
   m_EditorClassIdentifier: 
-  _buildStyles: 00000000010000000200000003000000040000000500000006000000
+  _buildStyles: 0000000001000000020000000300000004000000050000000600000007000000
   _materialRequirements:
   - CailiaoXioahaoList:
     - caiLiaoStyel: 0
@@ -42,6 +42,13 @@ MonoBehaviour:
       Num: 0
     - caiLiaoStyel: 2
       Num: 0
+  - CailiaoXioahaoList:
+    - caiLiaoStyel: 0
+      Num: 1
+    - caiLiaoStyel: 1
+      Num: 1
+    - caiLiaoStyel: 2
+      Num: 1
   - CailiaoXioahaoList:
     - caiLiaoStyel: 0
       Num: 1

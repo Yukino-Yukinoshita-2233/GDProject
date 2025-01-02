@@ -39,7 +39,7 @@ public class AttackRangeDetector : MonoBehaviour
         }
 
         // 检测到怪物（假设怪物的层级为15）
-        if (other.gameObject.layer == 15)
+        else if (other.gameObject.layer == 15)
         {
             GameObject monster = other.gameObject;
             //Debug.Log($"AttackRange detected Monster: {monster.name}");
@@ -48,7 +48,7 @@ public class AttackRangeDetector : MonoBehaviour
         }
 
         // 检测到士兵（假设士兵的层级为16）
-        if (other.gameObject.layer == 16)
+        else if (other.gameObject.layer == 16)
         {
             GameObject soldier = other.gameObject;
             //Debug.Log($"AttackRange detected Soldier: {soldier.name}");
@@ -71,7 +71,7 @@ public class AttackRangeDetector : MonoBehaviour
         }
 
         // 检测到怪物离开（假设怪物的层级为15）
-        if (other.gameObject.layer == 15)
+        else if (other.gameObject.layer == 15)
         {
             GameObject monster = other.gameObject;
             //Debug.Log($"AttackRange exited Monster: {monster.name}");
@@ -80,7 +80,7 @@ public class AttackRangeDetector : MonoBehaviour
         }
 
         // 检测到士兵离开（假设士兵的层级为16）
-        if (other.gameObject.layer == 16)
+        else if (other.gameObject.layer == 16)
         {
             GameObject soldier = other.gameObject;
             //Debug.Log($"AttackRange exited Soldier: {soldier.name}");

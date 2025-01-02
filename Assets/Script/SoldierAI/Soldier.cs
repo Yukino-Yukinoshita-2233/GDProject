@@ -143,7 +143,8 @@ public class Soldier : MonoBehaviour
 
     private void HandleAttackingState()
     {
-        if (currentMonsterTarget != null && detectedMonsters != null)
+
+        if (currentMonsterTarget != null && detectedMonsters.First() != null)
         {
             currentMonsterTarget = detectedMonsters.First();
             if (Time.time - lastAttackTime >= attackCooldown)
@@ -154,6 +155,7 @@ public class Soldier : MonoBehaviour
         }
         else
         {
+
             SwitchTarget();
         }
     }
@@ -168,10 +170,13 @@ public class Soldier : MonoBehaviour
 
     private void SwitchTarget()
     {
+        if(detectedMonsters.First() == null)
+        {
+            detectedMonsters.RemoveAt(0);
+        }
         if (detectedMonsters.Count > 0)
         {
             currentMonsterTarget = detectedMonsters.First();
-            //detectedMonsters.RemoveAt(0);
             currentState = SoldierState.Attacking;
         }
         else

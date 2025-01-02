@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// 选择管理器，负责选择友军单位（士兵）并控制它们的行动。
@@ -26,13 +27,13 @@ public class SelectionManager : MonoBehaviour
     private void HandleSelectionInput()
     {
         // 开始框选
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false)
         {
             selectionStartPos = Input.mousePosition;
             isSelecting = true; // 进入框选模式
         }
         // 框选结束
-        if (Input.GetMouseButtonUp(0))// && isSelecting
+        if (Input.GetMouseButtonUp(0) && isSelecting)
         {
             // 获取屏幕选择框的范围
             selectionEndPos = Input.mousePosition;
@@ -118,19 +119,30 @@ public class SelectionManager : MonoBehaviour
             {
                 if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Grass"))
                 {
-                    foreach (var soldier in selectedSoldiers)
+                    for (int i = selectedSoldiers.Count - 1; i >= 0; i--)
                     {
-                        soldier.SetTarget(new GameObject("TargetPoint") { transform = { position = hit.point } }.transform);
+                        var soldier = selectedSoldiers[i];
+                        if (soldier == null)
+                        {
+                            selectedSoldiers.RemoveAt(i); // 安全删除空对象
+                        }
+                        else
+                        {
+                            // 创建目标点并设置给士兵
+                            var targetPoint = new GameObject("TargetPoint");
+                            targetPoint.transform.position = hit.point;
+                            soldier.SetTarget(targetPoint.transform);
+                        }
                     }
                 }
-                else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Monster"))
-                {
-                    Transform enemy = hit.collider.transform;
-                    foreach (var soldier in selectedSoldiers)
-                    {
-                        soldier.SetTarget(enemy);
-                    }
-                }
+                //else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Monster"))
+                //{
+                //    Transform enemy = hit.collider.transform;
+                //    foreach (var soldier in selectedSoldiers)
+                //    {
+                //        soldier.SetTarget(enemy);
+                //    }
+                //}
             }
         }
     }

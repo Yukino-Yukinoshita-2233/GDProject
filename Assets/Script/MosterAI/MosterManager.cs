@@ -17,7 +17,7 @@ public class MonsterManager : MonoBehaviour
         gridMap = MapManager.gridMap; // 获取地图数据
         monsterParent = GameObject.Find("Monster").transform;
         castle = GameObject.Find("Building").transform.Find("Castle");
-        //SpawnMonsters();
+        SpawnMonsters();
     }
 
 
@@ -29,7 +29,7 @@ public class MonsterManager : MonoBehaviour
             Mathf.RoundToInt(castle.transform.position.z)
         );
 
-        for (int i = 0; i < 5; i++) // 随机生成5个怪物
+        for (int i = 0; i < 3; i++) // 随机生成怪物
         {
             Vector2Int startPos = GetRandomPosition();
             SpawnMonster(startPos, targetPos);
@@ -62,9 +62,21 @@ public class MonsterManager : MonoBehaviour
 
     void Update()
     {
+        // 遍历怪物列表，移除已销毁的怪物
+        monsters.RemoveAll(monster => monster == null);
+
+        // 确保怪物列表为空时重新生成怪物
+        if (monsters.Count <= 0)
+        {
+            SpawnMonsters();
+        }
+
         foreach (Monster monster in monsters)
         {
-            monster.UpdateMonster();
+            if(monster != null)
+            {
+                monster.UpdateMonster();
+            }
 
         }
     }

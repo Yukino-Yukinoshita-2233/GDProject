@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 762a2dd9bf5874640bd837313e845952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectedMonsters: []
+  MonsterAttackList: []
+  SoldierAttackList: []
 --- !u!135 &1682865770143193037
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -194,8 +195,8 @@ MonoBehaviour:
   target: {fileID: 0}
   moveSpeed: 3
   attackCooldown: 1
-  attackDamage: 10
-  maxHealth: 100
+  attackDamage: 20
+  maxHealth: 500
   currentMonsterTarget: {fileID: 0}
 --- !u!114 &-4516223177246626444
 MonoBehaviour:

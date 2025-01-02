@@ -4,7 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public enum BuildStyle
 {
-    DaBenYing,ChengQiang,FangYuTa,ZhuFang,MuCaiJGC,ShiCaiJGC,JinShuJGC
+    DaBenYing,ChengQiang,FangYuTa,ZhuFang,MuCaiJGC,ShiCaiJGC,JinShuJGC,JianShi
 }
 public class BuildManger : SingletonMono<BuildManger>
 {

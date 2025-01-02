@@ -81,7 +81,7 @@ public class Health : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        Debug.Log($"{gameObject.name} took {damage} damage! Current health: {currentHealth}");
+        Debug.Log($"{gameObject.name} took {damage} damage! Current health: {currentHealth}"); 
 
         // 更新血条填充
         //UpdateHealthBarFill();
@@ -115,11 +115,11 @@ public class Health : MonoBehaviour
         // 销毁血条
         if (healthBarInstance != null)
         {
-            Destroy(healthBarInstance);
+            //Destroy(healthBarInstance);
         }
 
         // 销毁对象
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
     private void OnDestroy()
