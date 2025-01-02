@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngineInternal;
 using MapManagernamespace;
+using System.Collections.Generic;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -27,6 +28,11 @@ public class MapGenerator : MonoBehaviour
     public GameObject[] resourcePrefabs; // 资源预制体数组
     public int[] resourceScale; // 资源大小
     public float resourcesTerrainSize = 0.3f;   //资源地形占位百分比
+
+
+    // 资源道具
+    public GameObject[] itemPrefabs;  //道具预制体数组
+    public int itemCount = 5;         //控制道具生成的数量
 
     private void Start()
     {
@@ -61,7 +67,54 @@ public class MapGenerator : MonoBehaviour
         //Debug.Log("获取地图数据成功");
         // 实例化地图
         InstantiateMap();
+
+        InstantiateItemsOnGrass();
         Debug.Log("实例化地图成功");
+    }
+
+    void InstantiateItemsOnGrass()
+    {
+        // 存储已经生成过道具的位置，避免重复生成
+        HashSet<Vector2Int> usedPositions = new HashSet<Vector2Int>();
+
+        int itemsGenerated = 0;
+
+        // 随机生成道具，直到达到指定数量
+        while (itemsGenerated < itemCount)
+        {
+            // 随机选择一个位置
+            int x = Random.Range(0, widthGen);
+            int y = Random.Range(0, heightGen);
+
+            // 确保当前位置是草地并且没有道具已生成
+            if (gridMapGen[x, y] == 0 && !usedPositions.Contains(new Vector2Int(x, y)))
+            {
+                // 记录该位置已生成道具
+                usedPositions.Add(new Vector2Int(x, y));
+
+                // 随机选择一个道具
+                GameObject itemPrefab = itemPrefabs[Random.Range(0, itemPrefabs.Length)];
+
+                if (itemPrefab.GetComponent<ZiYuan>().CaiLiaoStye == CaiLiaoStye.MuCai)
+                {
+                    baseGridMap = GameObject.Find("res/木材").transform;
+                }
+                else if (itemPrefab.GetComponent<ZiYuan>().CaiLiaoStye == CaiLiaoStye.ShiCai)
+                {
+                    baseGridMap = GameObject.Find("res/石材").transform;
+                }
+                else if (itemPrefab.GetComponent<ZiYuan>().CaiLiaoStye == CaiLiaoStye.JinShu)
+                {
+                    baseGridMap = GameObject.Find("res/金属").transform;
+                }
+
+                // 生成道具
+                Vector3 worldPosition = new Vector3(x, 0.5f, y);
+                Instantiate(itemPrefab, worldPosition, Quaternion.identity, baseGridMap);
+
+                itemsGenerated++;
+            }
+        }
     }
 
     //城堡生成
