@@ -34,16 +34,16 @@ public class NpcToZiYuan : MonoBehaviour
         }
     }
 
-    float t =0;
+    float t = 0;
     public float targetTime = 1.5f;
-    Transform CaiLiao=null;
+    Transform CaiLiao = null;
     // Update is called once per frame
     void Update()
     {
-        if (isGoZiYuan==true&&isGoZiyuanEnd==false)
+        if (isGoZiYuan == true && isGoZiyuanEnd == false)
         {
             //Debug.Log("设置目的地");
-            CaiLiao=FindCaiLiao();
+            CaiLiao = FindCaiLiao();
             if (CaiLiao != null)
             {
                 SetNpcToCaiLiao(CaiLiao);
@@ -70,7 +70,7 @@ public class NpcToZiYuan : MonoBehaviour
             }
         }
 
-        if (isGoHome==true&& isGoZiyuanEnd == true)
+        if (isGoHome == true && isGoZiyuanEnd == true)
         {
             //Debug.Log("设置回家路");
             NPC.GetComponent<NPC>().SetPostion(OldPos);
@@ -107,9 +107,9 @@ public class NpcToZiYuan : MonoBehaviour
 
         foreach (Transform item in Parent)
         {
-            if (item.GetComponent<ZiYuan>().isLock == false)
+            if (item.GetComponent<ZiyuanSelf>().isLock == false)
             {
-                item.GetComponent<ZiYuan>().isLock=true;
+                item.GetComponent<ZiyuanSelf>().isLock = true;
                 return item;
             }
         }

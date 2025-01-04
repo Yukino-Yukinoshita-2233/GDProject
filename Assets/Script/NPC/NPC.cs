@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    private Vector3 destination=new Vector3(15,15,15);
+    private Vector3 destination = new Vector3(15, 15, 15);
     public bool isMove = false;
     private float speed = 3;
     // Start is called before the first frame update
@@ -76,7 +76,7 @@ public class NPC : MonoBehaviour
         }
         _stackPos.Pop();
         CreatePathPos();
-        
+
     }
     private List<GameObject> pathGoList = new List<GameObject>();
     public static List<KeyValuePair<int, Node>> checkNodeList = new List<KeyValuePair<int, Node>>();
@@ -116,10 +116,11 @@ public class NPC : MonoBehaviour
     /// </summary>
     private void CreatePathPos()
     {
-        GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        GameObject go = new GameObject();
         go.transform.localScale = Vector3.one * 0.2f;
         go.transform.position = new Vector3(this.transform.position.x, 0.6f, this.transform.position.z);
-        go.GetComponent<Renderer>().material.color = Color.red;
+        //go.GetComponent<Renderer>().material.color = Color.red;
         pathGoList.Add(go);
     }
 }

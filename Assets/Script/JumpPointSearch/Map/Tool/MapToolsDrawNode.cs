@@ -31,7 +31,7 @@ public class MapToolsDrawNode
             go.transform.localScale = new Vector3(0.5f, 0.05f, 0.5f); //new Vector3(mapQuad.NodeWidth(), 1, mapQuad.NodeLength()) * 0.9f;
             go.transform.SetParent(parent.transform);
 
-            go.GetComponent<Renderer>().material.color = NodeColor(node.NodeType);
+            //go.GetComponent<Renderer>().material.color = NodeColor(node.NodeType);
         }
     }
 
