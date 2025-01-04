@@ -9,11 +9,11 @@ public class Goblin : Monster
     // 哥布林的初始化
     void Awake()
     {
-        moveSpeed = 1f;            // 设置哥布林的移动速度
-        damage = 10;               // 设置哥布林的攻击力
-        maxHealth = 50f;           // 设置哥布林的最大血量
-        attackCooldown = 2.0f;     // 设置攻击冷却时间
-        currentHealth = maxHealth;
+        //moveSpeed = 1f;            // 设置哥布林的移动速度
+        //damage = 10;               // 设置哥布林的攻击力
+        //maxHealth = 50f;           // 设置哥布林的最大血量
+        //attackCooldown = 2.0f;     // 设置攻击冷却时间
+        //currentHealth = maxHealth;
 
         // 获取攻击范围检测器并注册事件
         //attackRangeDetector = GetComponentInChildren<AttackRangeDetector>();

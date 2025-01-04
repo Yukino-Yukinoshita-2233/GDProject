@@ -50,9 +50,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b7e3cc69660768429903618434f3e18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: 0
-  maxHealth: 100
+  maxHealth: 200
   currentHealth: 0
+  damage: 40
+  moveSpeed: 0.5
+  attackCooldown: 3
   currentState: 0
 --- !u!114 &-4150452412595329291
 MonoBehaviour:
@@ -66,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b87771697a27d8342b260b08935fd77a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 0
   currentHealth: 0
   healthBarPrefab: {fileID: 0}
 --- !u!33 &7392113881913883883

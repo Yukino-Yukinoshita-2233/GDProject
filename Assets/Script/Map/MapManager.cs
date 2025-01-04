@@ -11,9 +11,10 @@ namespace MapManagernamespace
         private static MapManager instance;
         MapGenerator mapGenerator;
         // µØÍ¼³ß´ç
+        
         public static int width = 73;
         public static int height = 45;
-        public static int scale = 20;
+        public static int scale = 13;
         public static float[,] noiseMap = new float[width, height];
         public static int[,] gridMap = new int[width, height];
 

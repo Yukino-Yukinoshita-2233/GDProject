@@ -5,7 +5,7 @@ public class FlyDragon : Monster
 {
     private void Awake()
     {
-        health = 10; // 设置飞龙的生命值
+        maxHealth = 10; // 设置飞龙的生命值
         damage = 6;  // 设置飞龙的伤害值
         moveSpeed = 4f; // 设置飞龙的移动速度
     }

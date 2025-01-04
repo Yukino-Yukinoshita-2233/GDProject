@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: e2750c11dfa6edc4496ff054c15d14db, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4193994238281821175, guid: bb001b50579d0f34bb2b76b7d2a0661f, type: 3}
     - target: {fileID: 919132149155446097, guid: e2750c11dfa6edc4496ff054c15d14db, type: 3}
       propertyPath: m_Name
       value: Isl_1_Bag_2 Variant

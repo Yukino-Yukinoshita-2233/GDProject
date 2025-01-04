@@ -9,10 +9,12 @@ using UnityEngine;
 public abstract class Monster : MonoBehaviour
 {
     // 基本属性
-    protected float health;                // 当前血量
-    protected float damage;                // 攻击力
-    protected float moveSpeed;             // 移动速度
+    public float maxHealth = 100f;         // 最大血量
+    public float currentHealth;            // 当前血量
+    public float damage;                // 攻击力
+    public float moveSpeed;             // 移动速度
     public float attackCooldown;           // 攻击冷却时间（秒）
+    protected float lastAttackTime;        // 上一次攻击的时间
 
     // 路径相关
     protected Vector2Int startPos;         // 起始位置
@@ -20,11 +22,6 @@ public abstract class Monster : MonoBehaviour
     protected List<ThetaStarNode> path;    // 用于路径计算的路径列表
     protected int currentPathIndex = 0;    // 当前路径点的索引
     protected int[,] map;                  // 地图数据
-
-    // 血量相关
-    public float maxHealth = 100f;         // 最大血量
-    public float currentHealth;            // 当前血量
-    protected float lastAttackTime;        // 上一次攻击的时间
 
     // 组件引用
     protected AttackRangeDetector attackRangeDetector; // 检测攻击范围的组件
@@ -98,13 +95,6 @@ public abstract class Monster : MonoBehaviour
     /// </summary>
     protected virtual void MoveTowardsTarget()
     {
-        // 如果路径为空或已经到达路径终点，切换到攻击状态
-        if (path == null || currentPathIndex >= path.Count)
-        {
-            currentState = State.Attacking;
-            return;
-        }
-
         // 如果城堡位置发生变化，重新计算路径
         Vector2Int currentCastlePosition = WorldToGrid(MonsterManager.castle.position);
         if (targetPos != currentCastlePosition)
@@ -120,6 +110,16 @@ public abstract class Monster : MonoBehaviour
             currentState = State.Attacking;
             return;
         }
+
+        // 如果路径为空或已经到达路径终点，切换到攻击状态
+        if (path == null || currentPathIndex >= path.Count)
+        {
+            currentState = State.Attacking;
+            return;
+        }
+
+
+
 
         // 移动到当前路径点
         Vector3 targetPosition = new Vector3(path[currentPathIndex].Position.x, 1, path[currentPathIndex].Position.y);
@@ -138,11 +138,17 @@ public abstract class Monster : MonoBehaviour
     protected virtual void Attack()
     {
         // 如果冷却时间未到或者没有目标，切换回移动状态
-        if (Time.time - lastAttackTime < attackCooldown || currentTargets.Count == 0)
+        if (currentTargets.Count == 0)
         {
             currentState = State.Moving;
             return;
         }
+        else if (Time.time - lastAttackTime < attackCooldown && currentTargets.Count != 0)
+        {
+            currentState = State.Idling;
+            return;
+        }
+
 
         // 获取第一个目标并执行攻击
         GameObject target = currentTargets.FirstOrDefault();
@@ -184,7 +190,17 @@ public abstract class Monster : MonoBehaviour
     }
 
     // 抽象方法和可重写方法（供子类实现或扩展逻辑）
-    protected virtual void FindNewTarget() { }
+    protected virtual void FindNewTarget() 
+    { 
+        if(currentTargets.Count != 0)
+        {
+            currentState = State.Attacking;
+        }
+        else 
+        {
+            currentState = State.Idling;
+        }
+    }
     protected virtual void HandleBuildingDetected(GameObject building) { }
     protected virtual void HandleSoldierDetected(GameObject soldier) { }
     protected virtual void HandleBuildingExit(GameObject building) { }
