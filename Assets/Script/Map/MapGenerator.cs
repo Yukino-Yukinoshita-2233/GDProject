@@ -209,7 +209,7 @@ public class MapGenerator : MonoBehaviour
                 }
                 else if (gridMapGen[x, y] == 1)    //Éú³ÉÉ½
                 {
-                    WorldPosition = new Vector3(x, 0 + 2 * H, y);
+                    WorldPosition = new Vector3(x, 0 + H, y);
                     GameObject instance = Instantiate(mountainPrefab, WorldPosition, Quaternion.identity, baseGridMap);
 
                 }
