@@ -56,6 +56,8 @@ public class MapGenerator : MonoBehaviour
             gridMapGen = MapManager.gridMap;
             OnMapGenerated();
             MapManager.isMapChange = false;
+
+            JPSMangaer.Instance.SetNode();
         }
     }
     public void OnMapGenerated()
@@ -95,15 +97,15 @@ public class MapGenerator : MonoBehaviour
                 // 随机选择一个道具
                 GameObject itemPrefab = itemPrefabs[Random.Range(0, itemPrefabs.Length)];
 
-                if (itemPrefab.GetComponent<ZiYuan>().CaiLiaoStye == CaiLiaoStye.MuCai)
+                if (itemPrefab.GetComponent<ZiyuanSelf>().CaiLiaoStye == CaiLiaoStye.MuCai)
                 {
                     baseGridMap = GameObject.Find("res/木材").transform;
                 }
-                else if (itemPrefab.GetComponent<ZiYuan>().CaiLiaoStye == CaiLiaoStye.ShiCai)
+                else if (itemPrefab.GetComponent<ZiyuanSelf>().CaiLiaoStye == CaiLiaoStye.ShiCai)
                 {
                     baseGridMap = GameObject.Find("res/石材").transform;
                 }
-                else if (itemPrefab.GetComponent<ZiYuan>().CaiLiaoStye == CaiLiaoStye.JinShu)
+                else if (itemPrefab.GetComponent<ZiyuanSelf>().CaiLiaoStye == CaiLiaoStye.JinShu)
                 {
                     baseGridMap = GameObject.Find("res/金属").transform;
                 }
@@ -122,8 +124,8 @@ public class MapGenerator : MonoBehaviour
     {
         while (true)
         {
-            int X = Random.Range(1, widthGen-1);
-            int Z = Random.Range(1, heightGen-1);
+            int X = Random.Range(1, widthGen - 1);
+            int Z = Random.Range(1, heightGen - 1);
             if (gridMapGen[X, Z] == 0)
             {
                 if (gridMapGen[X - 1, Z] == 0 && gridMapGen[X + 1, Z] == 0 && gridMapGen[X, Z - 1] == 0 && gridMapGen[X, Z + 1] == 0)
@@ -153,7 +155,7 @@ public class MapGenerator : MonoBehaviour
             for (int y = 0; y < heightGen; y++)
             {
 
-                if (gridMapGen[x,y] == 0) // 确保资源只生成在可行走区域
+                if (gridMapGen[x, y] == 0) // 确保资源只生成在可行走区域
                 {
                     float xCoord = ((float)x + offset.x) / widthGen * resourceScale[resourceIndex];
                     float yCoord = ((float)y + offset.y) / heightGen * resourceScale[resourceIndex];
