@@ -24,9 +24,9 @@ public class MapGeneratorWithItems : MonoBehaviour
     public int itemCount = 5;         //控制道具生成的数量
 
     // 资源地形
-    public GameObject[] resourcePrefabs; // 资源预制体数组
-    public int[] resourceScale; // 资源大小
-    public float resourcesTerrainSize = 0.3f;   //资源地形占位百分比
+    //public GameObject[] resourcePrefabs; // 资源预制体数组
+    //public int[] resourceScale; // 资源大小
+    //public float resourcesTerrainSize = 0.3f;   //资源地形占位百分比
 
     private void Start()
     {
@@ -149,6 +149,7 @@ public class MapGeneratorWithItems : MonoBehaviour
             // 确保当前位置是草地并且没有道具已生成
             if (gridMapGen[x, y] == 0 && !usedPositions.Contains(new Vector2Int(x, y)))
             {
+                Debug.Log($"尝试生成道具：位置 ({x}, {y}) 是草地且未生成过道具");
                 // 记录该位置已生成道具
                 usedPositions.Add(new Vector2Int(x, y));
 
@@ -174,7 +175,12 @@ public class MapGeneratorWithItems : MonoBehaviour
 
                 itemsGenerated++;
             }
+            else
+            {
+                Debug.Log($"跳过位置 ({x}, {y})，不是草地或已生成过道具");
+            }
         }
+        Debug.Log($"生成道具数量: {itemsGenerated}");
     }
 
     // 将二维数组格式化为字符串输出到 Debug.Log

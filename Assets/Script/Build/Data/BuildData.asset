@@ -38,35 +38,35 @@ MonoBehaviour:
   - CailiaoXioahaoList:
     - caiLiaoStyel: 0
       Num: 2
+    - caiLiaoStyel: 0
+      Num: 2
+    - caiLiaoStyel: 0
+      Num: 2
+  - CailiaoXioahaoList:
+    - caiLiaoStyel: 0
+      Num: 5
     - caiLiaoStyel: 1
       Num: 0
     - caiLiaoStyel: 2
       Num: 0
   - CailiaoXioahaoList:
     - caiLiaoStyel: 0
-      Num: 1
+      Num: 0
     - caiLiaoStyel: 1
-      Num: 1
+      Num: 5
     - caiLiaoStyel: 2
-      Num: 1
+      Num: 0
   - CailiaoXioahaoList:
     - caiLiaoStyel: 0
-      Num: 1
+      Num: 0
     - caiLiaoStyel: 1
-      Num: 1
+      Num: 0
     - caiLiaoStyel: 2
-      Num: 1
+      Num: 5
   - CailiaoXioahaoList:
     - caiLiaoStyel: 0
-      Num: 1
+      Num: 5
     - caiLiaoStyel: 1
-      Num: 1
+      Num: 5
     - caiLiaoStyel: 2
-      Num: 1
-  - CailiaoXioahaoList:
-    - caiLiaoStyel: 0
-      Num: 1
-    - caiLiaoStyel: 1
-      Num: 1
-    - caiLiaoStyel: 2
-      Num: 1
+      Num: 5
