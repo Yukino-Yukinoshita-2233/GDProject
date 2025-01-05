@@ -18,7 +18,7 @@ public class MonsterManager : MonoBehaviour
         gridMap = MapManager.gridMap; // 获取地图数据
         monsterParent = GameObject.Find("Monster").transform;
         castle = GameObject.Find("Building").transform.Find("Castle");
-        LevelNum = 1;
+        //LevelNum = 1;
         SpawnMonsters();
     }
     void Update()
