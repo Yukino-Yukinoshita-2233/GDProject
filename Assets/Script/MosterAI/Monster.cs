@@ -26,6 +26,7 @@ public abstract class Monster : MonoBehaviour
     // 组件引用
     protected AttackRangeDetector attackRangeDetector; // 检测攻击范围的组件
     protected Health thisMonsterHealth;               // 血量管理组件
+    //protected PathVisualizer pathVisualizer;
 
     // 当前怪物的攻击目标
     protected List<GameObject> currentTargets = new List<GameObject>();
@@ -45,11 +46,17 @@ public abstract class Monster : MonoBehaviour
         this.startPos = startPos;
         this.targetPos = targetPos;
         this.map = map;
-        this.currentHealth = maxHealth; // 初始化当前血量
-        path = ThetaStar.FindPath(map, startPos, targetPos); // 使用 Theta* 算法计算路径
-        oldCastlePosition = targetPos; // 记录目标位置
-        currentState = State.Moving;   // 初始状态为移动
-        thisMonsterHealth = transform.GetComponent<Health>(); // 获取血量管理组件
+        this.currentHealth = maxHealth;
+
+        // 使用 Theta* 算法计算路径
+        path = ThetaStar.FindPath(map, startPos, targetPos);
+        oldCastlePosition = targetPos;
+
+        // 设置路径可视化
+        SetLine(path);
+
+        currentState = State.Moving;
+        thisMonsterHealth = transform.GetComponent<Health>();
     }
 
     /// <summary>
@@ -102,6 +109,9 @@ public abstract class Monster : MonoBehaviour
             targetPos = currentCastlePosition;
             path = ThetaStar.FindPath(map, WorldToGrid(transform.position), targetPos);
             currentPathIndex = 0; // 重置路径点索引
+
+            // 设置路径可视化
+            SetLine(path);
         }
 
         // 如果当前有敌人目标，切换到攻击状态
@@ -117,9 +127,6 @@ public abstract class Monster : MonoBehaviour
             currentState = State.Attacking;
             return;
         }
-
-
-
 
         // 移动到当前路径点
         Vector3 targetPosition = new Vector3(path[currentPathIndex].Position.x, 1, path[currentPathIndex].Position.y);
@@ -189,6 +196,40 @@ public abstract class Monster : MonoBehaviour
         return new Vector3(gridPosition.x, 0, gridPosition.y);
     }
 
+    /// <summary>
+    /// 可视化寻路路劲
+    /// </summary>
+    public void SetLine(List<ThetaStarNode> path)
+    {
+        // 获取或添加 LineRenderer 组件
+        LineRenderer lineRenderer = GetComponent<LineRenderer>();
+        if (lineRenderer == null)
+        {
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
+        }
+
+        // 设置 LineRenderer 的基本属性
+        lineRenderer.positionCount = path.Count;
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
+
+        // 设置路径点
+        List<Vector3> pathPoints = new List<Vector3>();
+        for (int i = 0; i < path.Count; i++)
+        {
+            Vector3 point = new Vector3(path[i].Position.x, 1, path[i].Position.y);
+            pathPoints.Add(point);
+        }
+
+        lineRenderer.SetPositions(pathPoints.ToArray());
+
+        // 设置颜色渐变
+        lineRenderer.startColor = Color.green;
+        lineRenderer.endColor = Color.red;
+
+        // 设置材质
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+    }
     // 抽象方法和可重写方法（供子类实现或扩展逻辑）
     protected virtual void FindNewTarget() 
     { 

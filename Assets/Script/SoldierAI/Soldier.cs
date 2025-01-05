@@ -33,11 +33,19 @@ public class Soldier : MonoBehaviour
     private List<GameObject> detectedMonsters = new List<GameObject>();
 
     AttackRangeDetector attackRangeDetector;
+    //PathVisualizer pathVisualizer;  // 添加路径可视化器
 
     private void Start()
     {
         gridMap = MapManager.gridMap;
         currentGridPosition = WorldToGrid(transform.position);
+
+        // 获取 PathVisualizer 组件
+        //pathVisualizer = GetComponent<PathVisualizer>();
+        //if (pathVisualizer == null)
+        //{
+        //    pathVisualizer = gameObject.AddComponent<PathVisualizer>();
+        //}
 
         SoldierManager.Instance.RegisterNewSoldier(this);
         HealthBarManager.Instance.CreateHealthBar(this.gameObject);
@@ -134,6 +142,9 @@ public class Soldier : MonoBehaviour
         targetGridPosition = WorldToGrid(target.position);
         path = LPAStar.FindPath(gridMap, currentGridPosition, targetGridPosition);
         currentPathIndex = 1;
+
+        // 设置路径可视化
+        SetLine(path);
 
         if (path.Count == 0)
         {
@@ -233,4 +244,40 @@ public class Soldier : MonoBehaviour
         target = newTarget;
         currentState = (newTarget != null) ? SoldierState.Moving : SoldierState.Idle;
     }
+
+    /// <summary>
+    /// 可视化寻路路劲
+    /// </summary>
+    public void SetLine(List<LPAStarNode> path)
+    {
+        // 获取或添加 LineRenderer 组件
+        LineRenderer lineRenderer = GetComponent<LineRenderer>();
+        if (lineRenderer == null)
+        {
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
+        }
+
+        // 设置 LineRenderer 的基本属性
+        lineRenderer.positionCount = path.Count;
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
+
+        // 设置路径点
+        List<Vector3> pathPoints = new List<Vector3>();
+        for (int i = 0; i < path.Count; i++)
+        {
+            Vector3 point = new Vector3(path[i].Position.x, 1, path[i].Position.y);
+            pathPoints.Add(point);
+        }
+
+        lineRenderer.SetPositions(pathPoints.ToArray());
+
+        // 设置颜色渐变
+        lineRenderer.startColor = Color.green;
+        lineRenderer.endColor = Color.red;
+
+        // 设置材质
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+    }
+
 }
