@@ -14,7 +14,7 @@ namespace MapManagernamespace
         
         public static int width = 73;
         public static int height = 45;
-        public static int scale = 15;
+        public static int scale = 12;
         public static float[,] noiseMap = new float[width, height];
         public static int[,] gridMap = new int[width, height];
 

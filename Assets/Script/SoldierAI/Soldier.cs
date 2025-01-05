@@ -19,6 +19,7 @@ public class Soldier : MonoBehaviour
     public float attackCooldown = 1.0f;
     public float attackDamage = 10;
     public float maxHealth = 1000f;
+
     private float lastAttackTime = 0f;
     private List<LPAStarNode> path = new List<LPAStarNode>();
     private int currentPathIndex = 0;
@@ -33,6 +34,7 @@ public class Soldier : MonoBehaviour
     private List<GameObject> detectedMonsters = new List<GameObject>();
 
     AttackRangeDetector attackRangeDetector;
+    Health health;
     //PathVisualizer pathVisualizer;  // 添加路径可视化器
 
     private void Start()
@@ -50,7 +52,7 @@ public class Soldier : MonoBehaviour
         SoldierManager.Instance.RegisterNewSoldier(this);
         HealthBarManager.Instance.CreateHealthBar(this.gameObject);
 
-        Health health = gameObject.GetComponent<Health>();
+        health = gameObject.GetComponent<Health>();
         if (health != null)
         {
             health.SetHealth(maxHealth);
@@ -69,6 +71,13 @@ public class Soldier : MonoBehaviour
         if (attackRangeDetector.SoldierAttackList != null)
         {
             detectedMonsters = attackRangeDetector.SoldierAttackList;
+        }
+        // 如果血量低于等于 0，设置为死亡状态
+        if (health.GetHealth() <= 0)
+        {
+            Debug.Log("士兵死亡：" + gameObject.name);
+            //HealthBarManager.Instance.RemoveHealthBar(gameObject); // 移除血条
+            currentState = SoldierState.Dead;
         }
 
         switch (currentState)

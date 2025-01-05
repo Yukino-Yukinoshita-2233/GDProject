@@ -37,7 +37,7 @@ public abstract class Monster : MonoBehaviour
     // 怪物的状态枚举
     public enum State { Idling, Moving, Attacking, Dead }
     public State currentState;  // 当前状态
-
+    float NTime;
     /// <summary>
     /// 初始化怪物
     /// </summary>
@@ -52,11 +52,15 @@ public abstract class Monster : MonoBehaviour
         path = ThetaStar.FindPath(map, startPos, targetPos);
         oldCastlePosition = targetPos;
 
+        if(path == null) { currentState = State.Dead; }
         // 设置路径可视化
         SetLine(path);
 
         currentState = State.Moving;
         thisMonsterHealth = transform.GetComponent<Health>();
+
+        NTime = 0f;
+
     }
 
     /// <summary>
@@ -67,8 +71,6 @@ public abstract class Monster : MonoBehaviour
         // 如果血量低于等于 0，设置为死亡状态
         if (thisMonsterHealth.GetHealth() <= 0)
         {
-            Debug.Log("怪物死亡：" + gameObject.name);
-            HealthBarManager.Instance.RemoveHealthBar(gameObject); // 移除血条
             currentState = State.Dead;
         }
 
@@ -95,6 +97,13 @@ public abstract class Monster : MonoBehaviour
                 OnDeath(); // 执行死亡逻辑
                 break;
         }
+
+        if (NTime > 5 && (path == null || currentPathIndex >= path.Count) && currentTargets.Count == 0)
+        {
+            currentState = State.Dead;
+            return;
+        }
+        else { NTime += Time.deltaTime; }
     }
 
     /// <summary>
@@ -177,6 +186,8 @@ public abstract class Monster : MonoBehaviour
     /// </summary>
     protected virtual void OnDeath()
     {
+        Debug.Log("怪物死亡：" + gameObject.name);
+        HealthBarManager.Instance.RemoveHealthBar(gameObject); // 移除血条
         Destroy(gameObject); // 销毁怪物对象
     }
 
@@ -239,7 +250,7 @@ public abstract class Monster : MonoBehaviour
         }
         else 
         {
-            currentState = State.Idling;
+            currentState = State.Moving;
         }
     }
     protected virtual void HandleBuildingDetected(GameObject building) { }

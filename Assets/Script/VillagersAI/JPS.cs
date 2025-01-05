@@ -77,14 +77,14 @@
 //        DeleteChildren();//删除当前地图
 
 //        // 首先检查是否有名为 "BaseGridMap" 的子物体
-//        baseGridMap = transform.Find("BaseGridMap");
+//        CaiLiaoParent = transform.Find("BaseGridMap");
 
 //        // 如果没有，创建一个新的 GameObject 作为子物体
-//        if (baseGridMap == null)
+//        if (CaiLiaoParent == null)
 //        {
-//            baseGridMap = new GameObject("BaseGridMap").transform;
-//            baseGridMap.SetParent(transform);  // 设置为当前物体的子物体
-//            baseGridMap.localPosition = Vector3.zero;  // 设置相对位置为零
+//            CaiLiaoParent = new GameObject("BaseGridMap").transform;
+//            CaiLiaoParent.SetParent(transform);  // 设置为当前物体的子物体
+//            CaiLiaoParent.localPosition = Vector3.zero;  // 设置相对位置为零
 //            Debug.Log("InstantiateMap:创建baseGridMap子物体成功");
 //        }
 
@@ -99,19 +99,19 @@
 //                if (gridMapGen[x, y] == 3) //生成水
 //                {
 //                    WorldPosition = new Vector3(x, 0 - H, y);
-//                    GameObject instance = Instantiate(waterPrefab, WorldPosition, Quaternion.identity, baseGridMap);
+//                    GameObject instance = Instantiate(waterPrefab, WorldPosition, Quaternion.identity, CaiLiaoParent);
 //                }
 //                else if (gridMapGen[x, y] == 0) //生成草
 //                {
 //                    WorldPosition = new Vector3(x, 0, y);
-//                    GameObject instance = Instantiate(grassPrefab, WorldPosition, Quaternion.identity, baseGridMap);
+//                    GameObject instance = Instantiate(grassPrefab, WorldPosition, Quaternion.identity, CaiLiaoParent);
 //                    //instance.layer = GrassLayerMask;
 
 //                }
 //                else if (gridMapGen[x, y] == 1)    //生成山
 //                {
 //                    WorldPosition = new Vector3(x, 0 + 2 * H, y);
-//                    GameObject instance = Instantiate(mountainPrefab, WorldPosition, Quaternion.identity, baseGridMap);
+//                    GameObject instance = Instantiate(mountainPrefab, WorldPosition, Quaternion.identity, CaiLiaoParent);
 
 //                }
 //            }
