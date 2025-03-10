@@ -66,7 +66,7 @@ public class MonsterManager : MonoBehaviour
         Monster monster;
 
         // 随机选择怪物类型
-        if (Random.value > 0.5f)
+        if (Random.value > 0.3f)
         {
             monsterObject = Instantiate(goblinPrefab, new Vector3(startPos.x, 1, startPos.y), Quaternion.identity, monsterParent);
             monster = monsterObject.GetComponent<Goblin>();
@@ -87,12 +87,31 @@ public class MonsterManager : MonoBehaviour
 
     Vector2Int GetRandomPosition()
     {
-        int x, y;
+        int x = 0, y = 0;
+        int i = Random.Range(0, 4); // i 需要在 0 到 3 之间
+
         do
         {
-            x = Random.Range(0, gridMap.GetLength(0));
-            y = Random.Range(0, gridMap.GetLength(1));
-        } while (gridMap[x, y] != 0);
+            switch (i)
+            {
+                case 0: // 选择左边界
+                    x = 0;
+                    y = Random.Range(0, gridMap.GetLength(1));
+                    break;
+                case 1: // 选择上边界
+                    x = Random.Range(0, gridMap.GetLength(0));
+                    y = 0;
+                    break;
+                case 2: // 选择右边界
+                    x = gridMap.GetLength(0) - 1; // 防止索引越界
+                    y = Random.Range(0, gridMap.GetLength(1));
+                    break;
+                case 3: // 选择下边界
+                    x = Random.Range(0, gridMap.GetLength(0));
+                    y = gridMap.GetLength(1) - 1; // 防止索引越界
+                    break;
+            }
+        } while (gridMap[x, y] != 0); // 确保选中的位置是可行走的
 
         return new Vector2Int(x, y);
     }

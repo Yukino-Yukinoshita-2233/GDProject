@@ -12,15 +12,15 @@ namespace MapManagernamespace
         MapGenerator mapGenerator;
         // 地图尺寸
         
-        public static int width = 73;
-        public static int height = 45;
+        public static int width = 192;//73
+        public static int height = 108;//45
         public static int scale = 12;
         public static float[,] noiseMap = new float[width, height];
         public static int[,] gridMap = new int[width, height];
 
         // 基础地形
         public GameObject waterPrefab;  //水地形
-        public GameObject grassPrefab;  //草地形
+        public GameObject[] grassPrefab;  //草地形
         public GameObject mountainPrefab;  //山地形
         public float waterTerrainSize = 0.3f;   //水地形占位百分比
         public float mountainTerrainSize = 0.6f;   //山地形占位百分比

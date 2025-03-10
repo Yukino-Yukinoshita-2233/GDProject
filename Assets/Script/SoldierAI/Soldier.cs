@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using MapManagernamespace;
 using System.Linq;
+using System.Collections;
+using System.Threading;
 
 public enum SoldierState
 {
@@ -35,6 +37,7 @@ public class Soldier : MonoBehaviour
 
     AttackRangeDetector attackRangeDetector;
     Health health;
+    public Animator animator;
     //PathVisualizer pathVisualizer;  // 添加路径可视化器
 
     private void Start()
@@ -83,22 +86,29 @@ public class Soldier : MonoBehaviour
         switch (currentState)
         {
             case SoldierState.Idle:
+                animator.SetFloat("isRun", 0f);
                 HandleIdleState();
                 break;
             case SoldierState.Moving:
+                animator.SetFloat("isRun", 1f);
                 HandleMovingState();
                 break;
             case SoldierState.Attacking:
                 HandleAttackingState();
                 break;
             case SoldierState.Dead:
+                animator.SetBool("isDead",true);
                 HandleDeadState();
                 break;
         }
 
 
+    } 
+    void FixedUpdate()
+    {
+        Quaternion fixedRotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+        GetComponent<Rigidbody>().MoveRotation(fixedRotation);
     }
-
     private void HandleIdleState()
     {
         if (detectedMonsters.Count > 0)
@@ -132,7 +142,6 @@ public class Soldier : MonoBehaviour
             targetPosition.y = 1.45f;
 
             MoveTowards(targetPosition);
-
             if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
             {
                 currentPathIndex++;
@@ -170,7 +179,9 @@ public class Soldier : MonoBehaviour
             if (Time.time - lastAttackTime >= attackCooldown)
             {
                 lastAttackTime = Time.time;
-                AttackTarget(currentMonsterTarget);
+                animator.SetTrigger("isAttack01");
+                StartCoroutine(DelayAttack(0.5f)); // 1秒后执行伤害
+                //AttackTarget(currentMonsterTarget);
             }
         }
         else
@@ -178,6 +189,17 @@ public class Soldier : MonoBehaviour
 
             SwitchTarget();
         }
+    }
+
+
+    // 创建协程来延迟执行伤害
+    private IEnumerator DelayAttack(float delayTime)
+    {
+        // 等待指定的时间
+        yield return new WaitForSeconds(delayTime);
+
+        // 执行伤害逻辑
+        AttackTarget(currentMonsterTarget);
     }
 
     private void AttackTarget(GameObject monster)
@@ -236,6 +258,8 @@ public class Soldier : MonoBehaviour
     {
         Vector3 direction = (targetPosition - transform.position).normalized;
         transform.position += direction * moveSpeed * Time.deltaTime;
+        transform.LookAt(new Vector3(targetPosition.x,1.5f,targetPosition.z));
+
     }
 
     private Vector2Int WorldToGrid(Vector3 worldPosition)

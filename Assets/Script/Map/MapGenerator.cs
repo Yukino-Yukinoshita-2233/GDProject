@@ -14,10 +14,10 @@ public class MapGenerator : MonoBehaviour
     // 基础地形
     Transform baseGridMap;  //基础地形父物体
     public GameObject waterPrefab;  //水地形
-    public GameObject grassPrefab;  //草地形
-    public GameObject mountainPrefab;  //山地形
-    public float waterTerrainSize = 0.3f;   //水地形占位百分比
-    public float mountainTerrainSize = 0.6f;   //山地形占位百分比
+    public GameObject[] grassPrefab;  //草地形
+    public GameObject[] mountainPrefab;  //山地形
+    //public float waterTerrainSize = 0.3f;   //水地形占位百分比
+    //public float mountainTerrainSize = 0.6f;   //山地形占位百分比
     LayerMask GrassLayerMask;
     LayerMask WaterLayerMask;
     LayerMask MountainLayerMask;
@@ -205,14 +205,48 @@ public class MapGenerator : MonoBehaviour
                 else if (gridMapGen[x, y] == 0) //生成草
                 {
                     WorldPosition = new Vector3(x, 0, y);
-                    GameObject instance = Instantiate(grassPrefab, WorldPosition, Quaternion.identity, baseGridMap);
-                    //instance.layer = GrassLayerMask;
+                    if (x % 6 < 3)
+                    {
+                        if (y % 6 < 3)
+                        {
+                            GameObject instance = Instantiate(grassPrefab[0], WorldPosition, Quaternion.identity, baseGridMap);
+                        }
+                        else
+                        {
+                            GameObject instance = Instantiate(grassPrefab[1], WorldPosition, Quaternion.identity, baseGridMap);
+                        }
+                    }
+                    else if (x % 6 >= 3)
+                    {
+                        if (y % 6 >= 3)
+                        {
+                                GameObject instance = Instantiate(grassPrefab[0], WorldPosition, Quaternion.identity, baseGridMap);
 
+                        }
+                        else
+                        {
+                                GameObject instance = Instantiate(grassPrefab[1], WorldPosition, Quaternion.identity, baseGridMap);
+                        }
+                        //instance.layer = GrassLayerMask;
+
+                    }
                 }
                 else if (gridMapGen[x, y] == 1)    //生成山
                 {
                     WorldPosition = new Vector3(x, 0 + H, y);
-                    GameObject instance = Instantiate(mountainPrefab, WorldPosition, Quaternion.identity, baseGridMap);
+                    if (Random.Range(0, 10) < 1)
+                    {
+                        GameObject instance = Instantiate(mountainPrefab[1], WorldPosition, Quaternion.identity, baseGridMap);
+                    }
+                    else if (Random.Range(0, 10) > 8)
+                    {
+                        GameObject instance = Instantiate(mountainPrefab[2], WorldPosition, Quaternion.identity, baseGridMap);
+
+                    }
+                    else
+                    {
+                        GameObject instance = Instantiate(mountainPrefab[0], WorldPosition, Quaternion.identity, baseGridMap);
+                    }
 
                 }
             }

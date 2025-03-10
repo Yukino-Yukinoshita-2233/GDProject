@@ -44,7 +44,7 @@ MonoBehaviour:
       Num: 2
   - CailiaoXioahaoList:
     - caiLiaoStyel: 0
-      Num: 5
+      Num: 3
     - caiLiaoStyel: 1
       Num: 0
     - caiLiaoStyel: 2
@@ -62,11 +62,11 @@ MonoBehaviour:
     - caiLiaoStyel: 1
       Num: 0
     - caiLiaoStyel: 2
-      Num: 5
+      Num: 7
   - CailiaoXioahaoList:
     - caiLiaoStyel: 0
-      Num: 12
-    - caiLiaoStyel: 1
       Num: 6
+    - caiLiaoStyel: 1
+      Num: 3
     - caiLiaoStyel: 2
       Num: 2

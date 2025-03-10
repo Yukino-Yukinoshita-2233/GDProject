@@ -38,6 +38,7 @@ public abstract class Monster : MonoBehaviour
     public enum State { Idling, Moving, Attacking, Dead }
     public State currentState;  // 当前状态
     float NTime;
+    public Animator animator;
     /// <summary>
     /// 初始化怪物
     /// </summary>
@@ -85,15 +86,18 @@ public abstract class Monster : MonoBehaviour
         switch (currentState)
         {
             case State.Idling:
+                animator.SetFloat("isRun", 0f);
                 FindNewTarget(); // 寻找新目标（空方法，供子类实现）
                 break;
             case State.Moving:
+                animator.SetFloat("isRun", 1f);
                 MoveTowardsTarget(); // 执行移动逻辑
                 break;
             case State.Attacking:
                 Attack(); // 执行攻击逻辑
                 break;
             case State.Dead:
+                animator.SetBool("isDead", true);
                 OnDeath(); // 执行死亡逻辑
                 break;
         }
@@ -120,7 +124,7 @@ public abstract class Monster : MonoBehaviour
             currentPathIndex = 0; // 重置路径点索引
 
             // 设置路径可视化
-            SetLine(path);
+            //SetLine(path);
         }
 
         // 如果当前有敌人目标，切换到攻击状态
@@ -140,6 +144,8 @@ public abstract class Monster : MonoBehaviour
         // 移动到当前路径点
         Vector3 targetPosition = new Vector3(path[currentPathIndex].Position.x, 1, path[currentPathIndex].Position.y);
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * moveSpeed);
+        transform.LookAt(targetPosition);
+
 
         // 如果接近当前路径点，移动到下一个路径点
         if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
@@ -173,12 +179,26 @@ public abstract class Monster : MonoBehaviour
             Health targetHealth = target.GetComponent<Health>();
             if (targetHealth != null)
             {
-                targetHealth.TakeDamage(damage); // 对目标造成伤害
-                Debug.Log("怪物攻击，伤害：" + damage);
+                animator.SetTrigger("isAttack01");
+                // 启动协程，等待动画播放完毕后执行伤害
+                StartCoroutine(DelayAttack(targetHealth, 0.5f)); // 1秒后执行伤害
+                //targetHealth.TakeDamage(damage); // 对目标造成伤害
+                //Debug.Log("怪物攻击，伤害：" + damage);
             }
         }
 
         lastAttackTime = Time.time; // 更新最后攻击时间
+    }
+
+    // 创建协程来延迟执行伤害
+    private IEnumerator DelayAttack(Health targetHealth, float delayTime)
+    {
+        // 等待指定的时间
+        yield return new WaitForSeconds(delayTime);
+
+        // 执行伤害逻辑
+        targetHealth.TakeDamage(damage);
+        Debug.Log("怪物攻击，伤害：" + damage);
     }
 
     /// <summary>
@@ -223,7 +243,6 @@ public abstract class Monster : MonoBehaviour
         lineRenderer.positionCount = path.Count;
         lineRenderer.startWidth = 0.1f;
         lineRenderer.endWidth = 0.1f;
-
         // 设置路径点
         List<Vector3> pathPoints = new List<Vector3>();
         for (int i = 0; i < path.Count; i++)
