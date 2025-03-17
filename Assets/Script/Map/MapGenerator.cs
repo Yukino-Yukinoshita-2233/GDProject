@@ -85,8 +85,8 @@ public class MapGenerator : MonoBehaviour
         while (itemsGenerated < itemCount)
         {
             // 随机选择一个位置
-            int x = Random.Range(0, widthGen);
-            int y = Random.Range(0, heightGen);
+            int x = Random.Range(widthGen/3, widthGen-widthGen/3);
+            int y = Random.Range(heightGen/3, heightGen-heightGen/3);
 
             // 确保当前位置是草地并且没有道具已生成
             if (gridMapGen[x, y] == 0 && !usedPositions.Contains(new Vector2Int(x, y)))
@@ -124,8 +124,8 @@ public class MapGenerator : MonoBehaviour
     {
         while (true)
         {
-            int X = Random.Range(1, widthGen - 1);
-            int Z = Random.Range(1, heightGen - 1);
+            int X = Random.Range(widthGen/3, widthGen*2/3);
+            int Z = Random.Range(heightGen/3, heightGen*2/3);
             if (gridMapGen[X, Z] == 0)
             {
                 if (gridMapGen[X - 1, Z] == 0 && gridMapGen[X + 1, Z] == 0 && gridMapGen[X, Z - 1] == 0 && gridMapGen[X, Z + 1] == 0)
@@ -247,9 +247,22 @@ public class MapGenerator : MonoBehaviour
                     {
                         GameObject instance = Instantiate(mountainPrefab[0], WorldPosition, Quaternion.identity, baseGridMap);
                     }
-
                 }
             }
+        }
+        int backgroundMapX = 50;
+        int backgroundMapY = 50;
+        for (int i = -backgroundMapX; i < widthGen + backgroundMapX; i++)
+        {
+            for (int j = -backgroundMapY; j < heightGen + backgroundMapY; j++)
+            {
+                if (!(0 <= i && i < widthGen && 0 <= j && j < heightGen))
+                {
+                    WorldPosition = new Vector3(i, 0 + H, j);
+                    GameObject instance = Instantiate(mountainPrefab[0], WorldPosition, Quaternion.identity, baseGridMap);
+                }
+            }
+
         }
     }
 

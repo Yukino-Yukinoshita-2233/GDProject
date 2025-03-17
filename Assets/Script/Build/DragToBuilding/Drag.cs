@@ -58,9 +58,18 @@ public class Drag : MonoBehaviour, IPointerDownHandler
 
                 var obj = Resources.Load(Path);
                 GameObject TarGetObj = Instantiate(obj) as GameObject;
+                
                 TarGetObj.SetActive(true);
-                TarGetObj.transform.position = dragObj.transform.position;
+                if (TarGetObj.layer == 16)
+                {
+                    TarGetObj.transform.position = dragObj.transform.position+new Vector3(0,1,0);
+                }
+                else
+                {
+                    TarGetObj.transform.position = dragObj.transform.position;
+                }
                 TarGetObj.transform.rotation = dragObj.transform.rotation;
+
                 TarGetObj.transform.SetParent(parent);
             }
 
@@ -90,6 +99,7 @@ public class Drag : MonoBehaviour, IPointerDownHandler
         var obj = Resources.Load(Path+ "_Normal");
         //实例化一个资源到场景中
         dragObj = Instantiate(obj) as GameObject;
+        Debug.Log("生成:" + dragObj.name);
         dragObj.SetActive(true);
 
     }

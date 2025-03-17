@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 /// <summary>
 /// 选择管理器，负责选择友军单位（士兵）并控制它们的行动。
@@ -8,18 +9,28 @@ using UnityEngine.EventSystems;
 public class SelectionManager : MonoBehaviour
 {
     // 被选中的单位列表
-    private List<Soldier> selectedSoldiers = new List<Soldier>();
+    public List<Soldier> selectedSoldiers = new List<Soldier>();
+    public List<Soldier> selectedObjectIcon = new List<Soldier>();
 
     // 框选起始点
     private Vector2 selectionStartPos;
     private Vector2 selectionEndPos;
     private bool isSelecting = false;
 
+    public GameObject selectionObjectParent;
+    public List<GameObject> selectionObjectIcon = new List<GameObject>();
+
+    private void Start()
+    {
+        StartCoroutine(ClearSelectionObjectChildrenNextFrame());
+    }
     private void Update()
     {
         HandleSelectionInput(); // 处理鼠标选择逻辑
         HandleCommandInput();   // 处理右键命令逻辑
+        //isSelectedOnGUI();
     }
+
 
     /// <summary>
     /// 处理框选和单击的鼠标输入逻辑。
@@ -29,6 +40,9 @@ public class SelectionManager : MonoBehaviour
         // 开始框选
         if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false)
         {
+            // 清空之前的选择
+            selectedSoldiers.Clear();
+
             selectionStartPos = Input.mousePosition;
             isSelecting = true; // 进入框选模式
         }
@@ -41,10 +55,15 @@ public class SelectionManager : MonoBehaviour
             if(selectionStartPos == selectionEndPos)
             {
                 SelectUnitsSingle();
+                //syncSelectionObject();
+
             }
             else
             {
                 SelectUnitsInRectangle();
+                //syncSelectionObject();
+                StartCoroutine(ClearSelectionObjectChildrenNextFrame());
+
             }
 
         }
@@ -55,26 +74,34 @@ public class SelectionManager : MonoBehaviour
     /// </summary>
     private void SelectUnitsSingle()
     {
-        // 清空之前的选择
-        selectedSoldiers.Clear();
+        // 清空之前的选择，如果需要的话，可以取消注释下面这行代码
+        // selectedSoldiers.Clear();
 
-        // 使用射线检测（Raycast）选中单个士兵
+        // 从主摄像机获取鼠标点击位置对应的射线
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        // 使用 Physics.Raycast 进行射线检测，判断是否击中目标
         if (Physics.Raycast(ray, out RaycastHit hitInfo))
         {
-            // 检查射线击中的对象是否是士兵
+            // 调试输出：打印射线检测到的对象名称，便于调试确认射线命中情况
+            Debug.Log("射线检测到对象: " + hitInfo.collider.gameObject.name);
+
+            // 尝试获取射线击中对象上的 Soldier 组件
             Soldier soldier = hitInfo.collider.GetComponent<Soldier>();
             if (soldier != null)
             {
+                // 如果检测到的对象有 Soldier 组件，则将该士兵加入选中列表
                 selectedSoldiers.Add(soldier);
                 Debug.Log($"Selected soldier: {soldier.name}");
             }
             else
             {
+                // 如果检测到的对象没有 Soldier 组件，则输出提示信息
                 Debug.Log("No soldier selected");
             }
         }
     }
+
 
     /// <summary>
     /// 框选单位，并将符合条件的士兵加入选中列表。
@@ -82,7 +109,7 @@ public class SelectionManager : MonoBehaviour
     private void SelectUnitsInRectangle()
     {
         // 清空之前的选择
-        selectedSoldiers.Clear();
+        //selectedSoldiers.Clear();
 
         Rect selectionRect = new Rect(
             Mathf.Min(selectionStartPos.x, selectionEndPos.x),
@@ -102,6 +129,42 @@ public class SelectionManager : MonoBehaviour
         }
 
         Debug.Log($"Selected {selectedSoldiers.Count} soldiers");
+        //syncSelectionObject();
+
+    }
+
+    IEnumerator ClearSelectionObjectChildrenNextFrame()
+    {
+        // 循环直到所有子对象都被销毁
+        while (selectionObjectParent.transform.childCount > 0)
+        {
+            //Debug.Log("销毁icon");
+            Destroy(selectionObjectParent.transform.GetChild(0).gameObject);
+            // 等待一帧，让 Destroy() 生效
+            yield return null;
+        }
+        syncSelectionObject();
+
+    }
+
+    /// <summary>
+    /// 同步被选择栏，更新被选择对象的显示图标。
+    /// </summary>
+    void syncSelectionObject()
+    {
+        //StartCoroutine(ClearSelectionObjectChildrenNextFrame());
+
+        for (int i = 0; i < selectedSoldiers.Count; i++)
+        {
+            //Debug.Log("生成士兵icon: " + selectedSoldiers[i].name);
+
+            // 判断当前士兵是否是剑士类型（包括克隆体和原件）
+            if (selectedSoldiers[i].name == "Swordsman(Clone)" || selectedSoldiers[i].name == "Swordsman")
+            {
+                // Instantiate 方法用于生成预制体，将其作为 selectionObjectParent 的子对象
+                Instantiate(selectionObjectIcon[0], Vector3.zero, Quaternion.identity, selectionObjectParent.transform);
+            }
+        }
     }
 
     /// <summary>
@@ -112,7 +175,7 @@ public class SelectionManager : MonoBehaviour
         // 定义需要检测的层级（Grass 和 Monster）
         int layerMask = LayerMask.GetMask("Grass", "Monster");
         // 右键点击
-        if (Input.GetMouseButtonDown(1) && selectedSoldiers.Count > 0)
+        if (Input.GetMouseButtonUp(1) && selectedSoldiers.Count > 0)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, 100f, layerMask))
@@ -147,6 +210,7 @@ public class SelectionManager : MonoBehaviour
         }
     }
 
+
     /// <summary>
     /// 绘制选择框（仅供视觉辅助）。
     /// </summary>
@@ -164,6 +228,41 @@ public class SelectionManager : MonoBehaviour
             GUI.color = new Color(0, 0.5f, 1, 0.25f);
             GUI.DrawTexture(rect, Texture2D.whiteTexture);
             GUI.color = Color.white;
+        }
+        isSelectedOnGUI();
+    }
+
+    /// <summary>
+    /// 使用 OnGUI 方法为 selectedSoldiers 列表中的每个士兵绘制一个选中标识。
+    /// 此方法将在 GUI 渲染阶段执行，将士兵的世界坐标转换为屏幕坐标，并在该位置绘制选中贴图。
+    /// </summary>
+    void isSelectedOnGUI()
+    {
+        // 确保选中列表不为空
+        if (selectedSoldiers == null || selectedSoldiers.Count == 0)
+            return;
+
+        // 创建 GUIStyle 来控制文本样式
+        GUIStyle triangleStyle = new GUIStyle();
+        triangleStyle.fontSize = 30; // 设定字体大小
+        triangleStyle.normal.textColor = Color.black; // 设定颜色为黑色
+
+        // 遍历所有被选中的士兵
+        foreach (Soldier soldier in selectedSoldiers)
+        {
+            if (soldier == null)
+                continue;
+
+            // 获取士兵的世界坐标，并转换为屏幕坐标
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(soldier.transform.position);
+            screenPos.y = Screen.height - screenPos.y; // GUI 坐标原点在左上角，需要转换 y 坐标
+
+            // 计算倒三角的绘制位置，使其位于士兵上方
+            float triangleOffsetY = 50f; // 控制倒三角的高度偏移
+            Vector2 labelPos = new Vector2(screenPos.x - 10, screenPos.y - triangleOffsetY);
+
+            // 绘制倒三角（Unicode 字符 "▼"）
+            GUI.Label(new Rect(labelPos.x, labelPos.y, 20, 20), "▼", triangleStyle);
         }
     }
 }

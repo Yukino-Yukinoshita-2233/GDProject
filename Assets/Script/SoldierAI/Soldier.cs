@@ -7,6 +7,10 @@ using System.Threading;
 
 public enum SoldierState
 {
+
+}
+public enum SoldierBaseState
+{
     Idle,
     Moving,
     Attacking,
@@ -15,7 +19,7 @@ public enum SoldierState
 
 public class Soldier : MonoBehaviour
 {
-    public SoldierState currentState = SoldierState.Idle;
+    public SoldierBaseState currentState = SoldierBaseState.Idle;
     public Transform target;
     public float moveSpeed = 3.0f;
     public float attackCooldown = 1.0f;
@@ -80,30 +84,33 @@ public class Soldier : MonoBehaviour
         {
             Debug.Log("Ê¿±øËÀÍö£º" + gameObject.name);
             //HealthBarManager.Instance.RemoveHealthBar(gameObject); // ÒÆ³ýÑªÌõ
-            currentState = SoldierState.Dead;
+            currentState = SoldierBaseState.Dead;
         }
 
         switch (currentState)
         {
-            case SoldierState.Idle:
+            case SoldierBaseState.Idle:
                 animator.SetFloat("isRun", 0f);
                 HandleIdleState();
                 break;
-            case SoldierState.Moving:
+            case SoldierBaseState.Moving:
                 animator.SetFloat("isRun", 1f);
                 HandleMovingState();
                 break;
-            case SoldierState.Attacking:
+            case SoldierBaseState.Attacking:
                 HandleAttackingState();
                 break;
-            case SoldierState.Dead:
+            case SoldierBaseState.Dead:
                 animator.SetBool("isDead",true);
                 HandleDeadState();
                 break;
         }
-
-
     } 
+
+
+
+
+
     void FixedUpdate()
     {
         Quaternion fixedRotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
@@ -121,7 +128,7 @@ public class Soldier : MonoBehaviour
     {
         if (target == null || gridMap == null)
         {
-            currentState = SoldierState.Idle;
+            currentState = SoldierBaseState.Idle;
             return;
         }
 
@@ -149,7 +156,7 @@ public class Soldier : MonoBehaviour
 
                 if (currentPathIndex >= path.Count)
                 {
-                    currentState = detectedMonsters.Count > 0 ? SoldierState.Attacking : SoldierState.Idle;
+                    currentState = detectedMonsters.Count > 0 ? SoldierBaseState.Attacking : SoldierBaseState.Idle;
                 }
             }
         }
@@ -166,7 +173,7 @@ public class Soldier : MonoBehaviour
 
         if (path.Count == 0)
         {
-            currentState = SoldierState.Idle;
+            currentState = SoldierBaseState.Idle;
         }
     }
 
@@ -219,11 +226,11 @@ public class Soldier : MonoBehaviour
         if (detectedMonsters.Count > 0)
         {
             currentMonsterTarget = detectedMonsters.First();
-            currentState = SoldierState.Attacking;
+            currentState = SoldierBaseState.Attacking;
         }
         else
         {
-            currentState = SoldierState.Idle;
+            currentState = SoldierBaseState.Idle;
         }
     }
 
@@ -275,7 +282,7 @@ public class Soldier : MonoBehaviour
     public void SetTarget(Transform newTarget)
     {
         target = newTarget;
-        currentState = (newTarget != null) ? SoldierState.Moving : SoldierState.Idle;
+        currentState = (newTarget != null) ? SoldierBaseState.Moving : SoldierBaseState.Idle;
     }
 
     /// <summary>
