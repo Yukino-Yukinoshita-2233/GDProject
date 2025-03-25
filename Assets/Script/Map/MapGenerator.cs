@@ -172,6 +172,9 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+
+
+
     //ÊµÀý»¯µØÍ¼
     void InstantiateMap()
     {

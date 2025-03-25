@@ -2,6 +2,10 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using System.Collections;
+using UnityEngine.UI;
+using Unity.Burst.CompilerServices;
+using System;
+using System.IO;
 
 /// <summary>
 /// 选择管理器，负责选择友军单位（士兵）并控制它们的行动。
@@ -19,10 +23,33 @@ public class SelectionManager : MonoBehaviour
 
     public GameObject selectionObjectParent;
     public List<GameObject> selectionObjectIcon = new List<GameObject>();
+    public List<GameObject> SoldierType = new List<GameObject>();
+    public Transform soldierParent;
+
+    public List<Button> SoldierStateButton = new List<Button>();
+    public List<Button> SoldierTypeButton = new List<Button>();
+
+    public static Transform castle; // 城堡
+
+    public BuildStyle buildStyle;
 
     private void Start()
     {
+        castle = GameObject.Find("Building").transform.Find("Castle");
+
         StartCoroutine(ClearSelectionObjectChildrenNextFrame());
+
+        // 遍历列表，给每个按钮添加监听事件
+        for (int i = 0; i < SoldierStateButton.Count; i++)
+        {
+            int index = i; // 解决 Lambda 闭包问题
+            SoldierStateButton[i].onClick.AddListener(() => OnSoldierStateButtonClick(index));
+        }
+        for (int i = 0; i < SoldierTypeButton.Count; i++)
+        {
+            int index = i; // 解决 Lambda 闭包问题
+            SoldierTypeButton[i].onClick.AddListener(() => OnSoldierTypeButtonClick(index));
+        }
     }
     private void Update()
     {
@@ -31,12 +58,108 @@ public class SelectionManager : MonoBehaviour
         //isSelectedOnGUI();
     }
 
+    void ShowAllButtons(bool isShow)
+    {
+        foreach (Button btn in SoldierStateButton)
+        {
+            btn.gameObject.SetActive(isShow);
+        }
+    }
+
+    /// <summary>
+    /// 按钮点击事件处理
+    /// </summary>
+    void OnSoldierStateButtonClick(int index)
+    {
+        Debug.Log($"按钮 {index} 被点击");
+
+        // 在这里执行按钮点击后的逻辑
+        if(index == 2)
+        {
+            for (int i = selectedSoldiers.Count - 1; i >= 0; i--)
+            {
+                var soldier = selectedSoldiers[i];
+                if (soldier == null)
+                {
+                    selectedSoldiers.RemoveAt(i); // 安全删除空对象
+                }
+                else
+                {
+                    // 创建目标点并设置给士兵
+                    soldier.SetTarget(castle.transform.position);
+                }
+            }
+        }
+        else
+        {
+            for (int i = selectedSoldiers.Count - 1; i >= 0; i--)
+            {
+                var soldier = selectedSoldiers[i];
+                if (soldier == null)
+                {
+                    selectedSoldiers.RemoveAt(i); // 安全删除空对象
+                }
+                else
+                {
+                    soldier.currentBaseState = SoldierBaseState.Idle;
+                    soldier.currentState = (SoldierState)index;
+                }
+            }
+        }
+
+
+    }
+    /// <summary>
+    /// 按钮点击事件处理
+    /// </summary>
+    void OnSoldierTypeButtonClick(int index)
+    {
+        Debug.Log($"按钮 {index} 被点击");
+
+        // 在这里执行按钮点击后的逻辑
+        if (index == 0)
+        {
+            buildStyle = BuildStyle.JianShi;
+        }
+        else if (index == 1)
+        {
+            buildStyle = BuildStyle.FaShi;
+        }
+
+        Vector3Int Xioahao = BuildManger.Instance.GetXiaoHao(buildStyle);
+        Debug.Log("消耗为 " + Xioahao);
+        if (!CaiLiaoManager.Instance.GetUseCaiLiao(Xioahao))
+        {
+            return;
+        }
+
+        var obj = SoldierType[index];
+        GameObject TarGetObj = Instantiate(obj, castle.position + new Vector3(0,1,0), Quaternion.Euler(0, 180, 0), soldierParent);
+        StartCoroutine(MoveBackward(TarGetObj.transform, -2f, 1f)); // 移动 2 个单位，用 1 秒完成
+
+    }
+    IEnumerator MoveBackward(Transform soldier, float distance, float duration)
+    {
+        Vector3 startPos = soldier.position;
+        Vector3 endPos = startPos - soldier.forward * distance; // -Z 方向
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            soldier.position = Vector3.Lerp(startPos, endPos, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        soldier.position = endPos; // 确保最终位置正确
+    }
 
     /// <summary>
     /// 处理框选和单击的鼠标输入逻辑。
     /// </summary>
     private void HandleSelectionInput()
     {
+
         // 开始框选
         if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false)
         {
@@ -62,9 +185,9 @@ public class SelectionManager : MonoBehaviour
             {
                 SelectUnitsInRectangle();
                 //syncSelectionObject();
-                StartCoroutine(ClearSelectionObjectChildrenNextFrame());
 
             }
+            StartCoroutine(ClearSelectionObjectChildrenNextFrame());
 
         }
     }
@@ -153,17 +276,25 @@ public class SelectionManager : MonoBehaviour
     void syncSelectionObject()
     {
         //StartCoroutine(ClearSelectionObjectChildrenNextFrame());
-
-        for (int i = 0; i < selectedSoldiers.Count; i++)
+        if (selectedSoldiers.Count != 0)
         {
-            //Debug.Log("生成士兵icon: " + selectedSoldiers[i].name);
-
-            // 判断当前士兵是否是剑士类型（包括克隆体和原件）
-            if (selectedSoldiers[i].name == "Swordsman(Clone)" || selectedSoldiers[i].name == "Swordsman")
+            for (int i = 0; i < selectedSoldiers.Count; i++)
             {
-                // Instantiate 方法用于生成预制体，将其作为 selectionObjectParent 的子对象
-                Instantiate(selectionObjectIcon[0], Vector3.zero, Quaternion.identity, selectionObjectParent.transform);
+                //Debug.Log("生成士兵icon: " + selectedSoldiers[i].name);
+
+                // 判断当前士兵是否是剑士类型（包括克隆体和原件）
+                if (selectedSoldiers[i].name == "Swordsman(Clone)" || selectedSoldiers[i].name == "Swordsman")
+                {
+                    // Instantiate 方法用于生成预制体，将其作为 selectionObjectParent 的子对象
+                    Instantiate(selectionObjectIcon[0], Vector3.zero, Quaternion.identity, selectionObjectParent.transform);
+                }
             }
+
+            ShowAllButtons(true);
+        }
+        else
+        {
+            ShowAllButtons(false);
         }
     }
 
@@ -194,7 +325,10 @@ public class SelectionManager : MonoBehaviour
                             // 创建目标点并设置给士兵
                             var targetPoint = new GameObject("TargetPoint");
                             targetPoint.transform.position = hit.point;
-                            soldier.SetTarget(targetPoint.transform);
+                            soldier.SetTarget(targetPoint.transform.position);
+                            Destroy(targetPoint, 60f);
+                            soldier.currentState = SoldierState.Jingjie;
+
                         }
                     }
                 }

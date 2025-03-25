@@ -164,6 +164,21 @@ namespace MapManagernamespace
             }
             return gridMap;
         }
+
+        //返回一个可行走点
+        public Vector3 GetPointCanWalk()
+        {
+            while (true)
+            {
+                int X = UnityEngine.Random.Range(0, width);
+                int Z = UnityEngine.Random.Range(0, height);
+                if (gridMap[X, Z] == 0)
+                {
+                    return new Vector3(X, 0, Z);
+                }
+            }
+        }
+
     }
 }
 

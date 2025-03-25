@@ -138,7 +138,7 @@
 //                while (temp != startNode)
 //                {
 //                    newPath.Add(temp.worldPosition);
-//                    temp = temp.parent;
+//                    temp = temp.soldierParent;
 //                }
 //                newPath.Reverse();
 //                path = newPath.ToArray();
@@ -171,7 +171,7 @@
 //            if (jumpNode != null && !closedList.Contains(jumpNode))
 //            {
 //                openList.Add(jumpNode);
-//                jumpNode.parent = currentNode;
+//                jumpNode.soldierParent = currentNode;
 //            }
 //        }
 //    }

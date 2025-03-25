@@ -4,10 +4,12 @@ using MapManagernamespace;
 using System.Linq;
 using System.Collections;
 using System.Threading;
+using static UnityEngine.GraphicsBuffer;
 
 public enum SoldierState
 {
-
+    Jingjie,
+    Xunluo
 }
 public enum SoldierBaseState
 {
@@ -19,14 +21,16 @@ public enum SoldierBaseState
 
 public class Soldier : MonoBehaviour
 {
-    public SoldierBaseState currentState = SoldierBaseState.Idle;
-    public Transform target;
+    public SoldierState currentState = SoldierState.Jingjie;
+    public SoldierBaseState currentBaseState = SoldierBaseState.Idle;
+    public Vector3 target;
     public float moveSpeed = 3.0f;
     public float attackCooldown = 1.0f;
     public float attackDamage = 10;
     public float maxHealth = 1000f;
 
     private float lastAttackTime = 0f;
+    private float lastUpdatePathTime = 0f;
     private List<LPAStarNode> path = new List<LPAStarNode>();
     private int currentPathIndex = 0;
     private Vector2Int currentGridPosition;
@@ -48,6 +52,9 @@ public class Soldier : MonoBehaviour
     {
         gridMap = MapManager.gridMap;
         currentGridPosition = WorldToGrid(transform.position);
+        //Debug.Log("Soldiertarget:" + WorldToGrid(target.transform.position));
+        target = transform.position;
+        targetGridPosition = WorldToGrid(target);
 
         // 获取 PathVisualizer 组件
         //pathVisualizer = GetComponent<PathVisualizer>();
@@ -84,26 +91,52 @@ public class Soldier : MonoBehaviour
         {
             Debug.Log("士兵死亡：" + gameObject.name);
             //HealthBarManager.Instance.RemoveHealthBar(gameObject); // 移除血条
-            currentState = SoldierBaseState.Dead;
+            currentBaseState = SoldierBaseState.Dead;
         }
 
-        switch (currentState)
+        if (currentState == SoldierState.Jingjie)
         {
-            case SoldierBaseState.Idle:
-                animator.SetFloat("isRun", 0f);
-                HandleIdleState();
-                break;
-            case SoldierBaseState.Moving:
-                animator.SetFloat("isRun", 1f);
-                HandleMovingState();
-                break;
-            case SoldierBaseState.Attacking:
-                HandleAttackingState();
-                break;
-            case SoldierBaseState.Dead:
-                animator.SetBool("isDead",true);
-                HandleDeadState();
-                break;
+            switch (currentBaseState)
+            {
+                case SoldierBaseState.Idle:
+                    animator.SetFloat("isRun", 0f);
+                    JingJieIdleState();
+                    break;
+                case SoldierBaseState.Moving:
+                    animator.SetFloat("isRun", 1f);
+                    MovingState();
+                    break;
+                case SoldierBaseState.Attacking:
+                    AttackingState();
+                    break;
+                case SoldierBaseState.Dead:
+                    animator.SetBool("isDead", true);
+                    DeadState();
+                    break;
+            }
+        }
+        else if (currentState == SoldierState.Xunluo)
+        {
+            switch (currentBaseState)
+            {
+                case SoldierBaseState.Idle:
+                    animator.SetFloat("isRun", 0f);
+                    XunLuoIdleState();
+                    break;
+                case SoldierBaseState.Moving:
+                    animator.SetFloat("isRun", 1f);
+                    MovingState();
+                    break;
+                case SoldierBaseState.Attacking:
+                    AttackingState();
+                    break;
+                case SoldierBaseState.Dead:
+                    animator.SetBool("isDead", true);
+                    DeadState();
+                    break;
+            }
+
+
         }
     } 
 
@@ -116,32 +149,55 @@ public class Soldier : MonoBehaviour
         Quaternion fixedRotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
         GetComponent<Rigidbody>().MoveRotation(fixedRotation);
     }
-    private void HandleIdleState()
+    private void JingJieIdleState()
     {
+
         if (detectedMonsters.Count > 0)
         {
             SwitchTarget();
         }
     }
+    private void XunLuoIdleState()
+    {
+        if (detectedMonsters.Count > 0)
+        {
+            SwitchTarget();
+        }
 
-    private void HandleMovingState()
+        while (true)
+        {
+            int X = Random.Range(0, gridMap.GetLength(0));
+            int Z = Random.Range(0, gridMap.GetLength(1));
+            if (gridMap[X, Z] == 0)
+            {
+                Vector3 targetTest = new Vector3(X, 0, Z);
+                SetTarget(targetTest);
+                return;
+            }
+        }
+    }
+
+    private void MovingState()
     {
         if (target == null || gridMap == null)
         {
-            currentState = SoldierBaseState.Idle;
+            currentBaseState = SoldierBaseState.Idle;
             return;
         }
-
-        if (isPathUpdate)
+        if (WorldToGrid(target) != targetGridPosition)
         {
+            isPathUpdate = true;
+        }
+
+        if (isPathUpdate)// && Time.time - lastUpdatePathTime >= 1f
+        {
+            lastUpdatePathTime = Time.time;
+
             UpdatePath();
             isPathUpdate = false;
         }
 
-        if (WorldToGrid(target.transform.position) != currentGridPosition)
-        {
-            isPathUpdate = true;
-        }
+
 
         if (path.Count > 0 && currentPathIndex < path.Count)
         {
@@ -156,7 +212,7 @@ public class Soldier : MonoBehaviour
 
                 if (currentPathIndex >= path.Count)
                 {
-                    currentState = detectedMonsters.Count > 0 ? SoldierBaseState.Attacking : SoldierBaseState.Idle;
+                    currentBaseState = detectedMonsters.Count > 0 ? SoldierBaseState.Attacking : SoldierBaseState.Idle;
                 }
             }
         }
@@ -164,20 +220,21 @@ public class Soldier : MonoBehaviour
 
     private void UpdatePath()
     {
-        targetGridPosition = WorldToGrid(target.position);
+        Debug.Log(gameObject.name + "修改路径");
+        targetGridPosition = WorldToGrid(target);
         path = LPAStar.FindPath(gridMap, currentGridPosition, targetGridPosition);
         currentPathIndex = 1;
 
         // 设置路径可视化
         SetLine(path);
 
-        if (path.Count == 0)
-        {
-            currentState = SoldierBaseState.Idle;
-        }
+        //if (path.Count == 0)
+        //{
+        //    currentBaseState = SoldierBaseState.Idle;
+        //}
     }
 
-    private void HandleAttackingState()
+    private void AttackingState()
     {
 
         if (currentMonsterTarget != null && detectedMonsters.First() != null)
@@ -226,15 +283,15 @@ public class Soldier : MonoBehaviour
         if (detectedMonsters.Count > 0)
         {
             currentMonsterTarget = detectedMonsters.First();
-            currentState = SoldierBaseState.Attacking;
+            currentBaseState = SoldierBaseState.Attacking;
         }
         else
         {
-            currentState = SoldierBaseState.Idle;
+            currentBaseState = SoldierBaseState.Idle;
         }
     }
 
-    private void HandleDeadState()
+    private void DeadState()
     {
         SoldierManager.Instance.UnregisterSoldier(this);
         HealthBarManager.Instance.RemoveHealthBar(this.gameObject);
@@ -279,10 +336,10 @@ public class Soldier : MonoBehaviour
         return new Vector3(gridPosition.x, 0, gridPosition.y);
     }
 
-    public void SetTarget(Transform newTarget)
+    public void SetTarget(Vector3 newTarget)
     {
         target = newTarget;
-        currentState = (newTarget != null) ? SoldierBaseState.Moving : SoldierBaseState.Idle;
+        currentBaseState = (newTarget != null) ? SoldierBaseState.Moving : SoldierBaseState.Idle;
     }
 
     /// <summary>
