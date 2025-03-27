@@ -163,6 +163,20 @@ public class SelectionManager : MonoBehaviour
         // 开始框选
         if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject() == false)
         {
+            for (int i = selectedSoldiers.Count - 1; i >= 0; i--)
+            {
+                var soldier = selectedSoldiers[i];
+                if (soldier == null)
+                {
+                    selectedSoldiers.RemoveAt(i); // 安全删除空对象
+                }
+                else
+                {
+                    soldier.transform.Find("AttackRangeImage").gameObject.SetActive(false); // 关闭攻击范围显示
+
+                }
+            }
+
             // 清空之前的选择
             selectedSoldiers.Clear();
 
@@ -248,6 +262,8 @@ public class SelectionManager : MonoBehaviour
             if (selectionRect.Contains(screenPos, true))
             {
                 selectedSoldiers.Add(soldier);
+                soldier.transform.Find("AttackRangeImage").gameObject.SetActive(true); // 启用
+
             }
         }
 
@@ -288,6 +304,12 @@ public class SelectionManager : MonoBehaviour
                     // Instantiate 方法用于生成预制体，将其作为 selectionObjectParent 的子对象
                     Instantiate(selectionObjectIcon[0], Vector3.zero, Quaternion.identity, selectionObjectParent.transform);
                 }
+                else if (selectedSoldiers[i].name == "Mage(Clone)" || selectedSoldiers[i].name == "Mage")
+                {
+                    // Instantiate 方法用于生成预制体，将其作为 selectionObjectParent 的子对象
+                    Instantiate(selectionObjectIcon[1], Vector3.zero, Quaternion.identity, selectionObjectParent.transform);
+                }
+
             }
 
             ShowAllButtons(true);

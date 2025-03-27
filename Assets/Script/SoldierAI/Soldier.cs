@@ -29,26 +29,26 @@ public class Soldier : MonoBehaviour
     public float attackDamage = 10;
     public float maxHealth = 1000f;
 
-    private float lastAttackTime = 0f;
-    private float lastUpdatePathTime = 0f;
-    private List<LPAStarNode> path = new List<LPAStarNode>();
-    private int currentPathIndex = 0;
-    private Vector2Int currentGridPosition;
-    private Vector2Int targetGridPosition;
+    protected  float lastAttackTime = 0f;
+    protected  float lastUpdatePathTime = 0f;
+    protected  List<LPAStarNode> path = new List<LPAStarNode>();
+    protected  int currentPathIndex = 0;
+    protected  Vector2Int currentGridPosition;
+    protected Vector2Int targetGridPosition;
 
     public int[,] gridMap;
 
-    private bool isPathUpdate = false;
+    protected bool isPathUpdate = false;
     [SerializeField]
-    private GameObject currentMonsterTarget;
-    private List<GameObject> detectedMonsters = new List<GameObject>();
+    protected  GameObject currentMonsterTarget;
+    protected List<GameObject> detectedMonsters = new List<GameObject>();
 
-    AttackRangeDetector attackRangeDetector;
-    Health health;
+    protected AttackRangeDetector attackRangeDetector;
+    protected Health health;
     public Animator animator;
     //PathVisualizer pathVisualizer;  // 添加路径可视化器
 
-    private void Start()
+    protected virtual void Start()
     {
         gridMap = MapManager.gridMap;
         currentGridPosition = WorldToGrid(transform.position);
@@ -80,7 +80,7 @@ public class Soldier : MonoBehaviour
         }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (attackRangeDetector.SoldierAttackList != null)
         {
@@ -149,7 +149,7 @@ public class Soldier : MonoBehaviour
         Quaternion fixedRotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
         GetComponent<Rigidbody>().MoveRotation(fixedRotation);
     }
-    private void JingJieIdleState()
+    protected virtual void JingJieIdleState()
     {
 
         if (detectedMonsters.Count > 0)
@@ -157,7 +157,7 @@ public class Soldier : MonoBehaviour
             SwitchTarget();
         }
     }
-    private void XunLuoIdleState()
+    protected virtual void XunLuoIdleState()
     {
         if (detectedMonsters.Count > 0)
         {
@@ -177,7 +177,7 @@ public class Soldier : MonoBehaviour
         }
     }
 
-    private void MovingState()
+    protected virtual void MovingState()
     {
         if (target == null || gridMap == null)
         {
@@ -234,12 +234,12 @@ public class Soldier : MonoBehaviour
         //}
     }
 
-    private void AttackingState()
+    protected virtual void AttackingState()
     {
 
-        if (currentMonsterTarget != null && detectedMonsters.First() != null)
+        if (currentMonsterTarget != null && detectedMonsters.FirstOrDefault() != null)
         {
-            currentMonsterTarget = detectedMonsters.First();
+            currentMonsterTarget = detectedMonsters.FirstOrDefault();
             if (Time.time - lastAttackTime >= attackCooldown)
             {
                 lastAttackTime = Time.time;
@@ -266,7 +266,7 @@ public class Soldier : MonoBehaviour
         AttackTarget(currentMonsterTarget);
     }
 
-    private void AttackTarget(GameObject monster)
+    protected void AttackTarget(GameObject monster)
     {
         if (monster != null)
         {
@@ -274,15 +274,22 @@ public class Soldier : MonoBehaviour
         }
     }
 
-    private void SwitchTarget()
+    protected void SwitchTarget()
     {
-        if(detectedMonsters.First() == null)
+        if (detectedMonsters.Count == 0) // 先检查列表是否为空
+        {
+            currentBaseState = SoldierBaseState.Idle;
+            return;
+        }
+
+        if (detectedMonsters.First() == null) // 确保 First() 有元素可取
         {
             detectedMonsters.RemoveAt(0);
         }
+
         if (detectedMonsters.Count > 0)
         {
-            currentMonsterTarget = detectedMonsters.First();
+            currentMonsterTarget = detectedMonsters.FirstOrDefault();
             currentBaseState = SoldierBaseState.Attacking;
         }
         else
@@ -291,14 +298,14 @@ public class Soldier : MonoBehaviour
         }
     }
 
-    private void DeadState()
+    protected virtual void DeadState()
     {
         SoldierManager.Instance.UnregisterSoldier(this);
         HealthBarManager.Instance.RemoveHealthBar(this.gameObject);
         Destroy(gameObject);
     }
 
-    public void HandleMonsterDetected(GameObject monster)
+    protected virtual void HandleMonsterDetected(GameObject monster)
     {
         if (!detectedMonsters.Contains(monster))
         {
@@ -308,7 +315,7 @@ public class Soldier : MonoBehaviour
         }
     }
 
-    public void HandleMonsterExit(GameObject monster)
+    protected virtual void HandleMonsterExit(GameObject monster)
     {
         detectedMonsters.Remove(monster);
 
@@ -320,11 +327,28 @@ public class Soldier : MonoBehaviour
 
     private void MoveTowards(Vector3 targetPosition)
     {
-        Vector3 direction = (targetPosition - transform.position).normalized;
-        transform.position += direction * moveSpeed * Time.deltaTime;
-        transform.LookAt(new Vector3(targetPosition.x,1.5f,targetPosition.z));
+        // 计算目标方向（忽略 Y 轴，防止角色倾斜）
+        Vector3 direction = new Vector3(targetPosition.x - transform.position.x, 0, targetPosition.z - transform.position.z).normalized;
 
+        if (direction != Vector3.zero) // 避免零向量错误
+        {
+            // 计算目标旋转角度（仅在 XZ 平面旋转）
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+        }
+
+        // 执行移动（保持 Y 轴高度不变）
+        float step = moveSpeed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(targetPosition.x, transform.position.y, targetPosition.z), step);
+
+        // 检查是否到达目标点，避免浮点数误差卡住角色
+        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+        {
+            currentPathIndex++; // 前进到下一个路径点
+            currentGridPosition = WorldToGrid(transform.position);
+        }
     }
+
 
     private Vector2Int WorldToGrid(Vector3 worldPosition)
     {
@@ -336,7 +360,7 @@ public class Soldier : MonoBehaviour
         return new Vector3(gridPosition.x, 0, gridPosition.y);
     }
 
-    public void SetTarget(Vector3 newTarget)
+    public virtual void SetTarget(Vector3 newTarget)
     {
         target = newTarget;
         currentBaseState = (newTarget != null) ? SoldierBaseState.Moving : SoldierBaseState.Idle;

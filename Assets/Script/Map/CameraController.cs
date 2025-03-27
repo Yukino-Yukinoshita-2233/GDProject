@@ -2,7 +2,7 @@ using MapManagernamespace;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class CameraController : MonoBehaviour
+public class CameraController: MonoBehaviour
 {
     [Header("移动和缩放参数")]
     public float moveSpeed = 10f;      // 摄像机移动速度
