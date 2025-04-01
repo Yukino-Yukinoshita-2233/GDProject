@@ -42,8 +42,11 @@ public class Mage : Soldier
             laserBeam.SetPosition(0, firePoint.position); // 设置起点为 Mage 的施法点
             laserBeam.SetPosition(1, currentMonsterTarget.transform.position); // 设置终点为怪物
 
+            if (currentMonsterTarget) // 确保目标仍然存在
+            {
+                AttackTarget(currentMonsterTarget);
+            }
             // 执行伤害逻辑
-            AttackTarget(currentMonsterTarget);
 
 
 
