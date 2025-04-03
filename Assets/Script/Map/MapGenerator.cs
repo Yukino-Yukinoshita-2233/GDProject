@@ -202,7 +202,7 @@ public class MapGenerator : MonoBehaviour
 
                 if (gridMapGen[x, y] == 3) //生成水
                 {
-                    WorldPosition = new Vector3(x, 0 - H, y);
+                    WorldPosition = new Vector3(x, 0, y);
                     GameObject instance = Instantiate(waterPrefab, WorldPosition, Quaternion.identity, baseGridMap);
                 }
                 else if (gridMapGen[x, y] == 0) //生成草

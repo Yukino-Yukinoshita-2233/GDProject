@@ -21,6 +21,9 @@ public class Swordsman : Soldier
             {
                 lastAttackTime = Time.time;
                 animator?.SetTrigger("isAttack01");
+                // 立即旋转朝向目标
+                RotateTowardsTarget(currentMonsterTarget);
+
                 StartCoroutine(DelayAttack(0.5f));
             }
         }

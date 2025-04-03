@@ -24,6 +24,9 @@ public class Mage : Soldier
             {
                 lastAttackTime = Time.time;
                 animator?.SetTrigger("isAttack01");
+                // 立即旋转朝向目标
+                RotateTowardsTarget(currentMonsterTarget);
+
                 StartCoroutine(LaserAttack(0.5f)); // 持续 1 秒的激光
             }
         }
