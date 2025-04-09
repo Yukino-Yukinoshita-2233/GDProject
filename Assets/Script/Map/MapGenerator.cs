@@ -202,7 +202,7 @@ public class MapGenerator : MonoBehaviour
 
                 if (gridMapGen[x, y] == 3) //生成水
                 {
-                    WorldPosition = new Vector3(x, 0, y);
+                    WorldPosition = new Vector3(x, 0-H/2, y);
                     GameObject instance = Instantiate(waterPrefab, WorldPosition, Quaternion.identity, baseGridMap);
                 }
                 else if (gridMapGen[x, y] == 0) //生成草
@@ -261,8 +261,8 @@ public class MapGenerator : MonoBehaviour
             {
                 if (!(0 <= i && i < widthGen && 0 <= j && j < heightGen))
                 {
-                    WorldPosition = new Vector3(i, 0 + H, j);
-                    GameObject instance = Instantiate(mountainPrefab[0], WorldPosition, Quaternion.identity, baseGridMap);
+                    WorldPosition = new Vector3(i, 0 - H / 2, j);
+                    GameObject instance = Instantiate(waterPrefab, WorldPosition, Quaternion.identity, baseGridMap);
                 }
             }
 

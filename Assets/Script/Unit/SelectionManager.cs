@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Unity.Burst.CompilerServices;
 using System;
 using System.IO;
+using TMPro; // 引入TextMeshPro命名空间
 
 /// <summary>
 /// 选择管理器，负责选择友军单位（士兵）并控制它们的行动。
@@ -30,7 +31,7 @@ public class SelectionManager : MonoBehaviour
     public List<Button> SoldierTypeButton = new List<Button>();
 
     public static Transform castle; // 城堡
-
+    public TextMeshProUGUI castleHP;
     public BuildStyle buildStyle;
 
     private void Start()
@@ -56,6 +57,7 @@ public class SelectionManager : MonoBehaviour
         HandleSelectionInput(); // 处理鼠标选择逻辑
         HandleCommandInput();   // 处理右键命令逻辑
         //isSelectedOnGUI();
+        castleHP.text = castle.GetComponent<Health>().currentHealth.ToString() + "/" + castle.GetComponent<Health>().maxHealth.ToString();
     }
 
     void ShowAllButtons(bool isShow)
