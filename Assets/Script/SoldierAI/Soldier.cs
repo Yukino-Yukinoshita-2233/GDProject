@@ -25,22 +25,24 @@ public class Soldier : MonoBehaviour
 {
     public SoldierState currentState = SoldierState.Jingjie;
     public SoldierBaseState currentBaseState = SoldierBaseState.Idle;
-    public Vector3 target;                   // 寻路目标点（世界坐标）
     public float moveSpeed = 3.0f;             // 移动速度
     public float attackCooldown = 1.0f;        // 攻击冷却时间
     public float attackDamage = 10;            // 攻击伤害
     public float maxHealth = 1000f;            // 最大生命值
 
     protected float lastAttackTime = 0f;
+
+    public Vector3 target;                   // 寻路目标点（世界坐标）
+    protected Vector2Int currentGridPosition; // 当前所在格子位置
+    protected Vector2Int targetGridPosition;  // 目标点所在的格子位置
     protected float lastUpdatePathTime = 0f;
     protected List<ThetaStarNode> path = new List<ThetaStarNode>();  // 当前计算出的路径
     protected int currentPathIndex = 0;       // 当前路径点索引
-    protected Vector2Int currentGridPosition; // 当前所在格子位置
-    protected Vector2Int targetGridPosition;  // 目标点所在的格子位置
 
     public int[,] gridMap;                    // 地图数据
 
     protected bool isPathUpdate = false;      // 标记是否需要重新计算路径
+
     [SerializeField]
     protected GameObject currentMonsterTarget;
     protected List<GameObject> detectedMonsters = new List<GameObject>();
@@ -89,7 +91,20 @@ public class Soldier : MonoBehaviour
             Debug.Log("士兵死亡：" + gameObject.name);
             currentBaseState = SoldierBaseState.Dead;
         }
+        StateHandling(); // 状态处理
 
+    }
+
+    void FixedUpdate()
+    {
+        // 锁定旋转，只允许在Y轴旋转
+        Quaternion fixedRotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+        GetComponent<Rigidbody>().MoveRotation(fixedRotation);
+    }
+
+
+    public void StateHandling()
+    {
         // 根据不同状态分别处理
         if (currentState == SoldierState.Jingjie)
         {
@@ -141,14 +156,9 @@ public class Soldier : MonoBehaviour
                     break;
             }
         }
+
     }
 
-    void FixedUpdate()
-    {
-        // 锁定旋转，只允许在Y轴旋转
-        Quaternion fixedRotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-        GetComponent<Rigidbody>().MoveRotation(fixedRotation);
-    }
 
     protected virtual void JingJieIdleState()
     {
@@ -283,7 +293,6 @@ public class Soldier : MonoBehaviour
     {
         if (monster != null)
         {
-
             monster.GetComponent<Health>()?.TakeDamage(attackDamage);
         }
     }
@@ -305,7 +314,9 @@ public class Soldier : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// 切换目标
+    /// </summary>
     protected void SwitchTarget()
     {
         if (detectedMonsters.Count == 0)

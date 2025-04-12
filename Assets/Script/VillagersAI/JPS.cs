@@ -74,7 +74,7 @@
 //    //实例化地图
 //    void InstantiateMap()
 //    {
-//        DeleteChildren();//删除当前地图
+//        DeleteOldMap();//删除当前地图
 
 //        // 首先检查是否有名为 "BaseGridMap" 的子物体
 //        CaiLiaoParent = transform.Find("BaseGridMap");
@@ -138,7 +138,7 @@
 //                while (temp != startNode)
 //                {
 //                    newPath.Add(temp.worldPosition);
-//                    temp = temp.parent;
+//                    temp = temp.soldierParent;
 //                }
 //                newPath.Reverse();
 //                path = newPath.ToArray();
@@ -171,7 +171,7 @@
 //            if (jumpNode != null && !closedList.Contains(jumpNode))
 //            {
 //                openList.Add(jumpNode);
-//                jumpNode.parent = currentNode;
+//                jumpNode.soldierParent = currentNode;
 //            }
 //        }
 //    }

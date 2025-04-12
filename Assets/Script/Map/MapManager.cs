@@ -91,7 +91,7 @@ namespace MapManagernamespace
 
             Debug.Log("GenerateMap:开始生成地图");
             noiseMap = GenerateNoiseMap(noiseMap, widthT, heightT, scaleT);
-            gridMap = GenerategridMap(noiseMap, gridMap, waterTerrainSizeT, mountainTerrainSizeT);
+            gridMap = GenerateGridMap(noiseMap, gridMap, waterTerrainSizeT, mountainTerrainSizeT);
             isMapChange = true;
             Debug.Log("GenerateMap:地图生成完成");
         }
@@ -122,12 +122,12 @@ namespace MapManagernamespace
         }
 
         // 创建地形并保存到节点网格grid
-        private int[,] GenerategridMap(float[,] noiseMapT, int[,] gridMapT, float waterTerrainSizeT, float mountainTerrainSizeT)
+        private int[,] GenerateGridMap(float[,] noiseMapT, int[,] gridMapT, float waterTerrainSizeT, float mountainTerrainSizeT)
         {
-            Debug.Log("GenerategridMap:正在生成网格地图");
+            Debug.Log("GenerateGridMap:正在生成网格地图");
             if (noiseMapT == null)
             {
-                Debug.Log("GenerategridMap noiseMap has not been generated yet!");
+                Debug.Log("GenerateGridMap noiseMap has not been generated yet!");
             }
             //生成新的地图
             for (int x = 0; x < width; x++)
