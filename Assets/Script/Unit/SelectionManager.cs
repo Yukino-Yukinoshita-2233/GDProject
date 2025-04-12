@@ -22,11 +22,13 @@ public class SelectionManager : MonoBehaviour
     private Vector2 selectionEndPos;
     private bool isSelecting = false;
 
+    // 被选中UI
     public GameObject selectionObjectParent;
     public List<GameObject> selectionObjectIcon = new List<GameObject>();
     public List<GameObject> SoldierType = new List<GameObject>();
     public Transform soldierParent;
 
+    // 选择按钮
     public List<Button> SoldierStateButton = new List<Button>();
     public List<Button> SoldierTypeButton = new List<Button>();
 
@@ -111,6 +113,7 @@ public class SelectionManager : MonoBehaviour
 
 
     }
+    
     /// <summary>
     /// 按钮点击事件处理
     /// </summary>
@@ -140,6 +143,10 @@ public class SelectionManager : MonoBehaviour
         StartCoroutine(MoveBackward(TarGetObj.transform, -2f, 1f)); // 移动 2 个单位，用 1 秒完成
 
     }
+
+    /// <summary>
+    /// 士兵训练后位置移动
+    /// </summary>
     IEnumerator MoveBackward(Transform soldier, float distance, float duration)
     {
         Vector3 startPos = soldier.position;

@@ -11,10 +11,15 @@ public class JPSMangaer : SingletonMono<JPSMangaer>
     public JPS _jps;
 
     MapToolsDrawNode mapToolsDrawNode;
+    public int X = 73;
+    public int Y = 45;
     // Start is called before the first frame update
     void Start()
     {
-        imap = new MapQuad(0, 0, 45, 73, 1.0f, 1.0f);
+        //imap = new MapQuad(0, 0, 45, 73, 1.0f, 1.0f);
+        X = MapManager.width;
+        Y = MapManager.height;
+        imap = new MapQuad(0, 0, Y, X, 1.0f, 1.0f);
         _jps = new JPS(imap);
         mapToolsDrawNode = new MapToolsDrawNode(imap);
     }
@@ -47,9 +52,9 @@ public class JPSMangaer : SingletonMono<JPSMangaer>
         //    }
         //}
 
-        for (int row = 0; row < 45; ++row)
+        for (int row = 0; row < Y; ++row)
         {
-            for (int col = 0; col < 73; ++col)
+            for (int col = 0; col < X; ++col)
             {
                 int num = RCToIndex(row, col);
                 string name = string.Format("{0}_{1}", row, col);
@@ -87,7 +92,7 @@ public class JPSMangaer : SingletonMono<JPSMangaer>
 
     private int RCToIndex(int row, int col)
     {
-        int index = row * 73 + col;
+        int index = row * X + col;
         return index;
     }
 }

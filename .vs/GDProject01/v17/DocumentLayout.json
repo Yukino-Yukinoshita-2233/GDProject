@@ -3,44 +3,44 @@
   "WorkspaceRootPath": "D:\\Project\\GDProject\\GDProject01\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\map\\mapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\unit\\thetastar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\unit\\thetastar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\soldierai\\soldier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\soldierai\\soldier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|d:\\project\\gdproject\\gdproject01\\assets\\script\\unit\\selectionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\unit\\selectionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|d:\\project\\gdproject\\gdproject01\\assets\\script\\jumppointsearch\\jpsmangaer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\jumppointsearch\\jpsmangaer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\ui\\healthbarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\healthbarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|d:\\project\\gdproject\\gdproject01\\assets\\script\\map\\mapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\map\\mapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\unit\\selectionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\unit\\selectionmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\mosterai\\monster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\mosterai\\monster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\map\\mapmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\map\\mapmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|d:\\project\\gdproject\\gdproject01\\assets\\script\\soldierai\\soldier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\soldierai\\soldier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|d:\\project\\gdproject\\gdproject01\\assets\\script\\npc\\npc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\npc\\npc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\unit\\health.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\unit\\health.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|d:\\project\\gdproject\\gdproject01\\assets\\script\\unit\\thetastar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\unit\\thetastar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\soldierai\\mage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\soldierai\\mage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\soldierai\\swordsman.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\soldierai\\swordsman.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\unit\\lpastar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\unit\\lpastar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\mosterai\\monster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\mosterai\\monster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\map\\cameracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\map\\cameracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\mosterai\\mostermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -55,6 +55,26 @@
       "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\unit\\attackrangedetector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\unit\\health.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\unit\\health.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\ui\\healthbarmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\healthbarmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\soldierai\\mage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\soldierai\\mage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\soldierai\\swordsman.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\soldierai\\swordsman.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\unit\\lpastar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\unit\\lpastar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\resources\\prefab\\ui\\pathvisualizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\resources\\prefab\\ui\\pathvisualizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -63,20 +83,8 @@
       "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\mosterai\\goblin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\map\\cameracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\map\\cameracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\mosterai\\rockdragon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\mosterai\\rockdragon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\ui\\healthbarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\healthbarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\ui\\healthbarmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\healthbarmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -86,42 +94,69 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 3,
+              "Title": "JPSMangaer.cs",
+              "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\JumpPointSearch\\JPSMangaer.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\JumpPointSearch\\JPSMangaer.cs",
+              "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\JumpPointSearch\\JPSMangaer.cs",
+              "RelativeToolTip": "Assets\\Script\\JumpPointSearch\\JPSMangaer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T07:02:53.612Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "NPC.cs",
+              "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\NPC\\NPC.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\NPC\\NPC.cs",
+              "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\NPC\\NPC.cs",
+              "RelativeToolTip": "Assets\\Script\\NPC\\NPC.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAQwCIAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T06:54:31.372Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "CameraController.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Map\\CameraController.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Map\\CameraController.cs",
               "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Map\\CameraController.cs",
               "RelativeToolTip": "Assets\\Script\\Map\\CameraController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAAHQAAAAAAAAAAAAYwJAAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-28T07:07:27.705Z"
+              "WhenOpened": "2025-02-28T07:07:27.705Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "MapManager.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Map\\MapManager.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Map\\MapManager.cs",
               "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Map\\MapManager.cs",
               "RelativeToolTip": "Assets\\Script\\Map\\MapManager.cs",
-              "ViewState": "AgIAAG8AAAAAAAAAAAAcwMAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAF4AAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-11T15:00:46.648Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "SelectionManager.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Unit\\SelectionManager.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Unit\\SelectionManager.cs",
               "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Unit\\SelectionManager.cs",
               "RelativeToolTip": "Assets\\Script\\Unit\\SelectionManager.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAADwvyAAAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAIUBAAAAAAAAAAAAAKMBAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-22T13:57:00.255Z",
               "EditorCaption": ""
@@ -134,9 +169,10 @@
               "RelativeDocumentMoniker": "Assets\\Script\\SoldierAI\\SoldierManager.cs",
               "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\SoldierAI\\SoldierManager.cs",
               "RelativeToolTip": "Assets\\Script\\SoldierAI\\SoldierManager.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAAAEgAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEgAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-22T14:00:08.538Z"
+              "WhenOpened": "2024-11-22T14:00:08.538Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -146,51 +182,53 @@
               "RelativeDocumentMoniker": "Assets\\Script\\MosterAI\\MosterManager.cs",
               "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\MosterAI\\MosterManager.cs",
               "RelativeToolTip": "Assets\\Script\\MosterAI\\MosterManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAADwv1cAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T06:01:07.645Z"
+              "WhenOpened": "2024-11-16T06:01:07.645Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 14,
               "Title": "HealthBarManager.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\UI\\HealthBarManager.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\UI\\HealthBarManager.cs",
               "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\UI\\HealthBarManager.cs",
               "RelativeToolTip": "Assets\\Script\\UI\\HealthBarManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-08T16:57:49.585Z"
+              "WhenOpened": "2024-12-08T16:57:49.585Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 13,
               "Title": "Health.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Unit\\Health.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Unit\\Health.cs",
               "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Unit\\Health.cs",
               "RelativeToolTip": "Assets\\Script\\Unit\\Health.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAADcAAAAAAAAAAAAQwG4AAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-22T14:20:52.857Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "ThetaStar.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Unit\\ThetaStar.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Unit\\ThetaStar.cs",
               "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Unit\\ThetaStar.cs",
               "RelativeToolTip": "Assets\\Script\\Unit\\ThetaStar.cs",
-              "ViewState": "AgIAAEEBAAAAAAAAAAAcwF4BAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAJ8AAAAAAAAAAAAswMoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-22T16:08:08.47Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 17,
               "Title": "LPAstar.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Unit\\LPAstar.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Unit\\LPAstar.cs",
@@ -208,13 +246,14 @@
               "RelativeDocumentMoniker": "Assets\\Script\\Unit\\AttackRangeDetector.cs",
               "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Unit\\AttackRangeDetector.cs",
               "RelativeToolTip": "Assets\\Script\\Unit\\AttackRangeDetector.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAADwv1sAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABcAAAAAAAAAAADwvzwAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-15T13:03:03.397Z"
+              "WhenOpened": "2024-12-15T13:03:03.397Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 18,
               "Title": "PathVisualizer.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Resources\\Prefab\\UI\\PathVisualizer.cs",
               "RelativeDocumentMoniker": "Assets\\Resources\\Prefab\\UI\\PathVisualizer.cs",
@@ -228,24 +267,24 @@
         },
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "MapGenerator.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Map\\MapGenerator.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Map\\MapGenerator.cs",
               "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Map\\MapGenerator.cs",
               "RelativeToolTip": "Assets\\Script\\Map\\MapGenerator.cs",
-              "ViewState": "AgIAANoAAAAAAAAAAAAYwAIBAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEwAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-11T14:26:52.944Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 4,
               "Title": "HealthBarController.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\UI\\HealthBarController.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\UI\\HealthBarController.cs",
@@ -253,23 +292,25 @@
               "RelativeToolTip": "Assets\\Script\\UI\\HealthBarController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-09T14:45:03.076Z"
+              "WhenOpened": "2024-12-09T14:45:03.076Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 6,
               "Title": "Monster.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\MosterAI\\Monster.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\MosterAI\\Monster.cs",
               "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\MosterAI\\Monster.cs",
               "RelativeToolTip": "Assets\\Script\\MosterAI\\Monster.cs",
-              "ViewState": "AgIAAFcAAAAAAAAAAAAQwHAAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAADwvwwBAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-16T14:03:09.609Z"
+              "WhenOpened": "2024-11-16T14:03:09.609Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 19,
               "Title": "Goblin.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\MosterAI\\Goblin.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\MosterAI\\Goblin.cs",
@@ -281,7 +322,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 20,
               "Title": "RockDragon.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\MosterAI\\RockDragon.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\MosterAI\\RockDragon.cs",
@@ -293,20 +334,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Soldier.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\SoldierAI\\Soldier.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\SoldierAI\\Soldier.cs",
               "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\SoldierAI\\Soldier.cs",
               "RelativeToolTip": "Assets\\Script\\SoldierAI\\Soldier.cs",
-              "ViewState": "AgIAAPMAAAAAAAAAAADwvx8BAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAIkBAAAAAAAAAAAYwJgBAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-22T14:00:12.876Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 16,
               "Title": "Swordsman.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\SoldierAI\\Swordsman.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\SoldierAI\\Swordsman.cs",
@@ -314,19 +355,21 @@
               "RelativeToolTip": "Assets\\Script\\SoldierAI\\Swordsman.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T13:16:50.439Z"
+              "WhenOpened": "2025-03-24T13:16:50.439Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 15,
               "Title": "Mage.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\SoldierAI\\Mage.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\SoldierAI\\Mage.cs",
               "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\SoldierAI\\Mage.cs",
               "RelativeToolTip": "Assets\\Script\\SoldierAI\\Mage.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBkAAAAzAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-24T13:17:25.306Z"
+              "WhenOpened": "2025-03-24T13:17:25.306Z",
+              "EditorCaption": ""
             }
           ]
         }

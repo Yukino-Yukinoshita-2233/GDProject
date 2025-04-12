@@ -178,7 +178,7 @@ public class MapGenerator : MonoBehaviour
     //实例化地图
     void InstantiateMap()
     {
-        DeleteChildren();//删除当前地图
+        DeleteOldMap();//删除当前地图
 
         // 首先检查是否有名为 "BaseGridMap" 的子物体
         baseGridMap = transform.Find("BaseGridMap");
@@ -270,7 +270,7 @@ public class MapGenerator : MonoBehaviour
     }
 
     //删除当前地图
-    void DeleteChildren()
+    void DeleteOldMap()
     {
         // 首先检查是否有名为 "BaseGridMap" 的子物体
         baseGridMap = GameObject.Find("Terrain").transform.Find("BaseGridMap");

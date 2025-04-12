@@ -110,6 +110,11 @@ public abstract class Monster : MonoBehaviour
         else { NTime += Time.deltaTime; }
     }
 
+    public void StateHandling()
+    {
+
+    }
+
     /// <summary>
     /// 移动到目标位置
     /// </summary>
