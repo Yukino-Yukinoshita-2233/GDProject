@@ -6,6 +6,9 @@ public class NpcToZiYuan : MonoBehaviour
 {
     public CaiLiaoStye CaiLiaoStye;
     public Transform NPC;
+    public BuildUpLvData buildUpLvData;
+    public int ShangXian;
+    private int CiaoLiaoCount = 0;
     private Transform Parent;
     private Vector3 OldPos;
     private bool isGoZiYuan = true;
@@ -13,9 +16,14 @@ public class NpcToZiYuan : MonoBehaviour
     private bool isGoHome = false;
     bool isGoHomeEnd = false;
     Vector3Int addCaiLiao;
+    private Animator ani;
     // Start is called before the first frame update
     void Start()
     {
+        ani = NPC.GetComponent<Animator>();
+
+        ShangXian = buildUpLvData.storageLimit;
+
         OldPos = NPC.transform.position;
         if (CaiLiaoStye == CaiLiaoStye.MuCai)
         {
@@ -40,12 +48,18 @@ public class NpcToZiYuan : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (CiaoLiaoCount >= ShangXian)
+        {
+            return;
+        }
+
         if (isGoZiYuan == true && isGoZiyuanEnd == false)
         {
             //Debug.Log("设置目的地");
             CaiLiao = FindCaiLiao();
             if (CaiLiao != null)
             {
+                ani.SetBool("isRun", true);
                 SetNpcToCaiLiao(CaiLiao);
                 isGoZiYuan = false;
             }
@@ -55,10 +69,13 @@ public class NpcToZiYuan : MonoBehaviour
             //Debug.Log("行走到目的地");
             if (NPC.GetComponent<NPC>().isMove == false)
             {
+                ani.SetBool("isRun", false);
+                ani.SetBool("isCai", true);
                 //Debug.Log("到达目的地 " + t);
                 t += Time.deltaTime;
                 if (t >= targetTime)
                 {
+                    ani.SetBool("isCai", false);
                     //Debug.Log("时间到了 " + t);
                     Destroy(CaiLiao.gameObject);
                     CaiLiao = null;
@@ -74,7 +91,7 @@ public class NpcToZiYuan : MonoBehaviour
         {
             //Debug.Log("设置回家路");
             NPC.GetComponent<NPC>().SetPostion(OldPos);
-
+            ani.SetBool("isRun", true);
             isGoHome = false;
         }
         else if (isGoHome == false && isGoZiyuanEnd == true)
@@ -82,6 +99,7 @@ public class NpcToZiYuan : MonoBehaviour
             //Debug.Log("回到回家路");
             if (NPC.GetComponent<NPC>().isMove == false)
             {
+                ani.SetBool("isRun", false);
                 t += Time.deltaTime;
                 if (t >= targetTime)
                 {
@@ -89,7 +107,7 @@ public class NpcToZiYuan : MonoBehaviour
                     isGoZiyuanEnd = false;
                     isGoHome = false;
                     isGoHomeEnd = false;
-
+                    CiaoLiaoCount++;
                     CaiLiaoManager.Instance.AddCaiLiao(addCaiLiao);
 
                     t = 0;
@@ -119,6 +137,10 @@ public class NpcToZiYuan : MonoBehaviour
 
     void SetNpcToCaiLiao(Transform Cailiao)
     {
+        Debug.LogError("设置材料位置");
+        GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        go.transform.localScale = Vector3.one * 0.2f;
+        go.transform.position = Cailiao.position;
         NPC.GetComponent<NPC>().SetPostion(Cailiao.position);
     }
 }

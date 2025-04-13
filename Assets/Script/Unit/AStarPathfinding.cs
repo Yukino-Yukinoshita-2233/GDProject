@@ -11,10 +11,10 @@ public class Node
     public int FCost => GCost + HCost;  // 总代价 (GCost + HCost)
 
     // 构造函数
-    public Node(Vector2Int position, Node soldierParent, int gCost, int hCost)
+    public Node(Vector2Int position, Node parent, int gCost, int hCost)
     {
         Position = position;
-        Parent = soldierParent;
+        Parent = parent;
         GCost = gCost;
         HCost = hCost;
     }

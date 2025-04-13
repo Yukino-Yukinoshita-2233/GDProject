@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using System.Collections;
 using UnityEngine.UI;
-using Unity.Burst.CompilerServices;
+// using Unity.Burst.CompilerServices;
 using System;
 using System.IO;
 using TMPro; // 引入TextMeshPro命名空间
@@ -242,16 +242,16 @@ public class SelectionManager : MonoBehaviour
             }
             else
             {
-                //if (hitInfo.collider.tag == "JGC")
-                //{
-                //    UPUIManager.Instance.Show(hitInfo.collider.gameObject);
+                if (hitInfo.collider.tag == "JGC")
+                {
+                    UPUIManager.Instance.Show(hitInfo.collider.gameObject);
 
-                //}
-                //else
-                //{
-                //    UPUIManager.Instance.Hide();
+                }
+                else
+                {
+                    UPUIManager.Instance.Hide();
 
-                //}
+                }
                 // 如果检测到的对象没有 Soldier 组件，则输出提示信息
                 Debug.Log("No soldier selected");
             }

@@ -8,6 +8,7 @@ public class NPC : MonoBehaviour
     private Vector3 destination = new Vector3(15, 15, 15);
     public bool isMove = false;
     private float speed = 3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,10 +18,10 @@ public class NPC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (CreateCheckGameObject())
-        {
-            return;
-        }
+        //if (CreateCheckGameObject())
+        //{
+        //    return;
+        //}
 
         Move();
     }
@@ -57,7 +58,7 @@ public class NPC : MonoBehaviour
         }
         // 顺次执行 _stackPos.Peek(); 将 路点从 栈中取出即是从 开始点到结束点的路径
     }
-
+    Vector3 velocity;
     private void Move()
     {
         if (_stackPos.Count <= 0)
@@ -67,9 +68,12 @@ public class NPC : MonoBehaviour
         }
 
         Position position = _stackPos.Peek();
-        Vector3 destinationPos = new Vector3(position.ColPos, 0.3f, position.RowPos);
-        Vector3 dir = destinationPos - this.transform.position;
-        this.transform.Translate(dir.normalized * speed * Time.deltaTime, Space.World);
+        Vector3 destinationPos = new Vector3(position.ColPos, 0.5f, position.RowPos);
+
+        //Vector3 dir = destinationPos - this.transform.position;
+        //this.transform.Translate(dir.normalized * speed * Time.deltaTime, Space.World);
+        transform.position = Vector3.SmoothDamp(transform.position, destinationPos, ref velocity, 0.25f, speed);
+        transform.LookAt(destinationPos);
         if (Vector3.Distance(this.transform.position, destinationPos) > 0.05f)
         {
             return;
@@ -119,7 +123,7 @@ public class NPC : MonoBehaviour
         //GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         GameObject go = new GameObject();
         go.transform.localScale = Vector3.one * 0.2f;
-        go.transform.position = new Vector3(this.transform.position.x, 0.6f, this.transform.position.z);
+        go.transform.position = new Vector3(this.transform.position.x, 0.5f, this.transform.position.z);
         //go.GetComponent<Renderer>().material.color = Color.red;
         pathGoList.Add(go);
     }

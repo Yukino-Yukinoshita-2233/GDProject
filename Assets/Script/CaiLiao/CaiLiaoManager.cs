@@ -38,6 +38,20 @@ public class CaiLiaoManager : SingletonMono<CaiLiaoManager>
 
     }
 
+    public bool isUseCaiLiao(Vector3Int xiaohao)
+    {
+        if ((MuCaiCount - xiaohao.x) < 0 || (ShiCaiCount - xiaohao.y) < 0 || (JinShuCount - xiaohao.z) < 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+
+
+    }
+
     public void AddCaiLiao(Vector3Int Cailiao)
     {
         MuCaiCount += Cailiao.x;

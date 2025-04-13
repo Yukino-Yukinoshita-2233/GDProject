@@ -58,7 +58,8 @@ public class Drag : MonoBehaviour, IPointerDownHandler
 
                 var obj = Resources.Load(Path);
                 GameObject TarGetObj = Instantiate(obj) as GameObject;
-                
+                TarGetObj.GetComponent<NpcToZiYuan>().buildUpLvData = BuildDataManager.Instance.BuildUpLvDatas[(int)buildStyle];
+
                 TarGetObj.SetActive(true);
                 if (TarGetObj.layer == 16)
                 {
@@ -71,6 +72,7 @@ public class Drag : MonoBehaviour, IPointerDownHandler
                 TarGetObj.transform.rotation = dragObj.transform.rotation;
 
                 TarGetObj.transform.SetParent(parent);
+
             }
 
             if (Input.GetKeyDown(KeyCode.R))

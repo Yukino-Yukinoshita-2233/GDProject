@@ -17,8 +17,6 @@ public class JPSMangaer : SingletonMono<JPSMangaer>
     void Start()
     {
         //imap = new MapQuad(0, 0, 45, 73, 1.0f, 1.0f);
-        X = MapManager.width;
-        Y = MapManager.height;
         imap = new MapQuad(0, 0, Y, X, 1.0f, 1.0f);
         _jps = new JPS(imap);
         mapToolsDrawNode = new MapToolsDrawNode(imap);

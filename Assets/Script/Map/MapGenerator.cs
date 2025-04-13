@@ -172,13 +172,10 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-
-
-
     //实例化地图
     void InstantiateMap()
     {
-        DeleteOldMap();//删除当前地图
+        DeleteChildren();//删除当前地图
 
         // 首先检查是否有名为 "BaseGridMap" 的子物体
         baseGridMap = transform.Find("BaseGridMap");
@@ -202,7 +199,7 @@ public class MapGenerator : MonoBehaviour
 
                 if (gridMapGen[x, y] == 3) //生成水
                 {
-                    WorldPosition = new Vector3(x, 0-H/2, y);
+                    WorldPosition = new Vector3(x, 0 - H, y);
                     GameObject instance = Instantiate(waterPrefab, WorldPosition, Quaternion.identity, baseGridMap);
                 }
                 else if (gridMapGen[x, y] == 0) //生成草
@@ -261,8 +258,8 @@ public class MapGenerator : MonoBehaviour
             {
                 if (!(0 <= i && i < widthGen && 0 <= j && j < heightGen))
                 {
-                    WorldPosition = new Vector3(i, 0 - H / 2, j);
-                    GameObject instance = Instantiate(waterPrefab, WorldPosition, Quaternion.identity, baseGridMap);
+                    WorldPosition = new Vector3(i, 0 + H, j);
+                    GameObject instance = Instantiate(mountainPrefab[0], WorldPosition, Quaternion.identity, baseGridMap);
                 }
             }
 
@@ -270,7 +267,7 @@ public class MapGenerator : MonoBehaviour
     }
 
     //删除当前地图
-    void DeleteOldMap()
+    void DeleteChildren()
     {
         // 首先检查是否有名为 "BaseGridMap" 的子物体
         baseGridMap = GameObject.Find("Terrain").transform.Find("BaseGridMap");
