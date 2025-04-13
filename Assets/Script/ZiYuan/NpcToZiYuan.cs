@@ -137,7 +137,7 @@ public class NpcToZiYuan : MonoBehaviour
 
     void SetNpcToCaiLiao(Transform Cailiao)
     {
-        Debug.LogError("设置材料位置");
+        //Debug.LogError("设置材料位置");
         GameObject go = GameObject.CreatePrimitive(PrimitiveType.Cube);
         go.transform.localScale = Vector3.one * 0.2f;
         go.transform.position = Cailiao.position;

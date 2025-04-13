@@ -187,7 +187,7 @@ LineRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2126061437
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 5
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -374,11 +374,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   currentBaseState: 0
-  target: {x: 0, y: 0, z: 0}
   moveSpeed: 3
   attackCooldown: 3
   attackDamage: 10
   maxHealth: 300
+  target: {x: 0, y: 0, z: 0}
   currentMonsterTarget: {fileID: 0}
   animator: {fileID: 5030619294870254517}
   laserBeam: {fileID: 6408349014600012466}
