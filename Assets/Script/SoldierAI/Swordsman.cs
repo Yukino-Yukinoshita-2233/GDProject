@@ -1,62 +1,18 @@
 using System.Collections;
-using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Swordsman : Soldier
+public class Swordsman : MonoBehaviour
 {
-    //protected override void Start()
-    //{
-        //base.Start();
-        //animator = GetComponent<Animator>();
-        //attackCooldown = 1.0f;
-        //attackDamage = 20;
-    //}
-
-    protected override void AttackingState()
+    // Start is called before the first frame update
+    void Start()
     {
-        if (currentMonsterTarget != null && detectedMonsters.FirstOrDefault() != null)
-        {
-            currentMonsterTarget = detectedMonsters.FirstOrDefault();
-            if (Time.time - lastAttackTime >= attackCooldown)
-            {
-                lastAttackTime = Time.time;
-                animator?.SetTrigger("isAttack01");
-                // 立即旋转朝向目标
-                RotateTowardsTarget(currentMonsterTarget);
-
-                StartCoroutine(DelayAttack(0.5f));
-            }
-        }
-        else
-        {
-            SwitchTarget();
-        }
+        
     }
 
-    private IEnumerator DelayAttack(float delay)
+    // Update is called once per frame
+    void Update()
     {
-        yield return new WaitForSeconds(delay);
-        // 执行伤害逻辑
-        AttackTarget(currentMonsterTarget);
+        
     }
-
-    protected override void HandleMonsterDetected(GameObject monster)
-    {
-        if (!detectedMonsters.Contains(monster))
-        {
-            Debug.Log("Soldier Get " + monster);
-            detectedMonsters.Add(monster);
-            SwitchTarget();
-        }
-    }
-    protected override void HandleMonsterExit(GameObject monster)
-    {
-        detectedMonsters.Remove(monster);
-
-        if (monster == currentMonsterTarget)
-        {
-            currentMonsterTarget = null;
-        }
-    }
-
 }

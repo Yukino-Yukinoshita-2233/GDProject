@@ -245,7 +245,7 @@ public class Soldier : MonoBehaviour
     /// 更新路径计算
     /// 以当前单位位置为起点，目标格子为终点计算新路径，并更新路径可视化
     /// </summary>
-    private void UpdatePath()
+    protected void UpdatePath()
     {
         Debug.Log(gameObject.name + " 修改路径");
         // 更新起点为当前单位位置
@@ -255,8 +255,11 @@ public class Soldier : MonoBehaviour
         // 这里约定 ThetaStar 返回的路径第一节点为起点，因此从索引1开始移动
         currentPathIndex = (path.Count > 1) ? 1 : 0;
 
-        // 更新路径可视化
-        SetLine(path);
+        if(currentState != SoldierState.Xunluo)
+        {
+            // 更新路径可视化
+            SetLine(path);
+        }
     }
 
     protected virtual void AttackingState()
@@ -282,7 +285,7 @@ public class Soldier : MonoBehaviour
         }
     }
 
-    private IEnumerator DelayAttack(float delayTime)
+    protected IEnumerator DelayAttack(float delayTime)
     {
 
         yield return new WaitForSeconds(delayTime);
@@ -368,7 +371,7 @@ public class Soldier : MonoBehaviour
     /// <summary>
     /// 移动函数，仅负责移动单位，不处理路径索引更新（在 MovingState 中统一处理）
     /// </summary>
-    private void MoveTowards(Vector3 targetPosition)
+    protected void MoveTowards(Vector3 targetPosition)
     {
         // 计算目标方向（忽略 Y 轴）
         Vector3 direction = new Vector3(targetPosition.x - transform.position.x, 0, targetPosition.z - transform.position.z).normalized;
@@ -386,7 +389,7 @@ public class Soldier : MonoBehaviour
     /// <summary>
     /// 将世界坐标转换为网格坐标
     /// </summary>
-    private Vector2Int WorldToGrid(Vector3 worldPosition)
+    protected Vector2Int WorldToGrid(Vector3 worldPosition)
     {
         return new Vector2Int(Mathf.RoundToInt(worldPosition.x), Mathf.RoundToInt(worldPosition.z));
     }
@@ -394,7 +397,7 @@ public class Soldier : MonoBehaviour
     /// <summary>
     /// 将网格坐标转换为世界坐标（忽略 Y 轴）
     /// </summary>
-    private Vector3 GridToWorld(Vector2Int gridPosition)
+    protected Vector3 GridToWorld(Vector2Int gridPosition)
     {
         return new Vector3(gridPosition.x, 0, gridPosition.y);
     }
@@ -404,6 +407,7 @@ public class Soldier : MonoBehaviour
     /// </summary>
     public virtual void SetTarget(Vector3 newTarget)
     {
+        ClearPathVisualization();
         target = newTarget;
         currentBaseState = (newTarget != null) ? SoldierBaseState.Moving : SoldierBaseState.Idle;
     }
@@ -436,7 +440,7 @@ public class Soldier : MonoBehaviour
     /// <summary>
     /// 清除路径可视化（到达目标后调用）
     /// </summary>
-    private void ClearPathVisualization()
+    protected void ClearPathVisualization()
     {
         LineRenderer lineRenderer = GetComponent<LineRenderer>();
         if (lineRenderer != null)

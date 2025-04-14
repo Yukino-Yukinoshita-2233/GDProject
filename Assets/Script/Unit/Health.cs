@@ -80,8 +80,9 @@ public class Health : MonoBehaviour
     /// </summary>
     public void TakeDamage(float damage)
     {
+
         currentHealth -= damage;
-        Debug.Log($"{gameObject.name} took {damage} damage! Current health: {currentHealth}"); 
+        //Debug.Log($"{gameObject.name} took {damage} damage! Current health: {currentHealth}"); 
 
         // ¸üĞÂÑªÌõÌî³ä
         //UpdateHealthBarFill();

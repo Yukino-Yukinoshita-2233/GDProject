@@ -4,7 +4,7 @@ using MapManagernamespace;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 
-public class MapGeneratorWithItems : MonoBehaviour
+public class Resoure : MonoBehaviour
 {
     // µØÍ¼³ß´ç
     int widthGen;

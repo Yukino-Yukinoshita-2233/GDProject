@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class BuildDataManager : SingletonMono<BuildDataManager>
 {
-    public string filePath = Application.dataPath + "/Script/Build/BuildDataManager/BuildData.xlsx"; // 替换为你的Excel文件路径
+    public string filePath = Application.dataPath + "C:/seig/Assets/Script/Build/BuildDataManager/BuildData.xlsx"; // 替换为你的Excel文件路径
 
     public Dictionary<int, BuildUpLvData> BuildUpLvDatas=new Dictionary<int, BuildUpLvData>();
 
