@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "D:\\Project\\GDProject\\GDProject01\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\map\\mapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\map\\mapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\unit\\health.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\unit\\health.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\map\\mapmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\map\\mapmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\soldierai\\mage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -51,16 +59,8 @@
       "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\healthbarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\map\\mapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\map\\mapgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\mosterai\\monster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\mosterai\\monster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\map\\mapmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\map\\mapmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B558EB53-E7D6-DEF1-344F-1BCF867C8C29}|Assembly-CSharp.csproj|D:\\Project\\GDProject\\GDProject01\\assets\\script\\npc\\npc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -114,7 +114,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "backbutton.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\UI\\button\\backbutton.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\UI\\button\\backbutton.cs",
@@ -126,7 +126,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "BuildManger.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Build\\BuildManger.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Build\\BuildManger.cs",
@@ -139,7 +139,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "NpcToZiYuan.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\ZiYuan\\NpcToZiYuan.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\ZiYuan\\NpcToZiYuan.cs",
@@ -151,7 +151,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "Drag.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Build\\DragToBuilding\\Drag.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Build\\DragToBuilding\\Drag.cs",
@@ -163,7 +163,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "JPSMangaer.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\JumpPointSearch\\JPSMangaer.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\JumpPointSearch\\JPSMangaer.cs",
@@ -199,7 +199,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 2,
               "Title": "MapManager.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Map\\MapManager.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Map\\MapManager.cs",
@@ -207,11 +207,12 @@
               "RelativeToolTip": "Assets\\Script\\Map\\MapManager.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAF4AAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-11T15:00:46.648Z"
+              "WhenOpened": "2024-11-11T15:00:46.648Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "SelectionManager.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Unit\\SelectionManager.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Unit\\SelectionManager.cs",
@@ -260,20 +261,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Health.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Unit\\Health.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Unit\\Health.cs",
               "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Unit\\Health.cs",
               "RelativeToolTip": "Assets\\Script\\Unit\\Health.cs",
-              "ViewState": "AgIAAEQAAAAAAAAAAAAUwGkAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAUwF0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-22T14:20:52.857Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "ThetaStar.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Unit\\ThetaStar.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Unit\\ThetaStar.cs",
@@ -323,23 +324,24 @@
         },
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 0,
               "Title": "MapGenerator.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Map\\MapGenerator.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Map\\MapGenerator.cs",
               "ToolTip": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\Map\\MapGenerator.cs",
               "RelativeToolTip": "Assets\\Script\\Map\\MapGenerator.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEwAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAANwAAAAAAAAAAAAIwAMBAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-11T14:26:52.944Z"
+              "WhenOpened": "2024-11-11T14:26:52.944Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "HealthBarController.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\UI\\HealthBarController.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\UI\\HealthBarController.cs",
@@ -351,7 +353,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Monster.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\MosterAI\\Monster.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\MosterAI\\Monster.cs",
@@ -387,7 +389,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Soldier.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\SoldierAI\\Soldier.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\SoldierAI\\Soldier.cs",
@@ -400,7 +402,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Swordsman.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\SoldierAI\\Swordsman.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\SoldierAI\\Swordsman.cs",
@@ -413,7 +415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Mage.cs",
               "DocumentMoniker": "D:\\Project\\GDProject\\GDProject01\\Assets\\Script\\SoldierAI\\Mage.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\SoldierAI\\Mage.cs",
