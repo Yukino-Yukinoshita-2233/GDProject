@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: 3f1ccf991d68dc343b6e9d87a8cda241
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - aiController: {instanceID: 0}
+  - grassPrefab: {fileID: 8212596697546888433, guid: 83d7d21e2d870d7469ff3be6f4e2d04c, type: 3}
+  - watchPrefab: {fileID: 5852326225527187864, guid: 561ba168bf64bdf4f9464caa9705a480, type: 3}
+  - forestPrefab: {fileID: 5720728146397894487, guid: d027a3d4cc6386548a9d209ba24cb1f2, type: 3}
+  - minePrefab: {fileID: 3269709497653013129, guid: 86fda5b8518d52849b665e800e79cfe5, type: 3}
+  - farmPrefab: {fileID: 921503878592821805, guid: c2d28b1e8742e004fa245b561d2ddbd1, type: 3}
+  - stonePrefab: {instanceID: 0}
+  - treePrefab: {instanceID: 0}
+  - chestPrefab: {instanceID: 0}
+  - cropPrefab: {instanceID: 0}
+  - baseCampPrefab: {instanceID: 0}
+  - wallPrefab: {instanceID: 0}
+  - towerPrefab: {instanceID: 0}
+  - housePrefab: {instanceID: 0}
+  - woodFactoryPrefab: {instanceID: 0}
+  - stoneFactoryPrefab: {instanceID: 0}
+  - metalFactoryPrefab: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

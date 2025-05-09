@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - JGC
   layers:
   - Default
   - TransparentFX
@@ -11,18 +12,18 @@ TagManager:
   - 
   - Water
   - UI
+  - Grass
+  - Mountain
+  - Resource
+  - 
+  - 
+  - Building
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Monster
+  - Soldier
+  - Villager
   - 
   - 
   - 
